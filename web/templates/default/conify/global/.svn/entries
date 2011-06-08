@@ -1,52 +1,0 @@
-10
-
-dir
-20389
-svn://svn.open-ils.org/ILS/branches/rel_2_1/Open-ILS/web/templates/default/conify/global
-svn://svn.open-ils.org/ILS
-
-
-
-2011-05-03T14:57:50.800690Z
-20381
-miker
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-dcc99617-32d9-48b4-a31d-7c20da2025e4
-
-asset
-dir
-
-action_trigger
-dir
-
-biblio
-dir
-
-acq
-dir
-
-config
-dir
-
-booking
-dir
-
-permission
-dir
-
-action
-dir
-
