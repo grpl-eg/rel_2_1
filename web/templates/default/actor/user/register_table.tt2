@@ -5,6 +5,7 @@
             <button dojoType='dijit.form.Button' jsId='replaceBarcode' scrollOnFocus='false'></button>
             <span id='uedit-dupe-barcode-warning' style='color:red; font-weight:bold' class='hidden'>
             </span>
+	    <button dojoType='dijit.form.Button' jsId='genISM' scrollOnFocus='false'>ISM Number</button>
         </td>
         <td id='uedit-all-barcodes' class='hidden'>
             <button dojoType='dijit.form.Button' jsId='allCards' scrollOnFocus='false'></button>
