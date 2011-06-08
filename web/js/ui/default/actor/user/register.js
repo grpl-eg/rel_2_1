@@ -322,6 +322,18 @@ function drawAllCards() {
                     dojo.byId('true').cloneNode(true) :
                     dojo.byId('false').cloneNode(true)
             ); 
+            if (openils.Util.isTrue(card.active())){
+                var act = new dijit.form.ToggleButton({label:"Disable", onClick: function() {disableCard(card.id());} },"disableButton");
+                getByName(row, 'state').appendChild(act.domNode);
+            }else{
+                var act = new dijit.form.Button({label:"Enable", onClick: function() {enableCard(card.id());} },"enableButton");
+                getByName(row, 'state').appendChild(act.domNode);
+            }
+            if (!first) {
+                var pri = new dijit.form.Button({label:"Make Primary", onClick: function() {makePrimaryCard(card.id());} },"primaryButton");
+                getByName(row, 'primary').appendChild(pri.domNode);
+            }
+
 
             tbody.appendChild(row);
             first = false;
@@ -330,6 +342,27 @@ function drawAllCards() {
 
     allCardsDialog.show();
 }
+
+function disableCard(id) {
+    var old = patron.cards().filter(function(c){return (c.id() == id)})[0];
+    old.active('f');
+    old.ischanged(1);
+    dojo.removeClass(dojo.byId('changesPending'),"hidden");
+}
+
+function enableCard(id) {
+    var old = patron.cards().filter(function(c){return (c.id() == id)})[0];
+    old.active('t');
+    old.ischanged(1);
+    dojo.removeClass(dojo.byId('changesPending'),"hidden");
+}
+
+function makePrimaryCard(id) {
+    patron.card().id(id);
+    patron.ischanged(1);
+    dojo.removeClass(dojo.byId('changesPending'),"hidden");
+}
+
 
 function clearMessage(){
     var input = findWidget('au', 'alert_message');
