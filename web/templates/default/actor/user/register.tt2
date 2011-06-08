@@ -43,24 +43,39 @@
 <div class='hidden'>
     <span id='true' style='color:green;'>&#x2713;</span>
     <span id='false' style='color:red;'>&#x2717;</span>
+    <span id='button'><button dojoType='dijit.form.Button'></button></span>
     <div dojoType='dijit.Dialog' jsId='allCardsDialog'>
         <table class='oils-generic-table' style='margin:10px;'>
             <thead>
                 <tr>
                     <th>Barcode</th>
                     <th>Active</th>
+                    <th>Creator</th>
+                    <th>Create Date</th>
+		    <th/>
+		    <th/>
                 </tr>
             </thead>
             <tbody id='uedit-all-cards-tbody'>
                 <tr id='uedit-all-cards-tr-template'>
                     <td><div name='barcode'></div></td>
                     <td><div name='active'></div></td>
+                    <td><div name='creator'></div></td>
+                    <td><div name='create_date'></div></td>
+		    <td><div name='state'></div></td>
+		    <td><div name='primary'></div></td>
                 </tr>
             </tbody>
             <tbody>
                 <tr>
                     <td colspan='2' style='text-align:center;'>
                         <button dojoType='dijit.form.Button' onClick='allCardsDialog.hide()' scrollOnFocus='false'>Close</button>
+                    </td>
+		    <td/>
+		    <td colspan='2' style='text-align:center;'><span id='changesPending' class='hidden'>Changes Pending</span></td>
+		    <td/>
+		    <td style='text-align:right;'>
+			<button dojoType='dijit.form.Button' onClick='uEditSave()' scrollOnFocus='false'>Apply</button>
                     </td>
                 </tr>
             </tbody>
