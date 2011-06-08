@@ -244,6 +244,11 @@ function load() {
     }
         
     lock_ready = true;
+
+    // we'll use this to hide features between systems
+    if (staff.ws_ou() == 4)
+	dojo.removeClass(dojo.byId('ISMbutton'),"hidden");
+	
 }
 
 var permGroups;
