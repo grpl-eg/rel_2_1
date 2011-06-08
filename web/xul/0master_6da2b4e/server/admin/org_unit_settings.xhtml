@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!-- 
+# Copyright (C) 2008  Georgia Public Library Service
+# Bill Erickson <erickson@esilibrary.com>
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+-->
+
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" [
+    <!--#include virtual="/opac/locale/${locale}/lang.dtd"-->
+]>
+
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <title>&staff.server.admin.org_unit_settings.title;</title>
+        <link type='text/css' rel='stylesheet' href='admin.css'/>
+        <script type="text/javascript" src='/IDL2js?aou,aout,pgt,au,coust,aous'></script>
+        <script type="text/javascript" djConfig="parseOnLoad: true,isDebug:false" src="/js/dojo/dojo/dojo.js"></script>
+        <script type="text/javascript" djConfig="parseOnLoad: true,isDebug:false" src="/js/dojo/dojo/openils_dojo.js"></script>
+        <script type="text/javascript" src='org_unit_settings.js'></script>
+    </head>
+    <body class="tundra tall">
+        <div dojoType="dijit.layout.LayoutContainer" orientation="vertical" class="tall">
+            <div dojoType="dijit.layout.ContentPane" layoutAlign='top'>
+                <h1>&staff.server.admin.org_unit_settings.title;</h1><br/>
+                <span>&staff.server.admin.org_unit_settings.context;</span>
+                <span>
+                    <select dojoType="openils.widget.OrgUnitFilteringSelect" jsId='osContextSelector'
+                        searchAttr="shortname" autocomplete="true" labelAttr='shortname' onchange='osChangeContext();'> 
+                    </select>
+                </span>
+                <span>&staff.server.admin.org_unit_settings.uninherited;</span>
+            </div>
+            <div dojoType="dijit.layout.ContentPane" layoutAlign='client'>
+                <div class='hide_me' id='no-perms'><b>&staff.server.admin.org_unit_settings.no_perms;</b></div>
+            </div>
+            <div dojoType="dijit.layout.ContentPane" layoutAlign='client' class='tall'>
+                <script>
+                    var osGridLayout = [{
+                        defaultCell: {styles: 'text-align: center;'},
+                        cells : [[
+                            {   name: 'Edit', 
+                                value: '&lt;a href=&quot;javascript:void(0);&quot; onclick=&quot;osLaunchEditor(\'SETTING\');&quot;>Edit&lt;/a>',
+                                get: osGetEditLink, 
+                                formatter : osFormatEditLink
+                            },
+                            {name: 'Setting', get: osGetGridData, field:'label', width:'auto', styles:'text-align:left;'},
+                            {name: 'Context', get: osGetGridData, field:'context'},
+                            {name: 'Value', get: osGetGridData, field:'value', width:'auto'},
+                        ]]
+                    }];
+                </script>
+                <div dojoType='dojox.Grid' jsId='osGrid'> </div>
+            </div>
+        </div>
+
+        <!-- edit dialog -->
+        <div dojoType="dijit.Dialog" jsId='osEditDialog' title="&staff.server.admin.org_unit_settings.edit_setting;">
+            <table class='form_table'>
+                <thead>
+                    <tr><td colspan='2' align='center'><div id='os-edit-name'/></td></tr>
+                    <tr><td colspan='2' align='center'><div id='os-edit-desc' style='max-width:600px;'/></td></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Context</td>
+                        <td> 
+                            <select dojoType="openils.widget.OrgUnitFilteringSelect" jsId='osEditContextSelector'
+                                searchAttr="shortname" autocomplete="true" labelAttr='shortname'> 
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Value</td>
+                        <td>
+                            <input dojoType='dijit.form.TextBox' jsId='osEditTextBox'/>
+                            <input dojoType='dijit.form.CurrencyTextBox' jsId='osEditCurrencyTextBox'/>
+                            <input dojoType='dijit.form.NumberTextBox' jsId='osEditNumberTextBox'/>
+                            <select dojoType='dijit.form.FilteringSelect' jsId='osEditBoolSelect'>
+                                <option value='true'>&common.true;</option>
+                                <option value='false'>&common.false;</option>
+                            </select>
+                            <div id='os-edit-auto-widget'></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <button dojoType='dijit.form.Button' onclick='osEditSetting(true);'>&staff.server.admin.org_unit_settings.delete_setting;</button>
+                        </td>
+                        <td> 
+                            <button dojoType='dijit.form.Button' onclick='osEditSetting();'>&staff.server.admin.org_unit_settings.update_setting;</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> <!-- edit dialog -->
+        <span id='os-true' class='hidden'>&common.true;</span>
+        <span id='os-false' class='hidden'>&common.false;</span>
+        <div dojoType="openils.widget.ProgressDialog" jsId="progressDialog" indeterminate="true"></div>
+    </body>
+</html>
+

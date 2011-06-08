@@ -1,0 +1,123 @@
+dojo.require('dijit.layout.TabContainer');
+dojo.require('openils.widget.AutoGrid');
+dojo.require('dijit.form.FilteringSelect');
+dojo.require('openils.PermaCrud');
+dojo.require('openils.MarcXPathParser');
+
+
+var provider;
+var xpathParser = new openils.MarcXPathParser();
+var subFields= [];
+
+function draw() {
+    if(providerId) {
+        openils.Util.addCSSClass(dojo.byId('provider-list-div'), 'hidden');
+       
+        console.log('in draw');
+        var pcrud = new openils.PermaCrud();
+        pcrud.retrieve('acqpro', providerId, {
+                oncomplete : function(r) {
+                    provider = openils.Util.readResponse(r);
+                    console.log('provider is' + js2JSON(provider));
+                    var pane = new openils.widget.EditPane({fmObject:provider, paneStackCount:2}, dojo.byId('provider-summary-pane'));
+                    pane.startup();
+                    console.log("pane started");
+                    dojo.connect(providerTabs, 'selectChild', drawProviderSummary);                        
+                }
+ 
+            });
+      
+        drawProviderSummary();
+    } else {
+        openils.Util.addCSSClass(dojo.byId('provider-details-div'), 'hidden');       
+        console.log('in else block');
+        pListGrid.loadAll({order_by:{acqpro : 'name'}});       
+        pListGrid.onPostCreate = function(fmObject) {
+            location.href = location.href + '/' + fmObject.id();
+        }
+        
+    }
+   
+}
+function drawProviderSummary(child) {
+    var loadedTabs = {'provider-address' : true};
+    if(child){   
+        if(loadedTabs[child.id]) return;
+        loadedTabs[child.id] = true;
+        switch(child.id) {
+        case 'tab-pro-contact': 
+            pcListGrid.overrideEditWidgets.provider = new
+                dijit.form.TextBox({disabled: 'true', value: providerId});
+            pcListGrid.resetStore();
+            pcListGrid.loadAll( {oncomplete:function(r){
+                        var count = 0; 
+                        pcListGrid.store.fetch( {onComplete:function(list) { 
+                            count =  list.length
+                            if(count>=1){
+                                var contactIds = [];                                                    dojo.forEach(list, function(item) {
+                                        contactIds.push(pcListGrid.store.getValue(item, 'id')); }
+                                    );
+                               
+                                pcaListGrid.overrideEditWidgets.contact = new
+                                dijit.form.FilteringSelect({store: pcListGrid.store});
+                                pcaListGrid.resetStore();
+                                pcaListGrid.loadAll({order_by:{acqpca : 'contact'}}, {contact: contactIds});
+                            }else{ 
+                                return;
+                            }            
+                                }
+                            }
+                            );
+                    }
+                }, {provider : providerId});
+            
+            break;
+        case 'tab-attr': 
+            padListGrid.overrideEditWidgets.provider = new
+                dijit.form.TextBox({disabled: 'true', value: providerId});
+            padListGrid.resetStore();
+            padListGrid.loadAll({order_by:{acqlipad : 'code'}}, {provider : providerId});
+            break;
+        case 'tab-hold': 
+            phsListGrid.overrideEditWidgets.provider = new
+                dijit.form.TextBox({disabled: 'true', value: providerId});
+            phsListGrid.resetStore();
+            phsListGrid.loadAll({order_by:{acqphsm : 'name'}}, {provider : providerId});
+            break;
+        case "tab-invoice":
+            invListGrid.resetStore();
+            invListGrid.loadAll(
+                {"order_by": {"acqinv": "recv_date DESC"}},
+                {"provider": providerId}
+            );
+            break;
+        default:
+            paListGrid.overrideEditWidgets.provider = new
+                dijit.form.TextBox({disabled: 'true', value: providerId});
+            paListGrid.resetStore();
+            paListGrid.loadAll({order_by:{acqpa:'provider'}}, {provider: providerId}); 
+        }
+        
+    } else {
+        paListGrid.overrideEditWidgets.provider = new
+            dijit.form.TextBox({disabled: 'true', value: providerId});
+        paListGrid.resetStore();
+        paListGrid.loadAll({order_by:{acqpa:'provider'}}, {provider: providerId}); 
+    }
+}
+
+
+function getParsedTag(rowIndex, item) {
+    return item && xpathParser.parse(padListGrid.store.getValue(item, 'xpath')).tags;
+}
+
+
+function getParsedSubf(rowIndex, item) {
+
+    if(item) {
+        var subfields = xpathParser.parse(padListGrid.store.getValue(item, 'xpath')).subfields;
+        return subfields.join(',');
+    }
+    return'';
+}
+openils.Util.addOnLoad(draw);

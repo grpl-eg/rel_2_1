@@ -1,0 +1,135 @@
+
+body {
+    font-family: Arial, Verdana;
+    font-size: 13px;
+}
+
+#oils-selfck-top-div {
+    padding: 20px;
+    margin: 2px;
+    border: 1px solid #888;
+    text-align: center;
+    font-weight:bold;
+}
+
+#oils-selfck-user-banner {
+    position:fixed;
+    top:30px;
+    right:30px;
+}
+
+#oils-selfck-logo-div {
+    margin: 20px;
+}
+
+#oils-selfck-scan-text {
+    margin: 10px;
+}
+
+#oils-selfck-bottom-div {
+    width: 98%;
+    padding: 10px;
+}
+
+#oils-self-circ-pic-cell {
+    width: 43px;
+}
+
+.oils-selfck-jacket {
+    height: 50px; 
+    width: 40px;  
+    border: none;
+}
+
+.oils-selfck-item-table  {
+    width: 98%;
+    margin-top: 15px;
+}
+
+.oils-selfck-item-table td {
+    text-align: left;
+    padding: 7px;
+}
+
+.oils-selfck-item-table thead {
+    font-weight: bold;
+}
+
+.oils-selfck-item-table tbody tr {
+    border-bottom: 1px solid #888;
+}
+
+
+#oils-selfck-content-div {
+    width: 70%;
+    position: float;
+    float: left;
+}
+
+#oils-selfck-summary-div {
+    width: 28%;
+    float: right;
+    border-left: 1px solid #888;
+}
+
+#oils-selfck-content-header {
+    margin: 8px 10px 15px 10px;
+    padding: 8px;
+    border-bottom: 1px dashed #888;
+    text-align: right;
+    width: 100%;
+}
+#oils-selfck-content-header span {
+    padding-left: 5px;
+}
+
+#oils-selfck-info-nav {
+    margin: 15px 10px 15px 10px;
+    padding: 8px;
+    border-bottom: 1px dashed #888;
+}
+
+#oils-selfck-circ-info-div span {
+    padding-right: 8px;
+}
+#oils-selfck-info-nav span {
+    padding-left: 8px;
+}
+
+#oils-selfck-info-nav span.selected {
+    background-color: #e0e0e0;
+}
+
+#oils-selfck-circ-info-div fieldset {
+    margin: 15px 10px 15px 10px;
+    padding: 8px;
+    border: 2px dashed #888;
+    -moz-border-radius: 3px;
+}
+
+#oils-selfck-circ-info-div fieldset legend {
+    font-weight: bold;
+}
+
+#oils-selfck-circ-info-div div {
+    padding: 3px;
+}
+
+#oils-selfck-status-div {
+    height: 20px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: middle;
+    color: red;
+}
+
+#oils-selfck-cc-payment-summary {
+    font-weight:bold;
+    padding: 30px;
+}
+
+#oils-selfck-cc-payment-table td {
+    padding: 5px;
+}
+
+

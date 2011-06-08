@@ -1,0 +1,55 @@
+10
+
+dir
+20389
+svn://svn.open-ils.org/ILS/branches/rel_2_1/Open-ILS/web/templates/default/acq
+svn://svn.open-ils.org/ILS
+
+
+
+2011-02-24T21:57:55.804529Z
+19538
+gmc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dcc99617-32d9-48b4-a31d-7c20da2025e4
+
+settings
+dir
+
+picklist
+dir
+
+financial
+dir
+
+search
+dir
+
+lineitem
+dir
+
+common
+dir
+
+receiving
+dir
+
+invoice
+dir
+
+po
+dir
+

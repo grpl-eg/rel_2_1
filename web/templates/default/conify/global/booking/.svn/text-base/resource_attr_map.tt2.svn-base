@@ -1,0 +1,36 @@
+[% WRAPPER default/base.tt2 %]
+[% ctx.page_title = 'Resource Attribute Maps' %]
+<div dojoType="dijit.layout.ContentPane" layoutAlign="client">
+    <div dojoType="dijit.layout.ContentPane" layoutAlign="top" class='oils-header-panel'>
+        <div>Resource Attribute Maps</div>
+        <div>
+            <button dojoType='dijit.form.Button' onClick='bramGrid.showCreateDialog()'>New Resource Attribute Map</button>
+            <button dojoType='dijit.form.Button' onClick='bramGrid.deleteSelected()'>Delete Selected</button>
+        </div>
+    </div>
+    <table  jsId="bramGrid"
+            dojoType="openils.widget.AutoGrid"
+            fieldOrder="['resource', 'resource_attr', 'value']"
+            query="{id: '*'}"
+            fmClass='bram'
+            showPaginator='true'
+            editOnEnter='true'>
+    </table>
+</div>
+
+<script type ="text/javascript">
+    dojo.require("openils.widget.PCrudAutocompleteBox");
+    dojo.require('openils.widget.AutoGrid');
+
+    openils.Util.addOnLoad(
+        function() {
+            bramGrid.overrideEditWidgets.resource =
+                new openils.widget.PCrudAutocompleteBox({
+                    "fmclass": "brsrc", "searchAttr": "barcode"
+                });
+            bramGrid.overrideEditWidgets.resource.shove = {"create": ""};
+            bramGrid.loadAll({"order_by": {"bram": "resource_attr"}});
+        }
+    );
+</script>
+[% END %]

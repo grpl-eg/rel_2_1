@@ -1,0 +1,30 @@
+@import "/js/dojo/dijit/themes/tundra/tundra.css";
+
+table.dijitTooltipTable { border-collapse: separate; }
+
+.content { padding: 5px; }
+.form_table td { padding: 6px; }
+.small_form_table td { padding: 1px; }
+.match_div {
+    height: 95%;
+    width: 95%;
+}
+.match_div a {
+    color: red;
+    font-weight:bold;
+}
+.match_div a:visited {
+    color: red;
+    font-weight:bold;
+}
+#toolbar { margin-top: 0px; }
+.progress {margin: 20px;}
+.overlay_selected { 
+    padding: 2px; 
+    background: #d9e8f9;
+    border: 1px solid red; 
+}
+
+.export_tr_border td { border-top: 1px solid #808080; }
+.nav_row_div {padding:1px; text-align:center; }
+.toolbar_selected { border: 2px dashed #808080; text-decoration:underline; font-weight:bold;}

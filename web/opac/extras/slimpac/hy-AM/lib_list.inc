@@ -1,0 +1,9 @@
+<option value='CONS'>Example Consortium</option>
+<option value='SYS1'>&#160;&#160;&#160;Example System 1</option>
+<option value='BR1'>&#160;&#160;&#160;&#160;&#160;&#160;Example Branch 1</option>
+<option value='SL1'>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Example Sub-library 1</option>
+<option value='BR2'>&#160;&#160;&#160;&#160;&#160;&#160;Example Branch 2</option>
+<option value='SYS2'>&#160;&#160;&#160;Example System 2</option>
+<option value='BR3'>&#160;&#160;&#160;&#160;&#160;&#160;Example Branch 3</option>
+<option value='BM1'>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Example Bookmobile 1</option>
+<option value='BR4'>&#160;&#160;&#160;&#160;&#160;&#160;Example Branch 4</option>
