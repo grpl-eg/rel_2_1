@@ -222,6 +222,9 @@ function load() {
 
     dojo.connect(replaceBarcode, 'onClick', replaceCardHandler);
     dojo.connect(allCards, 'onClick', drawAllCards);
+    dojo.connect(clearAlert, 'onClick', clearMessage);
+    dojo.connect(genISM, 'onClick', replaceISMCard);
+
     if(patron.cards().length > 1)
         dojo.removeClass(dojo.byId('uedit-all-barcodes'), 'hidden');
 
@@ -326,6 +329,32 @@ function drawAllCards() {
     );
 
     allCardsDialog.show();
+}
+
+function clearMessage(){
+    var input = findWidget('au', 'alert_message');
+    input.widget.attr('disabled', false).attr('readOnly', false).attr('value', null).focus();
+}
+
+function replaceISMCard(){
+    var input = findWidget('ac', 'barcode');
+    var rnd = Math.floor(Math.random()*999999);
+    rnd = '555'+rnd;
+    input.widget.attr('disabled', false).attr('readOnly', true).attr('value', rnd).focus();
+
+    var old = patron.cards().filter(function(c){return (c.id() == patron.card().id())})[0];
+    old.active('f');
+    old.ischanged(1);
+
+    var newc = new fieldmapper.ac();
+    newc.id(uEditCardVirtId--);
+    newc.isnew(1);
+    newc.active('t');
+    patron.card(newc);
+    var t = patron.cards();
+        if (!t) { t = []; }
+        t.push(newc);
+        patron.cards(t);
 }
 
 /**
