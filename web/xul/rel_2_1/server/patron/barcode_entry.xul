@@ -88,6 +88,9 @@
                 barcode = String( barcode ).replace( /\s+/g, '' );
 
                 if (!barcode) { sound.bad(); add_msg($("patronStrings").getString('staff.patron.barcode_entry.no_barcode')); tb.select(); tb.focus(); return; }
+	// MIEG: Michigan ID voodo
+		if (barcode.length == 25) { var bcode = barcode.substring(0,13); barcode = bcode.toLowerCase(); }
+		if (barcode.length == 23) { var bcode = barcode.substring(0,11); barcode = bcode.toLowerCase(); }
 
                 JSAN.use('util.network'); var net = new util.network();
 
