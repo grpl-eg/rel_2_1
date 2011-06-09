@@ -322,6 +322,8 @@ function drawAllCards() {
             }
             var row = allCardsTemplate.cloneNode(true);
             getByName(row, 'barcode').innerHTML = card.barcode();
+	    getByName(row, 'creator').innerHTML = card.creator();
+	    getByName(row, 'create_date').innerHTML = card.create_date();
             getByName(row, 'active').appendChild(
                 openils.Util.isTrue(card.active()) ? 
                     dojo.byId('true').cloneNode(true) :
