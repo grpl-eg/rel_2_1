@@ -250,6 +250,11 @@ patron.summary.prototype = {
                                         obj.patron.net_access_level()
                                     ].name()
                                 );
+//MIEG: GRPL Inet setting
+if (ses('ws_ou') == 4){
+   if (obj.patron.net_access_level() == 3) e.setAttribute('value','Internet Access: Denied');
+     else e.setAttribute('value','Internet Access: Allowed');
+}
                             };
                         }
                     ],
