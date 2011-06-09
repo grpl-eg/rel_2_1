@@ -993,6 +993,41 @@ function attachWidgetEvents(fmcls, fmfield, widget) {
             dojo.connect(widget.widget, 'onChange',
                 function() {
                     var barcode = this.attr('value');
+if (barcode.length > 22){
+	if (barcode.length == 25) {var bc = barcode.substr(0,13);}
+	if (barcode.length == 23) {var bc = barcode.substr(0,11);}
+	var dob = findWidget('au', 'dob');
+	var ident = findWidget('au', 'ident_value');
+	var id_type = findWidget('au', 'ident_type');
+	if (barcode.length == 25) {
+		var bc = barcode.substr(0,13);
+		if (!dob.widget.attr('value')){
+			var y = barcode.substr(13,4);
+			var m = barcode.substr(17,2);
+			var d = barcode.substr(19,2);
+			var bdate = new Date(y,m-1,d);
+			dob.widget.attr('value',bdate);
+		}
+		if (!ident.widget.attr('value'))
+                	ident.widget.attr('value',bc);
+        	id_type.widget.attr('value',1);	
+	}
+	if (barcode.length == 23) {
+		var bc = barcode.substr(0,11);
+		if (!dob.widget.attr('value')){
+                        var y = barcode.substr(11,4);
+                        var m = barcode.substr(15,2);
+                        var d = barcode.substr(17,2);
+			var bdate = new Date(y,m-1,d);
+                        dob.widget.attr('value',bdate);
+                }
+                if (!ident.widget.attr('value'))
+                        ident.widget.attr('value',bc);
+                id_type.widget.attr('value',4);
+	}
+	bc.toLowerCase();
+	this.attr('value',bc);
+}
                     dupeBarcode = false;
                     dojo.addClass(dojo.byId('uedit-dupe-barcode-warning'), 'hidden');
                     fieldmapper.standardRequest(
