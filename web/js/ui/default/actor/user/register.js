@@ -1111,6 +1111,8 @@ if (barcode.length > 22){
 	   case 'expire_date':
 		dojo.connect(widget.widget, 'onChange',
 		    function() {
+			//MIEG: change to suit
+			if (staff.ws_ou() != 4) return;
 			var now = new Date();
 			var maxExpire = new Date();
 			maxExpire.setDate(maxExpire.getDate() + 1100);
