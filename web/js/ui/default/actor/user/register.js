@@ -1261,7 +1261,32 @@ if (barcode.length > 22){
                 return;
 
             case 'street1':
+                dojo.connect(widget.widget, 'onChange',
+                    function(e) {
+			//MIEG:  GRPL address formatting
+			if (staff.ws_ou() != 4) return;
+			e = e.toUpperCase(); 
+ 	                e = e.replace(/\.|\,|\#/g,""); 
+ 	                e = e.replace(/\s+/g," ");	
+			var street1 = findWidget('aua', 'street1');
+			street1.widget.attr('value',e);
+		    }
+		);
+		return;
+
             case 'street2':
+                dojo.connect(widget.widget, 'onChange',
+                    function(e) {
+                        //MIEG:  GRPL address formatting
+                        if (staff.ws_ou() != 4) return;
+                        e = e.toUpperCase();                  
+                        e = e.replace(/\.|\,|\#/g,"");                                                                                                                    
+                        e = e.replace(/\s+/g," ");                                                                                                                     
+                        var street2 = findWidget('aua', 'street2');
+                        street2.widget.attr('value',e);
+                    }   
+                );
+                return;
             case 'city':
                 dojo.connect(widget.widget, 'onChange',
                     function(e) {
