@@ -993,6 +993,7 @@ function attachWidgetEvents(fmcls, fmfield, widget) {
             dojo.connect(widget.widget, 'onChange',
                 function() {
                     var barcode = this.attr('value');
+//MIEG: TADL Michigan ID to barcode voodo
 if (barcode.length > 22){
 	if (barcode.length == 25) {var bc = barcode.substr(0,13);}
 	if (barcode.length == 23) {var bc = barcode.substr(0,11);}
@@ -1025,7 +1026,7 @@ if (barcode.length > 22){
                         ident.widget.attr('value',bc);
                 id_type.widget.attr('value',4);
 	}
-	bc.toLowerCase();
+	bc = bc.toLowerCase();
 	this.attr('value',bc);
 }
                     dupeBarcode = false;
