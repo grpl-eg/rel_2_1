@@ -548,6 +548,20 @@ if (ses('ws_ou') == 4){
                             };
                         }
                     ],
+                    'patron_create_date' : [
+                        ['render'],
+                        function(e) {
+                            return function() {
+                                util.widgets.set_text(e,
+                                    'Created on ' + (
+                                        obj.patron.create_date() ?
+                                        util.date.formatted_date( obj.patron.create_date(), '%{localized_date}' ) :
+                                        patronStrings.getString('staff.patron.field.unset')
+                                    )
+                                );
+                            };
+                        }
+                    ],
                     'patron_hold_alias' : [
                         ['render'],
                         function(e) {
