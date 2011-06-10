@@ -1167,23 +1167,49 @@ if (barcode.length > 22){
                 return;
 
             case 'day_phone':
-                // if configured, use the last four digits of the day phone number as the password
-                if(uEditUsePhonePw && patron.isnew()) {
                     dojo.connect(widget.widget, 'onChange',
                         function(newVal) {
-                            if(newVal && newVal.length >= 4) {
-                                var pw1 = findWidget('au', 'passwd').widget;
-                                var pw2 = findWidget('au', 'passwd2').widget;
-                                pw1.attr('value', newVal.substring(newVal.length - 4));
-                                pw2.attr('value', newVal.substring(newVal.length - 4));
-                            }
+			    if(uEditUsePhonePw && patron.isnew()) {
+				// if configured, use the last four digits of the day phone number as the password
+                                if(newVal && newVal.length >= 4) {
+                                    var pw1 = findWidget('au', 'passwd').widget;
+                                    var pw2 = findWidget('au', 'passwd2').widget;
+                                    pw1.attr('value', newVal.substring(newVal.length - 4));
+                                    pw2.attr('value', newVal.substring(newVal.length - 4));
+                                }
+			    }
+			    if(newVal && newVal.length == 10) {
+ 				newVal = newVal.substr(0,3)+'-'+newVal.substr(3,3)+'-'+newVal.substr(6,4);
+				var dayPhone = findWidget('au', 'day_phone');	
+				dayPhone.widget.attr('value',newVal);
+			    }
                         }
                     );
-                }
+		    return;
             case 'evening_phone':
+                dojo.connect(widget.widget, 'onChange',
+                    function(newVal) {
+                        uEditDupeSearch('phone', newVal);
+                            if(newVal && newVal.length == 10) {
+                                newVal = newVal.substr(0,3)+'-'+newVal.substr(3,3)+'-'+newVal.substr(6,4);
+                                var eveningPhone = findWidget('au', 'evening_phone');
+                                eveningPhone.widget.attr('value',newVal);
+                            }
+                    }
+                );
+                return;
+
             case 'other_phone':
                 dojo.connect(widget.widget, 'onChange',
-                    function(newVal) { uEditDupeSearch('phone', newVal); });
+                    function(newVal) { 
+			uEditDupeSearch('phone', newVal); 
+			    if(newVal && newVal.length == 10) {
+                                newVal = newVal.substr(0,3)+'-'+newVal.substr(3,3)+'-'+newVal.substr(6,4);
+                                var otherPhone = findWidget('au', 'other_phone');
+                                otherPhone.widget.attr('value',newVal);
+                            }
+		    }
+		);
                 return;
 
             case 'home_ou':
