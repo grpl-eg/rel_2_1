@@ -1300,6 +1300,11 @@ if (barcode.length > 22){
                         };
                         if(args.street1 && args.city && args.post_code)
                             uEditDupeSearch('address', args); 
+                        //MIEG:  GRPL address formatting
+                        if (staff.ws_ou() != 4) return;
+			var city = findWidget('aua', 'city');
+                        e = e.toUpperCase();
+			city.widget.attr('value',e);
                     }
                 );
                 return;
