@@ -631,7 +631,7 @@ patron.display.prototype = {
                             } else {
                                 error = js2JSON(E).substr(0,100);
                             }
-                            location.href = urls.XUL_PATRON_BARCODE_ENTRY + '?error=' + window.escape(error);
+                            xulG.set_tab(urls.XUL_PATRON_BARCODE_ENTRY + '?error=' + window.escape(error),{},{});
                         } catch(F) {
                             alert(F);
                         }
@@ -965,7 +965,7 @@ patron.display.prototype = {
                     if (msg != obj.old_msg) {
                         //obj.error.yns_alert(msg,'Alert Message','OK',null,null,'Check here to confirm this message.');
                         document.documentElement.firstChild.focus();
-                        var data_url = window.escape("<img src='" + xulG.url_prefix('/xul/rel_2_1/server/skin/media/images/stop_sign.png') + "'/>" + '<h1>'
+                        var data_url = window.escape("<img src='" + xulG.url_prefix('/xul/server/skin/media/images/stop_sign.png') + "'/>" + '<h1>'
                             + $("patronStrings").getString('staff.patron.display.init.network_request.window_title') + '</h1><blockquote><p>' + msg + '</p>\r\n\r\n<pre>'
                             + $("patronStrings").getString('staff.patron.display.init.network_request.window_message') + '</pre></blockquote>');
                         obj.right_deck.set_iframe('data:text/html,'+data_url,{},{});
