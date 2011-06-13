@@ -1,3 +1,6 @@
+
+dojo.require('fieldmapper.IDL');
+
     function $(id) { return document.getElementById(id); }
 
     function oils_unsaved_data_V() {
@@ -177,7 +180,8 @@
             addCSSClass(document.documentElement,data.global_font_adjust);
         } catch(E) {
             var Strings = $('offlineStrings') || $('commonStrings');
-            alert(Strings.getFormattedString('openils.global_util.font_size.error', [E]));
+            //alert(Strings.getFormattedString('openils.global_util.font_size.error', [E]));
+	    updateStatus('statusbarpanel1',text + ' : copied to clipboard');
         }
     }
 
@@ -583,12 +587,14 @@
                 .getService(Components.interfaces.nsIClipboardHelper);
             gClipboardHelper.copyString(text);
             var Strings = $('offlineStrings') || $('commonStrings');
-            alert(Strings.getFormattedString('openils.global_util.clipboard', [text]));
-        } catch(E) {
+                if (text.length > 20)
+                        text = text.substring(0,20) + '...';
+                        updateStatus('statusbarpanel1',text + ' : copied to clipboard');
+                } catch(E) {
             var Strings = $('offlineStrings') || $('commonStrings');
-            alert(Strings.getFormattedString('openils.global_util.clipboard.error', [E]));    
+                        alert(Strings.getFormattedString('openils.global_util.clipboard.error', [E]));
+                }
         }
-    }
 
     function clear_the_cache() {
         try {
@@ -645,3 +651,27 @@
             alert('Error in global_utils.js, widget_prompt(): ' + E);
         }
     }
+
+        function updateStatus(panel,value) {
+
+		var mainWindow = window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+                   .getInterface(Components.interfaces.nsIWebNavigation)
+                   .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
+                   .rootTreeItem
+                   .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+                   .getInterface(Components.interfaces.nsIDOMWindow);
+                if (mainWindow.name != ''){
+                        mainWindow = window.opener.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+                            .getInterface(Components.interfaces.nsIWebNavigation)
+                            .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
+                            .rootTreeItem
+                            .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+                            .getInterface(Components.interfaces.nsIDOMWindow);
+
+                     if (mainWindow.document.getElementById(panel))
+                        mainWindow.document.getElementById(panel).setAttribute("label",value);
+                  }else{
+                        mainWindow.document.getElementById(panel).setAttribute("label",value);
+                }
+
+        }
