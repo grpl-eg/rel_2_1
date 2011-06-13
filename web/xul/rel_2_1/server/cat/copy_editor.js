@@ -14,7 +14,7 @@ function my_init() {
             throw( $('commonStrings').getString('common.jsan.missing') );
         }
         JSAN.errorLevel = "die"; // none, warn, or die
-        JSAN.addRepository('/xul/rel_2_1/server/');
+        JSAN.addRepository('/xul/server/');
         JSAN.use('util.error'); g.error = new util.error();
         g.error.sdump('D_TRACE','my_init() for cat/copy_editor.xul');
 
@@ -556,7 +556,7 @@ g.apply_owning_lib = function(ou_id) {
             var old_volume = g.map_acn[copy.call_number()];
             var acn_blob = g.network.simple_request(
                 'FM_ACN_FIND_OR_CREATE',
-                [ses(),old_volume.label(),old_volume.record(),ou_id,old_volume.prefix(),old_volume.suffix(),old_volume.label_class()]
+                [ses(),old_volume.label(),old_volume.record(),ou_id,old_volume.prefix().id(),old_volume.suffix().id(),old_volume.label_class().id()]
             );
             if (typeof acn_blob.ilsevent != 'undefined') {
                 g.error.standard_unexpected_error_alert($('catStrings').getFormattedString('staff.cat.copy_editor.apply_owning_lib.call_number.error', [copy.barcode()]), acn_blob);
