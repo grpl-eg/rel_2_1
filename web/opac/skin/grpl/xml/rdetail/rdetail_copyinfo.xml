@@ -1,0 +1,115 @@
+
+        <script language="javascript" type="text/javascript" src="/xul/server/main/constants.js"></script>
+        <script language="javascript" type="text/javascript" src="/xul/server/main/JSAN.js"></script>
+        <script language="javascript" type="text/javascript" src="/xul/server/circ/util.js"></script>
+        <script language="javascript" type="text/javascript" src="/xul/server/OpenILS/global_util.js"></script>
+	<script language="javascript" type="text/javascript" src="/opac/skin/grpl/js/sorttable.js"></script>
+
+
+<!-- This holds information for copies attached to this record -->
+<div id='rdetail_copy_info_div' class='rdetail_extras_div'>
+
+	<div style='width: 100%; text-align: center; padding-bottom: 5px;'>
+		<span>
+			<a href='javascript:void(0);' id='copy_info_local_link' 
+				class='rdetail_copy_nav_link hide_me classic_link'><b>&rdetail.copyInfo.local;</b></a>
+		</span>
+		<span width=''>
+			<a href='javascript:void(0);' id='copy_info_all_link' 
+				class='rdetail_copy_nav_link classic_link'><b>&rdetail.copyInfo.all;</b></a>
+		</span>
+	</div>
+
+	<table id='rdetail_copy_info_table' class='data_grid sortable'>
+		<thead>
+			<tr>
+				<th  class='rdetail_copy_info_header_cell'>Library</th>
+				<th  class='rdetail_copy_info_header_cell'>Callnumber</th>
+				<th  class='rdetail_copy_info_header_cell'>Shelving Location</th>
+				<th  class='rdetail_copy_info_header_cell'>Status</th>
+				<th  class='rdetail_copy_info_header_cell'>Due Date</th>
+				<th  class='rdetail_copy_info_header_cell unsortable'>Actions</th>
+				<th  class='rdetail_copy_info_header_cell'>Notes</th>
+			</tr>
+		</thead>
+		<tbody id='rdetail_copy_info_tbody' name='rdetail_copy_info_tbody'>
+		       	<tr id='rdetail_copy_info_row' class='hide_me' templateRow='1'>
+				<td name='rdetail_library_cell'></td>
+				<td name='rdetail_callnumber_cell'>
+					<div style='margin-top: 2px;'>
+						<a name='callnumber' style='font-size: 8pt;' class='classic_link'></a>
+                                        </div>
+				</td>
+                                <td name='location'></td>
+                                <td name='status'></td>
+                                <td name='copy_due_date'></td>
+                                <td name='rdetail_actions_cell'>
+					<a name='print' href='javascript:void(0);' class='classic_link'><img src='/opac/images/printer.jpg' border='0'/></a>
+                                                <a name='vol_hold_link' style='font-size: 8pt;' href='javascript:void(0);' class='hide_me classic_link'>volume_hold</a>
+									<a class='hide_me classic_link' style='font-size: 8pt;' name='copy_hold_link'
+                                                                                href='javascript:void(0);'>copy_hold</a>
+					<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>	
+                                                                        <a class='hide_me classic_link' style='font-size: 8pt;' name='item_details_link'>copy_info</a>
+                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<a class='hide_me classic_link' style='font-size: 8pt;' name='barcode_link'></a>
+                                </td>
+				<td name='notes'></td>
+                  	</tr>
+                   </tbody>
+
+	</table>
+
+	<!--
+	<table class='hide_me'>
+		<tbody>
+		<tr style='border: 3px solid #E0E0E0;' id='rdetail_volume_details_row'><td colspan='10'></td></tr>
+		</tbody>
+	</table>
+	-->
+
+	<br/><br/>
+
+	<div id='rdetail_copy_info_none' class='hide_me'>&rdetail.noneAvailable;</div>
+
+	<script language='javascript' type='text/javascript'>
+		config.ids.rdetail.cp_status			= "rdetail_copy_info_status";
+		config.ids.rdetail.cp_info_row		= "rdetail_copy_info_row";
+		config.ids.rdetail.cp_info_loading	= "rdetail_copy_info_loading";
+		config.ids.rdetail.cp_info_local		= "copy_info_local_link";
+		config.ids.rdetail.cp_info_all		= "copy_info_all_link";
+		config.ids.rdetail.cp_info_none		= "rdetail_copy_info_none";
+		config.names.rdetail.lib_cell			= "rdetail_library_cell";
+		config.names.rdetail.cn_cell			= "rdetail_callnumber_cell";
+		config.names.rdetail.cp_count_cell	= "rdetail_copy_count_cell";
+		config.names.rdetail.cp_status		= 'rdetail_status_cell';
+	</script>
+
+</div> <!-- copy info -->
+
+<div id='rdetail_print_details' class='hide_me'>
+        <div style='text-align: center; padding: 20px; width: 100%'>
+                <div style='width:100%; border: 2px solid #E0F0E0; margin-bottom: 20px;'>
+                        <input type='submit' value='&rdetail.cn.print;' onclick='window.print();'> </input>
+                </div>
+                <div name='body'>
+                        <table>
+                                <tbody name='tbody'>
+                                        <tr><td>&common.library;</td><td colspan='2' name='lib'></td></tr>
+                                        <tr><td>&common.title;</td><td colspan='2' name='title'></td></tr>
+                                        <tr><td>&common.author;</td><td colspan='2' name='author'></td></tr>
+                                        <tr><td>&common.edition;</td><td colspan='2' name='edition'></td></tr>
+                                        <tr><td>&common.pubdate;</td><td colspan='2' name='pubdate'></td></tr>
+                                        <tr><td>&common.publisher;</td><td colspan='2' name='publisher'></td></tr>
+                                        <tr><td>&common.physical;</td><td colspan='2' name='phys'></td></tr>
+                                        <tr>
+                                                <td colspan='3' style='background: #E0F0E0;'> </td>
+                                        </tr>
+                                        <tr name='cnrow'><td><b>&common.callnumber;</b></td><td><b colspan='2' name='cn'></b></td></tr>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+</div>
+
+
+

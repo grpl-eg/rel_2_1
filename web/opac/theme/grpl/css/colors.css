@@ -1,0 +1,109 @@
+body a		{ color: black; text-decoration: none;}
+body a:visited  { color: black; text-decoration: none;}
+body a:hover	{ color: #e57200; text-decoration: underline;}
+
+
+/* the idea is to have 4 complimentary colors that 
+ * are used throughout the opac.  Edit those colors
+ * in this file
+ */
+ 
+.color_1 { background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y; color: #000000; }
+.color_2 { background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y; color: #000000; }
+.color_3 { color: #000000; }
+.color_4 { background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y; color: #000000; }
+
+.border_1 { border: 1px solid #eeeeee; }
+.border_2 { border: 1px solid #eeeeee; }
+.border_3 { border: 1px solid #eeeeee; }
+.border_4 { border: 1px solid #eeeeee; }
+
+.border_1_2 { border: 2px solid #eeeeee; }
+.border_2_2 { border: 2px solid #eeeeee; }
+.border_3_2 { border: 2px solid #eeeeee; }
+.border_4_2 { border: 2px solid #eeeeee; }
+
+.border_1_3 { border: 3px solid #eeeeee; }
+.border_2_3 { border: 3px solid #eeeeee; }
+.border_3_3 { border: 3px solid #eeeeee; }
+.border_4_3 { border: 3px solid #eeeeee; }
+
+/* some facet styling */
+.facetClassContainer { margin: 2px; border: 1px solid #eeeeee; }
+.facetClassLabelContainer { background: #eeeeee; border: 1px solid #e0e0e0; }
+.facetClassLabel { font-weight: bold; text-align: center; }
+.facetFieldContainer { background: #ffffff; }
+.facetFieldLabel { padding-left: 2px; margin-top: 5px; margin-bottom: 5px; font-weight: bold; text-align: left; }
+.extraFacetFieldsWrapper { }
+.toggleExtraFacetFieldsButton { float: right; margin: 0px; padding: 0px; }
+.facetFieldLineCount { display: inline-block; border-right: 1px solid #e0e0e0; color: gray; width: 3em; margin-right: 3px }
+.facetField { border-top: 1px solid #e0e0e0; }
+.facetFields { padding-left: 5px; }
+.facetFieldLineValue { overflow: hidden; text-overflow: ellipsis; }
+
+
+
+
+
+/* general purpose light borders */
+.border_5 { border: 1px solid #D0D0D0; }
+.border_6 { border: 1px solid #808080; }
+
+input:focus { background: white; color: #000000;}
+a:focus { background: #E0e0E0; color: #000000;}
+
+
+/* ---------------------------------------------------------------------- */
+
+.canvas { /* main content div for each page */
+	
+}
+
+/* border around home search box */
+.home_search {  }
+
+/* main nav sidebar */
+.sidebar_item_active { background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y; font-weight: bold; }
+
+/* record detail summary block */
+.rdetail_desc { border: 1px solid #eeeeee; }
+.rdetail_item { border: 1px solid #eeeeee; }
+.rdetail_extras_selected { background: #E0e0E0;} 
+
+
+.data_grid thead tr { background: url(/opac/images/grpl/content_leftSidebar_bkg.gif) left top repeat-y; color: #000000; }
+.data_grid thead td { border: 1px solid #808080; }
+.data_grid tbody td { border: 1px solid #eeeeee; }
+.data_grid_nb thead tr { background: url(/opac/images/grpl/content_leftSidebar_bkg.gif) left top repeat-y; font-weight: bold; color: #000000; }
+.data_grid_nb thead td { border: none; }
+.data_grid_nb tbody td { border: none; }
+
+.light_border { border: 1px solid #E0eoE0; }
+
+.adv_quick_search_submit { border-bottom: 3px solid #E0eoE0;}
+
+.myopac_link_active { background: #eeeeee }
+
+.sidebar_extra_link { text-decoration: none; }
+#searchbar_tag_on { color: red; }
+.searchbar_item { color: black; } 
+#login_box { border-top: 1px solid #808080; border-bottom: 1px solid #808080; }
+#next_prev_links_dead { color: #808080; text-decoration: none; }
+
+.nav_link_active {font-weight: bold;}
+
+.result_table_subtable { border-top: 1px solid #E0E0E0; }
+
+.copy_count_cell { border-right: 1px solid #E0E0E0; } 
+.copy_count_div {	border-left: 2px solid #E0eoE0; border-right: 2px solid #E0eoE0; }
+
+#rdetail_image_cell { border: 1px solid white; border-right: 1px solid #eeeeee;}
+
+
+
+.x_mark { color: red; }
+.check_mark { color: green; }
+
+#myopac_holds_thaw_date_form { border: 1px solid #E0E0E0; } 
+
+.invalid_field { border: 3px solid red; }

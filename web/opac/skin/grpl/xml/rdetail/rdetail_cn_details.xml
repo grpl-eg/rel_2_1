@@ -1,0 +1,87 @@
+<table class='hide_me'>
+	<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/copy_details.js'></script>
+	<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/common/js/Date.W3CDTF.js'></script>
+	<tbody>
+		<tr style='border: 3px solid #E0E0E0;' id='rdetail_volume_details_row' templateRow='1'>
+			<td colspan='11'>
+				<div style='text-align: center; margin-top: 6px; margin-bottom: 6px'>
+				
+					<a name='print' href='javascript:void(0);' class='classic_link'>&rdetail.print;</a>
+					<table class='data_grid data_grid_center' style='width: 100%'>
+						<tbody name='copies_tbody' class='copy_details_table' width='100%'>
+
+							<tr name='copies_row'>
+
+                                                               <td name='library'></td>
+                                                                <td name='call_number'></td>
+                                                                <td name='location'></td>
+                                                                <td name='status'></td>
+                                                                <td name='copy_due_date'></td>
+                                                                <td class=''>
+                                                                        <span name='library'> </span>
+
+                                                                        <a class='hide_me classic_link copy_more_info' name='details_link'>&rdetail.cn.more;</a>
+                                                                        <a class='hide_me classic_link copy_more_info' name='less_details_link'>&rdetail.cn.less;</a>
+                                                                        <a class='hide_me classic_link copy_more_info' name='copy_hold_link'
+                                                                                href='javascript:void(0);'>volume_hold</a>
+                                                                        <a class='hide_me classic_link copy_more_info' name='item_details_link'>copy_info</a>
+                                                                </td>
+
+
+							</tr>
+
+							<tr name='copy_extras_row' class='hide_me'>
+								<td colspan='10'>
+									<table width='100%' class='data_grid'>
+										<tbody name='extras_tbody'>
+											<tr name='extras_row' class='hide_me'>
+												<td name='type' width='20%'> 
+													<span name='note' class='hide_me'><b>&rdetail.cn.note;</b></span>
+													<span name='cat' class='hide_me'><b>&rdetail.cn.category;</b></span>
+												</td>
+												<td>
+													<span name='key'> </span> : <span name='value'> </span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<span class='hide_me' id='rdetail.yes'>&common.yes;</span>
+<span class='hide_me' id='rdetail.no'>&common.no;</span>
+
+
+<div id='rdetail_print_details' class='hide_me'>
+	<div style='text-align: center; padding: 20px; width: 100%'>
+		<div style='width:100%; border: 2px solid #E0F0E0; margin-bottom: 20px;'>
+			<input type='submit' value='&rdetail.cn.print;' onclick='window.print();'> </input>
+		</div>
+		<div name='body'> 
+			<table>
+				<tbody name='tbody'>
+					<tr><td>&common.library;</td><td colspan='2' name='lib'></td></tr>
+					<tr><td>&common.title;</td><td colspan='2' name='title'></td></tr>
+					<tr><td>&common.author;</td><td colspan='2' name='author'></td></tr>
+					<tr><td>&common.edition;</td><td colspan='2' name='edition'></td></tr>
+					<tr><td>&common.pubdate;</td><td colspan='2' name='pubdate'></td></tr>
+					<tr><td>&common.publisher;</td><td colspan='2' name='publisher'></td></tr>
+					<tr><td>&common.physical;</td><td colspan='2' name='phys'></td></tr>
+					<tr>
+						<td colspan='3' style='background: #E0F0E0;'> </td>
+					</tr>
+					<tr name='cnrow'><td><b>&common.callnumber;</b></td><td><b colspan='2' name='cn'></b></td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+

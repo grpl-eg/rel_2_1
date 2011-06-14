@@ -693,6 +693,8 @@ function loadStatCats() {
         row.setAttribute('stat_cat_owner',stat.owner());
         row.setAttribute('stat_cat_name',stat.name());
         row.setAttribute('stat_cat_id',stat.id());
+        if (stat.id() == 19 || stat.id() == 20 ) //MIEG:  GRPL requires these two
+                row.setAttribute('required','required');
         tbody.appendChild(row);
         getByName(row, 'name').innerHTML = stat.name();
         var valtd = getByName(row, 'widget');

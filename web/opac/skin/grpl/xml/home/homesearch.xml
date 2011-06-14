@@ -1,0 +1,143 @@
+
+	<!-- load my js -->
+
+	<script language='javascript' type='text/javascript'
+		src="<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/depth_selector.js"> </script>
+	<script language='javascript' type='text/javascript'
+		src="<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/search_bar.js"> </script>
+
+
+	<script language='javascript' type='text/javascript'>
+		config.ids.searchbar = {};
+		config.css.searchbar = {};
+		config.ids.searchbar.text		= 'search_box';	
+		config.ids.searchbar.submit		= 'search_submit';	
+		config.ids.searchbar.type_selector	= 'search_type_selector';
+		config.ids.searchbar.depth_selector	= 'depth_selector';
+		config.ids.searchbar.form_selector	= 'form_selector';
+		config.ids.searchbar.extra_row		= 'searchbar_extra';
+		config.ids.searchbar.main_row		= 'searchbar_main_row';
+		config.ids.searchbar.table		= 'searchbar_table';
+		config.ids.searchbar.location_tag	= 'search_location_tag_link';
+		config.ids.searchbar.lib_sel_span	= 'lib_selector_span';
+		config.ids.searchbar.lib_sel_link	= 'lib_selector_link';
+		config.ids.searchbar.depth_sel_span	= 'depth_selector_span';
+	</script>
+
+        <div id="header">
+                <a id='header_myopac_link' href='javascript:void(0);'>&opac.navigate.myopac;</a>
+                <br/>
+                <a href="http://www.grpl.org/"><img src="/opac/images/grpl/nav_logo.gif" style='top:0; padding-bottom: 10px; right: 0; border: 0;'/></a>
+        </div>
+
+        <img src="/opac/images/grpl/wave.gif" style='padding: 0px;'/>
+
+<div id='home_canvas'>
+	
+	<style>
+	       	.mybg {
+			height: 20px;
+			background-image: url(/opac/images/grpl/content_leftSidebar_bkg.gif);
+			background-repeat: repeat-y;
+			background-attachment: scroll;
+			background-position: left top;
+		     }
+		.thebox {
+			border: 1px solid #dddddd;
+			padding: 15px;
+		     }
+        </style>
+	<center>
+	<table 
+	 	class='thebox' >
+
+		<tbody>
+
+			<tr class='mybg'>
+
+				<script language='javascript' type='text/javascript'>
+					config.ids.common.now_searching = 'now_searching_location';
+				</script>
+
+				<td style='padding: 6px; color: #002664;'>
+					<span>&opac.search.nowSearching;</span>
+					<span style='padding: 1px; font-weight: bold;' id='now_searching_location'>  </span>
+				</td>
+			</tr>
+
+
+			<tr class='mybg'><td></td></tr>
+
+			<tr class='mybg'>
+				<td nowrap='nowrap' align='center'>
+					<input id='search_box' style='width: 300px;' type='text' />
+					<span style='padding: 6px;'>
+						<input type='button' style='width: 40px;' id='search_submit' value='Go!' />
+					</span>
+				</td>
+			</tr>
+
+			<tr class='mybg'><td></td></tr>
+
+			<tr class='mybg'>
+
+				<td nowrap='nowrap' style='padding: 4px;' align='center'>
+
+					<span style='padding-right:40px;'>
+						<!--#include virtual="../common/stypes_selector.xml"-->
+					</span>
+
+					<span>
+						<!--
+						<span>&common.format;: </span>
+						-->
+						<!--#set var='FORM_SEL_ID' value='form_selector'-->
+						<!--#include virtual="../common/format_selector.xml"-->
+					</span>
+
+				</td>
+			</tr>
+
+			<tr class='mybg'><td></td></tr>
+
+			<tr align='center' class='mybg'>
+				<td align='center' style='padding: 10px;'>
+					<span style='font-weight: bold;'>
+						<a id='home_adv_search_link' href='javascript:void(0);' style='color: #002664; padding-right: 15px;'>&opac.navigate.advanced;</a></span>
+					<span>
+						<span class='hide_me' id='depth_selector_span'>
+							<select id='depth_selector' style='color: #9ba915; font-weight: bold;'>
+								<option value='new'>&opac.navigate.selectNewOrg;...</option>
+							</select>
+						</span>
+						<span class='hide_me' id='lib_selector_span' style='padding-left: 15px; font-weight: bold;'>
+							<a id='lib_selector_link' href='javascript:void(0)' style='color: #9ba915;'>&opac.navigate.selectOrg;</a>
+						</span>
+					</span>
+					<span class='hide_me' style='padding-left: 35px; padding-right: 15px; font-weight: bold;'>
+						<a id='home_myopac_link'  href='javascript:void(0);' style='color: #e57200;'>&opac.navigate.myopac;</a>
+					</span>
+				</td>
+			</tr>
+			<tr class='mybg'>
+                                <td style='padding: 10px; text-align:right;'>
+<!--                                        <span>&advanced.frbrize;</span>
+                                        <input id='adv_group_titles' type='checkbox' />
+-->
+                                        <span style='padding-left: 30px;'>&result.limit2avail;</span>
+                                        <input type='checkbox' id='opac.result.limit2avail'/>
+                                </td>
+                        </tr>
+
+
+
+		</tbody>
+	</table>
+	</center>
+<br/>
+
+</div>
+
+
+
+

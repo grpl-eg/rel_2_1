@@ -1,0 +1,21 @@
+<!-- CSS shared across pages goes here --> 
+
+<link type='text/css' rel='stylesheet' href="<!--#echo var='OILS_SKIN_BASE'-->/grpl/css/layout.css"/>
+<link type='text/css' rel='stylesheet' href="<!--#echo var='OILS_SKIN_BASE'-->/grpl/css/styles.css"/>
+
+<!-- Our font CSS's -->
+<link type='text/css' rel='stylesheet' href='<!--#echo var="OILS_CSS_BASE"-->/mediumfont.css' />
+
+<!-- Our colors -->
+<link type='text/css' rel="stylesheet" href="<!--#echo var='OILS_THEME_BASE'-->/grpl/css/colors.css" />
+
+<!-- OpenSearch auto discovery -->
+<link type="application/opensearchdescription+xml"
+	rel='search' title="Evergreen"
+	href="http://<!--#echo var='SERVER_NAME'-->/opac/extras/opensearch/1.1/-/osd.xml" />
+
+<!-- enable Dojo date picker -->
+<style type="text/css">
+	@import '/js/dojo/dojo/resources/dojo.css';
+	@import '/js/dojo/dijit/themes/tundra/tundra.css';
+</style>

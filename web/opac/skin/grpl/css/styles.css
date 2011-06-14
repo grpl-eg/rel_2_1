@@ -1,0 +1,658 @@
+*, html {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	background-color: #e2e3e5;
+	font-family: tahoma, geneva, sans-serif;
+}
+
+a {
+	outline: none; color: black; text-decoration: none;
+}
+
+fieldset {
+	border: 0px;
+}
+
+.clear {
+	clear: both;
+}
+
+/* WRAPPER */
+#wrapper {
+	position: relative;
+	width: 80%;
+	background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y;
+	margin: 0 auto;
+}
+
+/* NAVIGATION */
+#header {
+	
+        background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y;
+}
+
+#header a span {
+	display: none;
+}
+
+/* my account link */
+#header_myopac_link {
+	position: absolute;
+	top: 30px;
+	right: 15px;
+//	color: #06a1ff;
+	color: #006699;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a#header_myopac_link:hover {
+        position: absolute;
+        top: 30px;
+        right: 15px;
+        color: #06a1ff;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: underline;
+}
+
+
+#header_logout_link {
+        position: absolute;
+        top: 30px;
+        right: 15px;
+//        color: #06a1ff;
+        color: #F38F1D;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+}
+
+
+a#header_logout_link:hover {
+        position: absolute;
+        top: 30px;
+        right: 15px;
+        color: #06a1ff;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: underline;
+}
+
+#header a#myAccount:hover {
+	text-decoration: underline;
+}
+
+/* protect against braindead added-content */
+#rdetail_review_container a {
+        text-decoration: none;
+        color: black;
+}
+
+
+/* main navigation */
+#header ul {
+	list-style-type: none;
+	margin: 5px 0 0 0;
+}
+
+#header ul li {
+	float: left;
+}
+
+#header ul li a {
+	display: block;
+	background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y;
+}
+
+/* logo link */
+#header ul li#logo a {
+width: 209px;
+height: 23px;
+	background: url(/opac/images/grpl/nav_logo.gif) left top no-repeat;
+}
+
+/* catalog link */
+#header ul li#catalog a {
+	width: 72px;
+	background-position: left top;
+}
+
+#header ul li#catalog a:hover {
+	background-position: left bottom;
+}
+
+/* research link */
+#header ul li#research a {
+	width: 78px;
+	background-position: -72px top;
+}
+
+#header ul li#research a:hover {
+	background-position: -72px bottom;
+}
+
+/* books, music, movies link */
+#header ul li#books a {
+	width: 162px;
+	background-position: -150px top;
+}
+
+#header ul li#books a:hover {
+	background-position: -150px bottom;
+}
+
+/* teens link */
+#header ul li#teens a {
+	width: 55px;
+	background-position: -312px top;
+}
+
+#header ul li#teens a:hover {
+	background-position: -312px bottom;
+}
+
+/* kids link */
+#header ul li#kids a {
+	width: 46px;
+	background-position: -367px top;
+}
+
+#header ul li#kids a:hover {
+	background-position: -367px bottom;
+}
+
+/* search box */
+#header ul li#search {
+	margin: 0 0 0 5px;
+}
+
+#header ul li#search form input {
+	float: left;
+}
+
+#header ul li#search form input#searchBox {
+	width: 126px;
+	height: 21px;
+	border: 1px solid #d1d1d1;
+	margin: 0 4px 0 0;
+}
+
+/* FLASH */
+#flash {
+	clear: both;
+	border-bottom: 5px solid #464e5a;
+}
+
+#flash object {
+	display: block;
+}
+
+/* CONTENT */
+#content {
+	position: relative;
+        width: 95%;
+        margin: 0 auto;
+	background-color: #FFF;
+}
+
+#content .col {
+	float: left;
+}
+
+/* left col */
+#content #leftCol {
+	width: 324px;
+	margin: 0 20px 0 0;
+}
+
+/* easy information title bar */
+#content #leftCol .title {
+	height: 22px;
+	padding: 7px 0 0 10px;
+	background: url(/opac/images/grpl/content_leftSidebar_bkg.gif) left top repeat-y;
+	margin: 0 0 5px 0;
+}
+
+#content #leftCol .title h1 {
+	font-size: 12px;
+	color: #161d27;
+}
+
+/* easy information sidebar */
+#content #leftCol #easyInfo .link {
+	padding: 10px 25px 10px 10px;
+	height: 80px;
+}
+
+#content #leftCol #easyInfo .link img {
+	display: block;
+	border: 1px solid #dddddd;
+	float: left;
+	margin: 0 15px 0 0;
+}
+
+#content #leftCol #easyInfo .link h2 {
+	font-size: 11px;
+	color: #353e4b;
+	margin: 0 0 2px 0;
+}
+
+#content #leftCol #easyInfo .link p {
+	line-height: 15px;
+	font-size: 11px;
+	color: #9b9ea3;
+}
+
+#content #leftCol #easyInfo .link p a {
+	font-size: 11px;
+	color: #06a1ff;
+	text-decoration: none;
+	line-height: 11px;
+}
+
+#content #leftCol #easyInfo .link p a:hover {
+	text-decoration: underline;
+}
+
+/* right col */
+#content #rightCol {
+	width: 461px;
+}
+
+/* site navigation title */
+#content #rightCol .title {
+	height: 27px;
+	padding: 2px 5px 0 0;
+	background: url(/opac/images/content_rightSidebar_bkg.gif) left top repeat-y;
+}
+
+/* site navigation title dropdown */
+#content #rightCol .title form {
+	float: right;
+}
+
+#content #rightCol .title form select {
+	height: 23px;
+	border: 1px solid #e6e6e6;
+}
+
+#content #rightCol .title form select optgroup {
+	margin: 0 0 5px 0;
+}
+
+#content #rightCol .title form select optgroup option {
+	padding: 0 0 0 20px;
+}
+
+/* site navigation columns */
+#content #rightCol #siteNav .innerCol {
+	float: left;
+	border-left: 1px solid #ececec;
+	margin: 18px 0 25px 0;
+	padding: 0 0 0 6px;
+	min-height: 100px;
+}
+
+#content #rightCol #siteNav .innerCol h2 {
+	font-size: 12px;
+	padding: 0 0 0 4px;
+	margin: 0 0 4px 0;
+}
+
+#content #rightCol #siteNav .innerCol ul {
+	list-style-type: none;
+}
+
+#content #rightCol #siteNav .innerCol ul li {
+	font-size: 10px;
+	width: 125px;
+	height: 13px;
+	padding: 3px 0 0 4px;
+	line-height: 10px;
+}
+
+#content #rightCol #siteNav .innerCol ul li a {
+	display: block;
+	height: 13px;
+	width: 125px;
+	text-decoration: none;
+}
+
+#content #rightCol #siteNav .innerCol ul li:hover {
+	background: url(/opac/images/siteNav_bkg.gif) left top no-repeat;
+}
+
+/* site navigation left column */
+#content #rightCol #siteNav #leftInnerCol {
+	width: 141px;
+	color: #002664;
+}
+
+#content #rightCol #siteNav #leftInnerCol ul li a {
+	color: #002664;
+}
+
+/* site navigation middle column */
+#content #rightCol #siteNav #midInnerCol {
+	width: 169px;
+	color: #9ba915;
+}
+
+#content #rightCol #siteNav #midInnerCol a {
+	color: #9ba915;
+}
+
+/* site navigation right column */
+#content #rightCol #siteNav #rightInnerCol {
+	color: #e57200;
+}
+
+#content #rightCol #siteNav #rightInnerCol a {
+	color: #e57200;
+}
+
+/* news and events box navigation */
+.newsbox {
+height: 29px;
+width: 600px;
+padding: 10px;
+background-color: transparent;
+background-image: url(/opac/images/newsBox_bkg.gif);
+background-repeat: repeat-y;
+background-attachment: scroll;
+background-position: left top;
+}
+
+#content #rightCol #newsBox ul.navigation li {
+	float: left;
+}
+
+#content #rightCol #newsBox ul.navigation li#welcome {
+	padding: 0 77px 0 0;
+}
+
+#content #rightCol #newsBox ul.navigation li#events {
+	padding: 0 107px 0 0;
+}
+
+#content #rightCol #newsBox ul.navigation li a {
+	font-size: 12px;
+	font-weight: bold;
+	color: #a5aab2;
+	text-decoration: none;
+}
+
+#content #rightCol #newsBox ul.navigation li a.active {
+	color: #161d27;
+}
+
+/* news and events box pane */
+#content #rightCol #newsBox .pane {
+	width: 447px;
+	padding: 15px 10px 15px 10px;
+	font-size: 12px;
+}
+
+/* news and events box - welcome pane */
+#content #rightCol #newsBox #welcomePane h2 {
+	font-size: 11px;
+	color: #353e4b;
+	margin: 0 0 2px 0;
+}
+
+#content #rightCol #newsBox #welcomePane p {
+	line-height: 15px;
+	font-size: 11px;
+	color: #9b9ea3;
+	margin: 0 0 6px 0;
+	width: 437px;
+}
+
+#content #rightCol #newsBox #welcomePane p a {
+	color: #06a1ff;
+	text-decoration: none;
+	line-height: 11px;
+}
+
+#content #rightCol #newsBox #welcomePane p a:hover {
+	text-decoration: underline;
+}
+
+/* news and events box - events pane */
+#content #rightCol #newsBox #eventsPane ul {
+	list-style-type: none;
+	width: 437px;
+}
+
+#content #rightCol #newsBox #eventsPane ul li {
+	color: #c8c8c8;
+	line-height: 22px;
+}
+
+#content #rightCol #newsBox #eventsPane ul li span.date {
+	color: #4c535d;
+	width: 44px;
+	display: block;
+	float: left;
+}
+
+#content #rightCol #newsBox #eventsPane ul li a {
+	color: #16a7ff;
+	text-decoration: none;
+}
+
+#content #rightCol #newsBox #eventsPane ul li a:hover {
+	text-decoration: underline;
+}
+
+/* news and events box - news pane */
+#content #rightCol #newsBox #newsPane ul {
+	list-style-type: none;
+	
+}
+
+#content #rightCol #newsBox #newsPane ul li {
+	color: #c8c8c8;
+	line-height: 22px;
+}
+
+#content #rightCol #newsBox #newsPane ul li span.date {
+	color: #4c535d;
+	width: 44px;
+	display: block;
+	float: left;
+}
+
+#content #rightCol #newsBox #newsPane ul li a {
+	color: #16a7ff;
+	text-decoration: none;
+}
+
+#content #rightCol #newsBox #newsPane ul li a:hover {
+	text-decoration: underline;
+}
+
+/* FOOTER */
+#footer {
+	padding: 10px 0 20px 0;
+}
+
+#footer #image {
+	float: left;
+	margin-right: 15px;
+}
+
+/* address select */
+#footer #addressSelect {
+	float: left;
+	width: 323px;
+	height: 118px;
+	padding: 0 0 0 15px;
+	background: url(/opac/images/grpl/footer_addressBox_bkg.gif) left top no-repeat;
+}
+
+#footer #addressSelect h3 {
+	font-size: 11px;
+	color: #8d8d8d;
+	margin-bottom: 5px;
+}
+
+#footer #addressSelect ul {
+	width: 320px;
+	list-style-type: none;
+}
+
+#footer #addressSelect ul li {
+	width: 130px;
+	float: left;
+}
+
+#footer #addressSelect ul li a {
+	font-size: 10px;
+	color: #8d8d8d;
+	text-decoration: none;
+}
+
+#footer #addressSelect ul li a:hover {
+	color: #353e4b;
+}
+
+/* address display */
+#footer #addressDisplay {
+	float: left;
+	width: 185px;
+	height: 70px;
+	padding: 0 0 0 25px;
+}
+
+#footer #addressDisplay h3 {
+	font-size: 11px;
+	color: #353e4b;
+	line-height: 8px;
+}
+
+#footer #addressDisplay p {
+	font-size: 11px;
+	color: #353e4b;
+}
+
+#footer #addressDisplay p span {
+	color: #9b9ea3;
+}
+
+#footer #contact a {
+        float: left;
+        text-decoration: none;
+        color: #006699;
+        font-size: 11px;
+}
+#footer #contact a:hover {
+        float: left;
+        text-decoration: underline;
+        color: #06a1ff;
+        font-size: 11px;
+}
+
+/* text control */
+#footer #textControl {
+	float: left;
+}
+
+/* text control size */
+#footer #textControl #size {
+	height: 21px;
+	border-left: 1px solid #ececec;
+	border-right: 1px solid #ececec;
+	margin: 20px 0 17px 0;
+}
+
+#footer #textControl #size a {
+	display: block;
+	float: left;
+	color: #c8c8c8;
+	text-decoration: none;
+}
+
+#footer #textControl #size a:hover {
+	background-color: #161d27;
+	color: #fff;
+}
+
+#footer #textControl #size #small {
+	font-size: 10px;
+	margin: 0 0 0 12px;
+	padding: 4px 6px;
+	height: 12px;
+	width: 8px;
+}
+
+#footer #textControl #size #medium {
+	font-size: 12px;
+	font-weight: normal;
+	padding: 3px 6px;
+	height: 14px;
+	width: 8px;
+}
+
+#footer #textControl #size #large {
+	font-size: 14px;
+	font-weight: normal;
+	padding: 1px 6px;
+	height: 18px;
+	width: 8px;
+}
+
+#footer #textControl #size .active {
+	background-color: #161d27;
+	color: #fff;
+}
+
+#footer #textControl #language h3 {
+	font-size: 9px;
+	color: #a7a7a7;
+}
+
+/* text control language */
+#footer #textControl #language ul {
+	list-style-type: none;
+}
+
+#footer #textControl #language ul li a {
+	font-size: 10px;
+	color: #a7a7a7;
+	text-decoration: none;
+}
+
+#footer #textControl #language ul li a:hover {
+	text-decoration: underline;
+}
+
+/* navigation */
+#footer #navigation {
+	clear: both;
+}
+
+#footer #navigation ul {
+	list-style-type: none;
+}
+
+#footer #navigation ul li {
+	float: left;
+	padding: 10px 18px 0 0;
+}
+
+
+#footer #navigation ul li a {
+	font-size: 10px;
+	color: #9c9fa5;
+	text-decoration: none;
+}
+
+#footer #navigation ul li a:hover {
+	color: #353e4b;
+}

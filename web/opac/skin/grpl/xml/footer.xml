@@ -1,0 +1,94 @@
+<img src='/opac/images/grpl/footer.gif' width='100%'></img>
+<script language='javascript' src='/opac/skin/grpl/js/footer.js' type='text/javascript'></script>
+<div id='footer' align="center">
+        <table width="100%">
+<!--                <tr align="center">
+                <td valign='top' width='100%' style='padding: 5px;'>
+                                <span>
+                                        <a class='classic_link' href='http://www.grpl.org/about/replacement_hold.php' target='_blank'>
+                                                Replace your Lakeland library hold</a>
+                                </span>
+                </td>
+                </tr>
+-->
+                <tr align="center">
+                <td valign='top' width='100%' style='padding: 5px;'>
+
+                                <span>
+                                        <a class='classic_link' href='/opac/extras/slimpac/start.html'>Basic Catalog (HTML only)</a>
+                                </span>
+				<span> | </span>
+				<span>
+                                        <a href='http://www.grpl.org/about/recommend.php' target='_blank' class='classic_link'>
+                                                Suggest a Title</a>
+
+                                </span>
+				<span> | </span>
+                                <span>
+                                        <a href='http://lakenet.llcoop.org/' target='_blank' class='classic_link'>
+                                                Search LakeNet</a>
+                                </span>
+                                <span> | </span>
+                                <span>
+                                        <a href='http://elibrary.mel.org/search' target='_blank' class='classic_link'>
+                                                Search MeLCat</a>
+                                </span>
+<!--                                <span> | </span>
+                                <span>
+                                        <a href='http://www.grpl.org/cgi-bin/srp/srform.cgi' target='_blank' class='special'>
+                                                Summer Reading Sign-Up</a>
+                                </span>
+-->
+                                <span> | </span>
+
+
+                                <span>
+                                        <a target='_blank' class='classic_link' href='http://www.grpl.org/cgi-bin/eghelp.cgi'>Help</a>
+                                </span>
+
+				<br></br>
+		</td>
+		</tr>
+		<tr>
+		<td style="padding-top: 20px;">
+
+			<div id='image'><a href="http://www.grpl.org/"><img src='/opac/images/grpl/footer_logo.gif' style='margin-left: 25px;' border="0"></img></a></div>
+                        <div id='addressSelect'>
+                                <h3>8 Urban Locations:</h3>
+                                <ul>
+                                        <li id="main"><a href="http://www.grpl.org/about/main.php" onMouseOver="setAddress('main');">Main Library</a></li>
+                                        <li id="madison"><a href="http://www.grpl.org/about/madison.php" onMouseOver="setAddress('madison');" 
+						onMouseOut="setAddress('main');">Madison Square Branch</a></li>
+                                        <li id="seymour"><a href="http://www.grpl.org/about/seymour.php" onMouseOver="setAddress('seymour');" 
+                                                onMouseOut="setAddress('main');">Seymour Branch</a></li>
+                                        <li id="ottawa"><a href="http://www.grpl.org/about/ottawa.php" onMouseOver="setAddress('ottawa');" 
+                                                onMouseOut="setAddress('main');">Ottawa Hills Branch</a></li>
+                                        <li id="leonard"><a href="http://www.grpl.org/about/westleonard.php" onMouseOver="setAddress('leonard');" 
+                                                onMouseOut="setAddress('main');">West Leonard Branch</a></li>
+                                        <li id="valBelkum"><a href="http://www.grpl.org/about/vanbelkum.php" onMouseOver="setAddress('vanBelkum');" 
+                                                onMouseOut="setAddress('main');">Van Belkum Branch</a></li>
+                                        <li id="yankee"><a href="http://www.grpl.org/about/yankee.php" onMouseOver="setAddress('yankee');" 
+                                                onMouseOut="setAddress('main');">Yankee Clipper Branch</a></li>
+                                        <li id="westSide"><a href="http://www.grpl.org/about/westside.php" onMouseOver="setAddress('westSide');" 
+                                                onMouseOut="setAddress('main');">West Side Branch</a></li>
+
+                                </ul>
+
+			</div>
+                        <div id='addressDisplay'>
+                                <h3>Grand Rapids Public Library</h3>
+                                <p>111 Library Street NE<br />Grand Rapids, MI 49503<br />Phone (616) 988 5400</p>
+			<div id="contact">
+				<a href="http://www.grpl.org/cgi-bin/contact.cgi">Contact Us</a>
+                       	</div>
+			</div>
+
+                </td>
+
+		</tr>
+		<tr>
+		<td colspan='2' align='center'><br></br>Powered By: <img src='/opac/images/eg_tiny_logo.jpg' border='0'></img></td>
+                </tr>
+        </table>
+
+</div>

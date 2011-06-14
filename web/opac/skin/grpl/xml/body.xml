@@ -1,0 +1,101 @@
+
+<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/advanced.js'> </script>
+<body class='tundra' onload='getId("header_myopac_link").setAttribute("href", buildOPACLink({page:MYOPAC}, false, true));'>
+		
+<div id="content">
+<div id="header">				
+	<a id='header_myopac_link' href='javascript:void(0);'>&opac.navigate.myopac;</a>
+	<a id='header_logout_link' class='hide_me' href='javascript:void(0);'>&navigate.logout;</a>
+		<br />			
+		<a href="http://www.grpl.org/"><img src="/opac/images/grpl/nav_logo.gif" style='padding-bottom: 10px; right: 0; border: 0;'/></a>	
+		<!--#include virtual="common/fonts.xml"-->
+		</div>
+
+		<img src="/opac/images/grpl/wave.gif" style='padding: 0px;'/>
+ 	<div id='custom_quick_search' class='hide_me' >
+                                <table><tbody><tr>
+                                        <td>
+                                                <select id='custom_quick_type' style='width: 6em;'>
+							<option value='barcode'>&opac.advanced.quick.barcode;</option>
+                                                        <option value='isbn'>&opac.advanced.quick.isbn;</option>
+                                                        <option value='issn'>&opac.advanced.quick.issn;</option>
+                                                        <option value='cn'>&opac.advanced.quick.cn;</option>
+                                                        <option value='lccn'>&opac.advanced.quick.lccn;</option>
+                                                        <option value='tcn'>&opac.advanced.quick.tcn;</option>
+                                                </select>
+                                        </td><td>
+                                                <input type='text' id='custom_quick_text' size='16' />
+                                        </td>
+					<td>
+						<a id='custom_quick_submit' href='javascript:advGenericSearch("custom");' class='classic_link'>&common.submit;</a>
+					</td>
+                                </tr></tbody></table>
+
+            <span class='hide_me' id='myopac.copy.not.found'>&sidebar.copy.not.found;</span>
+          </div>
+
+
+	<table style='width: 95%'>
+		<tbody>
+			<tr>
+				<td id='main_left_cell'>
+					<!--#include virtual="common/sidebar.xml"-->
+				</td>
+
+
+				<td id='main_right_cell'>
+						<!--#if expr="$OILS_PAGE!='advanced.xml'"-->
+							<!--#include virtual="common/searchbar.xml"-->
+							<!--#include virtual="common/statusbar.xml"-->
+						<!--#endif-->
+
+						<!--#include virtual="common/altcanvas.xml"-->
+						<!--#include virtual="common/ilsevents.xml"--> 
+						<!--#include virtual="page_${OILS_PAGE}"-->
+					<br/>
+					<!--#include virtual="common/tips.xml"-->
+				</td>
+			</tr>
+		</tbody>
+	</table>
+		<!--#include virtual='footer.xml'-->
+	</div>
+<script language='javascript'>
+        if (isXUL()){
+                unHideMe($('custom_quick_search'));
+	}
+</script>
+
+    <center>
+        <div id='gcfPrompt' class='hide_me'>
+            <script>dojo.require('dojo.cookie')</script>;
+            <div><span>&common.googlechromeframe.why;</span></div>
+            <button onclick='CFInstall.check({preventPrompt: false, mode: "popup"});'>&common.googlechromeframe.install;</button>
+            <button onclick='dojo.cookie("noGCF", "true", {path:"/", expires: 365}); hideMe($("gcfPrompt"));'>&common.googlechromeframe.dontask;</button>
+        </div>
+    </center>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <script><![CDATA[ 
+        CFInstall.check({
+            preventPrompt: true,
+            onmissing: function() {
+                if (dojo.cookie("noGCF") != "true")
+                    unHideMe($('gcfPrompt'));
+            }
+        });]]>
+    </script>
+
+    <script language="javascript" type="text/javascript">
+        dojo.addOnLoad(init);
+        dojo.require("dijit._Calendar");
+        dojo.require("dijit.form.DateTextBox");
+        dojo.require("dijit.form.FilteringSelect");
+        dojo.require("dojo.date.locale");
+        dojo.require("dojo.date.stamp");
+        dojo.require("dojo.parser");
+        dojo.require("openils.widget.FacetSidebar"); // pulls in Searcher and I18N
+    </script>
+
+
+
+</body>

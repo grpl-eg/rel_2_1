@@ -1,0 +1,269 @@
+*, html { margin: 0px; padding: 0px; }
+
+body { background-color: #E2E3E5; font-family: tahoma, geneva, sans-serif; }
+
+.main_header	{ width: 100%; }
+.space			{ padding-right:5px; }
+.vert_space		{ padding-top: 82px; width: 100%;}
+.right			{ position:absolute; right: 0px; }
+.hide_me			{ display:none; visibility: hidden; }
+
+.less { visibility: hidden; display:none; }
+.more { visibility: visible; }
+.more_info { border: solid 1px black; }
+
+table { border-collapse: collapse; }
+
+/* generic CSS for a table with data */
+.data_grid { border-collapse: collapse;}
+.data_grid thead tr { }
+.data_grid thead td { padding-right: 5px; padding-left: 5px;}
+.data_grid tbody td { padding: 5px; }
+.data_grid_center { text-align: center; }
+
+.data_grid_nb { border-collapse: collapse;}
+.data_grid_nb thead tr { color: #000000; }
+.data_grid_nb thead td { padding-right: 5px; padding-left: 5px;}
+.data_grid_nb tbody td { padding: 5px; }
+
+/* .classic_link { color: #06a1FF;} */
+.classic_link { color: #006699;}
+.classic_link:visited { color: #006699;}
+.classic_link_col { color: #006699;}
+.classic_link:hover { text-decoration: underline; color: #06a1ff;}
+
+.search_link { color: #006699;}
+.search_link:visited { color: #006699;}
+.search_link_col { color: #006699;}
+.search_link:hover { text-decoration: underline; color: #06a1ff;}
+
+.special { color: #7d0049;}
+.special:visited { color: #7d0049;}
+.special:hover { text-decoration: underline; color: #f38f1d;}
+
+.encircled { border: 1px solid black; }
+
+.hold_button  { border: 2px outset; padding: 2px; text-decoration: none; background-color: #dedede; height: 15px; }
+
+.adv_quick_search { padding: 3px;}
+.adv_quick_search_submit { padding: 3px;}
+
+#custom_quick_search { position:fixed; top: 45px; left: 80px;}
+
+.overdue { color: red; font-weight: bold;}
+
+#main_table { border-collapse: collapse; width: 80%;  }
+#main_left_cell { width: 25%; vertical-align: top;margin: 0px; padding: 0px;}
+#main_right_cell { width: 90%; vertical-align: top; margin: 0px; padding-right: 5px; border-left: 1px solid #E2E3E5;}
+
+
+#content { min-height: 300px; }
+
+.canvas {  min-height: 300px; padding-left: 4px; -moz-border-radius: 6px;}
+#canvas_main { padding-bottom: 0px; }
+
+#loading_div { width: 100%;}
+
+
+
+.shadowed { background: #F0F0E0; }
+.no_copies { background: #E0E0E0; }
+.overdue_circ { border: 2px dashed #F0D0E0; }
+.is_deleted { border: 2px solid #F01111; }
+
+.org_tree { padding-left: 2px; padding-right: 2px; }            
+.org_link { padding-right: 15px; }
+#org_link_container { margin-bottom: 5px; padding-left: 4px; padding-bottom: 3px; padding-top: 3px; width: 100%; }
+#left_div { float:left; width: 20%; }
+#statusbar {}
+
+#frontsearch_table { }
+#frontsearch_table tr { margin: 6px; }
+
+/* ---------------------------------------------------------------------- */
+.sidebar_div { width: 100%; font-size: 9pt; margin-top: 12px; }
+.sidebar_header { margin-top: 10px; padding-left: 3px; margin-right: 6px; }
+
+.sidebar_extra_item { padding: 0px; margin-right: 8px;}
+.side_bar_item { padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; margin-right: 8px; }
+
+.sidebar_item_active { margin-right: 0px; }
+
+.sidebar_chunk { width: 100%; }
+
+/* ---------------------------------------------------------------------- */
+
+#searchbar { background: url(/opac/images/grpl/wrapper_bkg.gif) left top repeat-y; }
+#searchbar table tr td {font-weight: bold; font-size: 8pt; }
+#searchbar select, input { border-collapse: collapse; font-size: 9pt; }
+.searchbar_item { margin: 3px; font-size: 9pt; } 
+.searchbar_label_span { font-size: 9pt; }
+#searchbar_table { border-collapse: collapse; }
+
+.search_box_container { width: 220px; padding: 3px; }
+#search_box { width: 200px; }
+
+
+/* ---------------------------------------------------------------------- */
+#login_box { width: 70%; padding: 5px;}
+.login_text { margin-left: 8px; }
+
+/* ---------------------------------------------------------------------- */
+#result_table_div { text-align: left; width: 100%; }
+
+#search_nav_links { width: 100%; }
+#result_info_box { text-align: left; }
+#next_prev_links { padding-left: 2px; padding-right: 2px; text-align: left;}
+#goto_page_links { text-align: left; padding-left: 2px; padding-right: 2px;}
+
+#next_prev_links_dead {padding-left: 5px; padding-right: 5px;}
+
+#res_table { width: 100%; }
+
+.result_table_pic_cell { width: 43px;}
+.result_table_pic { height: 50px; width: 40px;  border: none;}
+.result_table_pic_header { width: 43px; }
+
+.result_table_row { text-align: left; width: 100%; height: 79px;}
+.result_table_subtable { width: 100%; border-collapse: collapse; vertical-align: top;}
+.result_table_subtbody { height: 100%; width: 100%; }
+.result_table_title_cell { text-align: left; font-weight: bold;}
+
+.copy_count_cell { width: 12%; vertical-align: middle; text-align: center; }
+.copy_count_div { width:  4em; height: 99%; vertical-align: middle; text-align: center; }
+
+.result_table_extra_span { border-right: 1px solid #E0E0E0; }
+
+.search_page_nav_link { margin-right: 5px; }
+
+.np_nav_link { margin-right: 5px; }
+
+/* ---------------------------------------------------------------------- */
+
+#rdetail_detail_main { width: 100%; }
+#rdetail_details_table { padding-top: 10px; width: 100%; padding: 30px; border-collapse: collapse;}
+.rdetail_header { padding: 3px; padding-left: 10px;}
+.rdetail_desc { padding: 2px; padding-left: 2px; padding-right: 2px;}
+.rdetail_item { width: 75%; padding-left: 10px; }
+#rdetail_image { padding-right: 10px; }
+#rdetail_copy_info_table { padding: 4px; width: 100%; border-collapse: collapse; }
+.rdetail_copy_info_header_cell { padding: 2px; }
+.rdetail_copy_count_cell { text-align: center; }
+
+
+.tor_pic { width: 20px; height: 20px; border: none;}
+
+.dim2_border { border: 1px solid #F06000; -moz-border-radius: 3px;}
+
+.dim2 { 
+	filter:alpha(opacity=50); 
+	-moz-opacity:0.5; 
+	opacity: 0.5; 
+	text-decoration: none; }
+
+.dim { 
+	filter:alpha(opacity=10); 
+	-moz-opacity:0.1; 
+	opacity: 0.1; 
+	text-decoration: none; }
+
+/* ---------------------------------------------------------------------- */
+
+.myopac_link { width: 12%; margin: 3px; padding: 3px; text-align: center; vertical-align: middle;  }
+.myopac_link_active { font-weight: 700;}
+.myopac_table thead tr td { padding: 2px; font-weight: 500; border: 1px solid #808080;}
+.myopac_table td { padding: 3px; }
+.myopac_form_pic { width: 20px; height: 20px; }
+
+.tips { padding: 2px; text-align: center; border: solid #dedede 3px; -moz-border-radius: 3px; width: 95%; }
+
+.holds_cell { border: 1px solid #E0E0E0; padding: 5px; width: 50%;}
+.myopac_update_cell { border: 3px solid #E0E0E0; width:100%; padding-top: 4px; padding-bottom: 4px;}
+.myopac_update_span { padding: 5px;}
+
+#result_low_hits { border-top: 2px solid #e0e0e0; }
+
+.lowhits_div { width: 100%; border-top: 1px solid #E0E0E0; text-align: center; 
+	padding-top: 8px; padding-bottom: 8px; }
+
+.rdetail_extras_div {
+	border-top: 3px solid #E0E0E0;margin-top: 3px; padding-top: 5px; width: 100%;}
+
+.copy_info_region_row {
+	line-height: 1px;
+	visibility: hidden;
+}
+
+.rdetail_extras_td { padding-right: 15px; padding-left: 15px; border-right: 1px solid #888; }
+.rdetails_extra_links { border: 1px solid #808080; padding-right: 5px; padding-left: 5px; }
+
+
+.cn_browse_item { height: 190px; }
+.cn_browse_info { padding: 4px; border-bottom: 1px dashed #E0E0E0;}
+
+.bookshelf {
+	 /*background-image: url(http://10.4.0.10/woodgrain.jpeg);*/
+	 /*
+	 background-image: url(http://dev.gapines.org/opac/images/woodgrain.jpg);
+	 background-repeat: repeat;
+	 */
+	 border-bottom: 1px solid black;
+}
+
+.cn_browse_loading { width: 95%; padding: 15px; text-align: center; background: #E0e0E0; }
+
+.cn_browse_home_cn { border: 2px solid #E0e0E0; background: #EEEEEE; font-weight: 700;}
+
+.rdetail_context_row { background: #F0E0E0; }
+
+.unadorned_link { text-decoration: none; vertical-align: bottom; }
+
+
+/* ie does not support disabling <option> elements */
+.disabled_option { color: #808080; }
+
+.copy_more_info { white-space: nowrap; padding-left: 6px; color: #804070; }
+
+.invalid_hold { background: #F0F0D0; }
+.myopac_summary_table td { padding : 3px; }
+
+.jacket_attrib { font-size: 7pt; }
+
+/* block that contains footer links and copyright */
+#copyright_block { 
+    width: 100%; 
+    text-align: center; 
+    vertical-align: bottom; 
+    margin-top: 10px;
+}
+
+/* block that contains the footer links */
+#footer_links {
+    width: 80%;
+    text-align: center;
+    padding: 10px;
+    margin: auto;
+}
+
+/* span for each link in the footer */
+.footer-link {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* block that contains the copyright text */
+#copyright_text {
+    margin-top: 4px;
+}
+
+/* block that contains the logo */
+#footer_logo {
+    text-align: center;
+    margin: auto;
+}
+
+#opac.result.sort { margin-left: 5px; }
+
+#xul_recipient_me { margin-left: 25px; }
+#myopac_holds_thaw_date_form {padding: 10px; text-align: center;}
+#myopac_holds_freeze_select_thaw {margin-right: 100px; margin-left: 100px; }
