@@ -253,7 +253,7 @@ function load() {
     lock_ready = true;
 
     // we'll use this to hide features between systems
-    if (staff.ws_ou() == 4)
+    if (staff.ws_ou() > 9 && staff.ws_ou() < 18)
 	dojo.removeClass(dojo.byId('ISMbutton'),"hidden");
 	
 }
@@ -1120,7 +1120,7 @@ if (barcode.length > 22){
 		dojo.connect(widget.widget, 'onChange',
 		    function() {
 			//MIEG: change to suit
-			if (staff.ws_ou() != 4) return;
+			if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
 			var now = new Date();
 			var maxExpire = new Date();
 			maxExpire.setDate(maxExpire.getDate() + 1100);
@@ -1281,7 +1281,7 @@ if (barcode.length > 22){
                 dojo.connect(widget.widget, 'onChange',
                     function(e) {
 			//MIEG:  GRPL address formatting
-			if (staff.ws_ou() != 4) return;
+			if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
 			e = e.toUpperCase(); 
  	                e = e.replace(/\.|\,|\#/g,""); 
  	                e = e.replace(/\s+/g," ");	
@@ -1295,7 +1295,7 @@ if (barcode.length > 22){
                 dojo.connect(widget.widget, 'onChange',
                     function(e) {
                         //MIEG:  GRPL address formatting
-                        if (staff.ws_ou() != 4) return;
+                        if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
                         e = e.toUpperCase();                  
                         e = e.replace(/\.|\,|\#/g,"");                                                                                                                    
                         e = e.replace(/\s+/g," ");                                                                                                                     
@@ -1317,7 +1317,7 @@ if (barcode.length > 22){
                         if(args.street1 && args.city && args.post_code)
                             uEditDupeSearch('address', args); 
                         //MIEG:  GRPL address formatting
-                        if (staff.ws_ou() != 4) return;
+                        if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
 			var city = findWidget('aua', 'city');
                         e = e.toUpperCase();
 			city.widget.attr('value',e);
