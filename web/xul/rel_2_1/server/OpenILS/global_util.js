@@ -1,6 +1,3 @@
-
-dojo.require('fieldmapper.IDL');
-
     function $(id) { return document.getElementById(id); }
 
     function oils_unsaved_data_V() {
