@@ -1169,6 +1169,47 @@ if (barcode.length > 22){
                 return;
 
             case 'ident_value':
+		dojo.connect(widget.widget, 'onChange',
+                    function(newVal) { uEditDupeSearch('ident_value', newVal); 
+//MIEG: TADL Michigan ID - reused for ID and dob population
+if (newVal.length > 22){
+        if (newVal.length == 25) {var bc = newVal.substr(0,13);}
+        if (newVal.length == 23) {var bc = newVal.substr(0,11);}
+        var dob = findWidget('au', 'dob');
+        var ident = findWidget('au', 'ident_value');
+        var id_type = findWidget('au', 'ident_type');
+        if (newVal.length == 25) {
+                var bc = newVal.substr(0,13);
+                if (!dob.widget.attr('value')){
+                        var y = newVal.substr(13,4);
+                        var m = newVal.substr(17,2);
+                        var d = newVal.substr(19,2);
+                        var bdate = new Date(y,m-1,d);
+                        dob.widget.attr('value',bdate);
+                }
+                if (!ident.widget.attr('value'))
+                        ident.widget.attr('value',bc);
+                id_type.widget.attr('value',1);
+        }
+        if (newVal.length == 23) {
+                var bc = newVal.substr(0,11);
+                if (!dob.widget.attr('value')){
+                        var y = newVal.substr(11,4);
+                        var m = newVal.substr(15,2);
+                        var d = newVal.substr(17,2);
+                        var bdate = new Date(y,m-1,d);
+                        dob.widget.attr('value',bdate);
+                }
+                if (!ident.widget.attr('value'))
+                        ident.widget.attr('value',bc);
+                id_type.widget.attr('value',4);
+        }
+	this.attr('value',bc);
+}
+			}
+	   	    );
+		return;
+
             case 'ident_value2':
                 dojo.connect(widget.widget, 'onChange',
                     function(newVal) { uEditDupeSearch('ident', newVal); });
