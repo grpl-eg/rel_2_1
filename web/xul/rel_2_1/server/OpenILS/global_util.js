@@ -180,7 +180,7 @@ dojo.require('fieldmapper.IDL');
             addCSSClass(document.documentElement,data.global_font_adjust);
         } catch(E) {
             var Strings = $('offlineStrings') || $('commonStrings');
-            //alert(Strings.getFormattedString('openils.global_util.font_size.error', [E]));
+            alert(Strings.getFormattedString('openils.global_util.font_size.error', [E]));
 	    updateStatus('statusbarpanel1',text + ' : copied to clipboard');
         }
     }
