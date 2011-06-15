@@ -980,7 +980,7 @@ function _rdetailBuildInfoRows(r) {
 		unHideMe(rowNode);
 
 		rdetailSetPath( thisOrg, isLocal );
-		rdetailBuildBrowseInfo( rowNode, arr[1], isLocal, thisOrg, cl );
+		rdetailBuildBrowseInfo( rowNode, [arr[1],arr[2],arr[3]], isLocal, thisOrg, cl );
 
 		if( i == summary.length - 1 && !defaultCN) defaultCN = arr[1];
 	}
@@ -990,16 +990,14 @@ function _rdetailBuildInfoRows(r) {
 
 function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 
-	if(local) {
-		var cache = callnumberCache[cn];
-		if( cache ) cache.count++;
-		else callnumberCache[cn] = { count : 1 };
-	}
 
 	var depth = getDepth();
 	if( !local ) depth = findOrgDepth(globalOrgTree);
 
-	$n(row, 'callnumber').appendChild(text(cn));
+        var cn_text = cn.toString();
+        cn_text = cn_text.replace(/,/g,'');
+
+	$n(row, 'callnumber').appendChild(text(cn_text));
 
         var myreq = new Request(FETCH_COPIES_FROM_VOLUME, record.doc_id(), cn, orgNode.id());
         if (record.doc_id()){
