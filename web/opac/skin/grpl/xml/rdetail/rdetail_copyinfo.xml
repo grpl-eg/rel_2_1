@@ -44,7 +44,7 @@
                                 <td name='status'></td>
                                 <td name='copy_due_date'></td>
                                 <td name='rdetail_actions_cell'>
-					<a name='print' href='javascript:void(0);' class='classic_link'><img src='/opac/images/printer.jpg' border='0'/></a>
+					<a name='print' href='javascript:void(0);' class='classic_link'><img src='/opac/images/grpl/printer.jpg' border='0'/></a>
                                                 <a name='vol_hold_link' style='font-size: 8pt;' href='javascript:void(0);' class='hide_me classic_link'>volume_hold</a>
 									<a class='hide_me classic_link' style='font-size: 8pt;' name='copy_hold_link'
                                                                                 href='javascript:void(0);'>copy_hold</a>
@@ -52,6 +52,7 @@
                                                                         <a class='hide_me classic_link' style='font-size: 8pt;' name='item_details_link'>copy_info</a>
                                         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 									<a class='hide_me classic_link' style='font-size: 8pt;' name='barcode_link'></a>
+					<span name='txt'/>
                                 </td>
 				<td name='notes'></td>
                   	</tr>
