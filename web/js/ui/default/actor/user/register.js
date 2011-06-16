@@ -389,6 +389,9 @@ function replaceISMCard(){
     rnd = '555'+rnd;
     input.widget.attr('disabled', false).attr('readOnly', true).attr('value', rnd).focus();
 
+    var profile = findWidget('au', 'profile');
+    profile.widget.attr('value',71);
+
     var old = patron.cards().filter(function(c){return (c.id() == patron.card().id())})[0];
     old.active('f');
     old.ischanged(1);
