@@ -46,6 +46,11 @@ var rdetailEnd = null;
 var mfhdDetails = [];
 var orgHiding = false;
 
+if(location.href.match(/&place_hold=1/)) {
+    // prevent load flicker between canvases
+    hideMe(dojo.byId('canvas_main'));
+}
+
 /* serials are currently the only use of Dojo strings in the OPAC */
 if (rdetailDisplaySerialHoldings) {
 	dojo.require("dijit.Menu");
@@ -107,7 +112,22 @@ function _rdetailNav(id, offset) {
 	goTo(buildOPACLink(args));
 }
 
+function rdetailHandlePlaceHold() {
+    function reload() {
+        location.href = location.href.replace(/&place_hold=1/, '');
+    }
+    attachEvt("common", "holdUpdated", reload);
+    attachEvt("common", "holdUpdateCanceled", reload);
+    attachEvt("common", "loginCanceled", reload);
+    holdsDrawEditor({record:getRid(), type: 'T'});
+}
+
 function rdetailDraw() {
+
+    if(new CGI().param('place_hold')) {
+        rdetailHandlePlaceHold();
+        return;
+    }
 
 	detachAllEvt('common','depthChanged');
 	detachAllEvt('common','locationUpdated');
@@ -217,6 +237,64 @@ function rdetailViewMarc(r,id) {
 	$('rdetail_view_marc_box').insertBefore(span, $('rdetail_view_marc_box').firstChild);
 }
 
+function rdetailForeignItems(r,id) {
+	hideMe($('rdetail_extras_loading'));
+    var tbody = $('rdetail_foreign_items_tbody');
+
+    var robj = r.getResultObject(); /* mvr list with foreign_copy_maps fleshed */
+
+    for (var i = 0; i < robj.length; i++) {
+        var args = {};
+        args.page = RDETAIL;
+        args[PARAM_OFFSET] = 0;
+        args[PARAM_RID] = robj[i].doc_id();
+        var row = elem('tr'); tbody.appendChild(row);
+        var td1 = elem('td'); row.appendChild(td1);
+        var title = elem(
+            'a',
+            {
+                'href' : buildOPACLink(args),
+                'class' : 'classic_link'
+            },
+            robj[i].title()
+        );
+        td1.appendChild(title);
+        var td2 = elem('td',{},robj[i].author()); row.appendChild(td2);
+        var td3 = elem('td'); row.appendChild(td3);
+        var details = elem(
+            'a',
+            {
+                'href' : 'javascript:void(0)',
+                'class' : 'classic_link'
+            },
+            'Copy Details'
+        );
+        details.onclick = function(idx,context_row){
+            return function() {
+                cpdBuild(
+                    tbody,
+                    context_row,
+                    robj[idx],
+                    null,
+                    1,
+                    0,
+                    1,
+                    dojo.map(
+                        robj[idx].foreign_copy_maps(),
+                        function(x){ return x.target_copy(); }
+                    ),
+                    dojo.map(
+                        robj[idx].foreign_copy_maps(),
+                        function(x){ return x.peer_type().name(); }
+                    )
+                );
+            };
+        }(i,row);
+        td3.appendChild(details);
+    }
+}
+
+
 
 function rdetailShowLocalCopies() {
 	rdetailShowLocal = true;
@@ -254,7 +332,9 @@ function OpenMarcEditWindow(pcrud, rec) {
 				rec.ischanged(true);
 				pcrud.update(rec);
 			}
-		}
+		},
+        'lock_tab' : typeof xulG != 'undefined' ? (typeof xulG['lock_tab'] != 'undefined' ? xulG.lock_tab : undefined) : undefined,
+        'unlock_tab' : typeof xulG != 'undefined' ? (typeof xulG['unlock_tab'] != 'undefined' ? xulG.unlock_tab : undefined) : undefined
 	};
 }
 
@@ -271,28 +351,26 @@ function loadMarcEditor(recId) {
  * Limited brain power means that I'm brute-forcing it for now
  */
 function _holdingsDraw(h) {
-	holdings = h.getResultObject();
-	if (!holdings) { return null; }
+    holdings = h.getResultObject();
+    if (!holdings) { return null; }
 
-	dojo.forEach(holdings, _holdingsDrawMFHD);
+    // Only draw holdings within our OU scope
+    var here = findOrgUnit(getLocation());
+    var entryNum = 0;
+    dojo.forEach(holdings, function (item) {
+        if (orgIsMine(here, findOrgUnit(item.owning_lib()))) {
+            _holdingsDrawMFHD(item, entryNum);
+            entryNum++;
+        }
+    });
 
-	// Populate XUL menus
-	if (isXUL()) {
-		runEvt('rdetail','MFHDDrawn');
-	}
+    // Populate XUL menus
+    if (isXUL()) {
+        runEvt('rdetail','MFHDDrawn');
+    }
 }
 
 function _holdingsDrawMFHD(holdings, entryNum) {
-
-        var here = findOrgUnit(getLocation());
-        if (getDepth() > 0 || getDepth === 0 ) {
-                while (getDepth() < findOrgDepth(here))
-                here = findOrgUnit( here.parent_ou() );
-		if (!orgIsMine(findOrgUnit(here), findOrgUnit(holdings.owning_lib()))) {
-			return null;
-		}
-        }
-
 	var hb = holdings.basic_holdings();
 	var hba = holdings.basic_holdings_add();
 	var hs = holdings.supplement_holdings();
@@ -351,7 +429,7 @@ function _holdingsDrawMFHD(holdings, entryNum) {
 	if (hm.length > 0) { _holdingsDrawMFHDEntry(entryNum, opac_strings.MISSING_VOLUMES, hm); }
 	if (hinc.length > 0) { _holdingsDrawMFHDEntry(entryNum, opac_strings.INCOMPLETE_VOLUMES, hinc); }
 
-	if (isXUL()) {
+	if (isXUL() && holdings.sre_id() != -1) { // -1 indicates in-DB only holdings, so no button or menu entries for MFHD
 		mfhdDetails.push({ 'id' : holdings.sre_id(), 'label' : hloc, 'entryNum' : entryNum, 'owning_lib' : holdings.owning_lib() });
 		dojo.require('openils.Event');
 		dojo.require('openils.PermaCrud');
@@ -387,18 +465,18 @@ function _rdetailDraw(r) {
 	runEvt('rdetail', 'recordRetrieved', record.doc_id());
 
 	G.ui.rdetail.title.appendChild(text(record.title()));
-	//buildSearchLink(STYPE_AUTHOR, record.author(), G.ui.rdetail.author);
-	//G.ui.rdetail.isbn.appendChild(text(cleanISBN(record.isbn())));
-	//G.ui.rdetail.edition.appendChild(text(record.edition()));
+//	buildSearchLink(STYPE_AUTHOR, record.author(), G.ui.rdetail.author);
+//	G.ui.rdetail.isbn.appendChild(text(cleanISBN(record.isbn())));
+//	G.ui.rdetail.edition.appendChild(text(record.edition()));
 	G.ui.rdetail.pubdate.appendChild(text(record.pubdate()));
-	//G.ui.rdetail.publisher.appendChild(text(record.publisher()));
+//	G.ui.rdetail.publisher.appendChild(text(record.publisher()));
 	$('rdetail_physical_desc').appendChild(text(record.physical_description()));
 	r = record.types_of_resource();
 	if(r) {
 		G.ui.rdetail.tor.appendChild(text(r[0]));
 		setResourcePic( G.ui.rdetail.tor_pic, r[0]);
 	}
-	//G.ui.rdetail.abstr.appendChild(text(record.synopsis()));
+//	G.ui.rdetail.abstr.appendChild(text(record.synopsis()));
 
 	try{
 		if(record.isbn()) {
@@ -461,8 +539,24 @@ function _rdetailDraw(r) {
 	}
 	buildunAPISpan( span, 'biblio-record_entry', record.doc_id() );
 
-	$('rdetail_place_hold').setAttribute(
-			'href','javascript:holdsDrawEditor({record:"'+record.doc_id()+'",type:"T"});');
+	$('rdetail_place_hold').onclick = function() {
+        var src = location.href;
+
+        if(forceLoginSSL && src.match(/^http:/)) {
+
+            src = src.replace(/^http:/, 'https:');
+
+            if(!src.match(/&place_hold=1/)) {
+                src += '&place_hold=1';
+            }
+
+            location.href = src;
+
+        } else {
+            holdsDrawEditor({record:record.doc_id(), type:'T'});
+        }
+    }
+
 
 	var RW = $('rdetail_exp_refworks');
 	if (RW && rdetailEnableRefWorks) {
@@ -518,7 +612,7 @@ function _rdetailDraw(r) {
         try {
             chili_init();
         } catch(E) {
-            dump(E + '\n');
+            console.log(E + '\n');
             hideMe($('rdetail_reviews_link'));
             hideMe($('rdetail_chilifresh_reviews'));
         }
@@ -529,11 +623,20 @@ function _rdetailDraw(r) {
         unHideMe($('rdetail_novelist_link'));
     }
 
+    // Multi-Home / Foreign Items / Peer Bibs
+    var req = new Request( TEST_PEER_BIBS, record.doc_id() );
+    req.callback(function(r){
+        var test = r.getResultObject();
+        if (test == "1") {
+            unHideMe($('rdetail_foreign_items_link'));
+        }
+    }); 
+    req.send();
+
 //GRPL: add hold count display
         var curr_holds = getHoldCount(record.doc_id());
         if (curr_holds)
                 $('rdetail_hold_count').appendChild(text(curr_holds));
-
 }
 
 
@@ -603,6 +706,7 @@ function rdetailAddToBookbag() {
 
 
 var rdetailMarcFetched = false;
+var rdetailForeignItemsFetched = false;
 function rdetailShowExtra(type, args) {
 
 	hideMe($('rdetail_copy_info_div'));
@@ -616,6 +720,7 @@ function rdetailShowExtra(type, args) {
 	hideMe($('cn_browse'));
 	hideMe($('rdetail_cn_browse_div'));
 	hideMe($('rdetail_novelist_div'));
+	hideMe($('rdetail_foreign_items_div'));
 	hideMe($('rdetail_notes_div'));
 
 	removeCSSClass($('rdetail_copy_info_link'), 'rdetail_extras_selected');
@@ -629,6 +734,7 @@ function rdetailShowExtra(type, args) {
 	removeCSSClass($('rdetail_annotation_link'), 'rdetail_extras_selected');
 	removeCSSClass($('rdetail_viewmarc_link'), 'rdetail_extras_selected');
 	removeCSSClass($('rdetail_novelist_link'), 'rdetail_extras_selected');
+	removeCSSClass($('rdetail_foreign_items_link'), 'rdetail_extras_selected');
 
 	switch(type) {
 
@@ -684,10 +790,21 @@ function rdetailShowExtra(type, args) {
 			unHideMe($('rdetail_novelist_div')); 
 			break;
 
+		case "foreign_items": 
+			addCSSClass($('rdetail_foreign_items_link'), 'rdetail_extras_selected');
+			unHideMe($('rdetail_foreign_items_div')); 
+            if(rdetailForeignItemsFetched) return;
+			unHideMe($('rdetail_extras_loading'));
+            rdetailForeignItemsFetched = true;
+			var req = new Request( FETCH_PEER_BIBS, record.doc_id() );
+			req.callback(rdetailForeignItems); 
+			req.send();
+			break;
+
 		case 'cn':
 			addCSSClass($('rdetail_viewcn_link'), 'rdetail_extras_selected');
 			unHideMe($('rdetail_cn_browse_div'));
-			rdetailShowCNBrowse(defaultCN, getLocation(), null, true);
+			rdetailShowCNBrowse(defaultCN[1], getLocation(), null, true);
 			break;
 
 	}
@@ -696,7 +813,7 @@ function rdetailShowExtra(type, args) {
 function rdetailVolumeDetails(args) {
 	var row = $(args.rowid);
 	var tbody = row.parentNode;
-	cpdBuild( tbody, row, record, args.cn, args.org, args.depth, args.copy_location );
+	cpdBuild( tbody, row, record, [args.cn_prefix, args.cn, args.cn_suffix], args.org, args.depth, args.copy_location );
 	return;
 }
 
@@ -705,7 +822,7 @@ function rdetailBuildCNList() {
 	var select = $('cn_browse_selector');
 	var index = 0;
 	var arr = [];
-	for( var cn in callnumberCache ) arr.push( cn );
+	for( var cn_json in callnumberCache ) arr.push( cn_json );
 	arr.sort();
 
 	if( arr.length == 0 ) {
@@ -714,8 +831,10 @@ function rdetailBuildCNList() {
 	}
 
 	for( var i = 0; i < arr.length; i++ ) {
-		var cn = arr[i];
-		var opt = new Option(cn);
+		var cn_json = arr[i];
+        var cn = JSON2js(cn_json);
+        var whole_cn_text = (cn[0] ? cn[0] + ' ' : '') + cn[1] + (cn[2] ? ' ' + cn[2] : '');
+		var opt = new Option(whole_cn_text,cn_json);
 		select.options[index++] = opt;
 	}
 	select.onchange = rdetailGatherCN;
@@ -723,7 +842,7 @@ function rdetailBuildCNList() {
 
 function rdetailGatherCN() {
 	var cn = getSelectorVal($('cn_browse_selector'));
-	rdetailShowCNBrowse( cn, getLocation(), getDepth(), true );
+	rdetailShowCNBrowse( JSON2js(cn), getLocation(), getDepth(), true );
 	setSelector( $('cn_browse_selector'), cn );
 }
 
@@ -738,7 +857,7 @@ function rdetailShowCNBrowse( cn, loc, depth, fromOnclick ) {
 
 	unHideMe($('rdetail_cn_browse_select_div'));
 	rdetailBuildCNList();
-	setSelector( $('cn_browse_selector'), cn );
+	setSelector( $('cn_browse_selector'), js2JSON(cn) );
 	hideMe($('rdetail_copy_info_div'));
 	hideMe($('rdetail_reviews_div'));
 	hideMe($('rdetail_summary_div'));
@@ -812,7 +931,6 @@ function rdetailBuildInfoRows() {
 	var method = FETCH_COPY_COUNTS_SUMMARY;
 //	if (rdetailShowCopyLocation)
 //		method = FETCH_COPY_LOCATION_COUNTS_SUMMARY;
-
 	if( rdetailShowLocal ) 
 		req = new Request(method, record.doc_id(), getLocation(), getDepth())
 	else
@@ -922,7 +1040,7 @@ function _rdetailBuildInfoRows(r) {
 	for( var i = 0; i < summary.length; i++ ) {
 
 		var arr = summary[i];
-		globalCNCache[arr[1]] = 1;
+		globalCNCache[js2JSON([arr[1],arr[2],arr[3]])] = 1; // prefix, label, suffix.  FIXME - Am I used anywhere?
 		var thisOrg = findOrgUnit(arr[0]);
 		var rowNode = $("cp_info_" + thisOrg.id());
 		if(!rowNode) continue;
@@ -956,11 +1074,11 @@ function _rdetailBuildInfoRows(r) {
 //		var cpc_temp = rowNode.removeChild(
 //				findNodeByName(rowNode, config.names.rdetail.cp_count_cell));
 
-		var statuses = arr[2];
+		var statuses = arr[4];
 		var cl = '';
 		if (rdetailShowCopyLocation) {
-			cl = arr[2];
-			statuses = arr[3];
+			cl = arr[4];
+			statuses = arr[5];
 		}
 
 
@@ -972,7 +1090,7 @@ function _rdetailBuildInfoRows(r) {
 			isLocal = true; 
 			if(!localCNFound) {
 				localCNFound = true;
-				defaultCN = arr[1];
+				defaultCN = [arr[1],arr[2],arr[3]]; // prefix, label, suffix
 			}
 		}
 
@@ -982,7 +1100,7 @@ function _rdetailBuildInfoRows(r) {
 		rdetailSetPath( thisOrg, isLocal );
 		rdetailBuildBrowseInfo( rowNode, [arr[1],arr[2],arr[3]], isLocal, thisOrg, cl );
 
-		if( i == summary.length - 1 && !defaultCN) defaultCN = arr[1];
+		if( i == summary.length - 1 && !defaultCN) defaultCN = [arr[1],arr[2],arr[3]]; // prefix, label, suffix
 	}
 
 	if(!found) unHideMe(G.ui.rdetail.cp_info_none);
@@ -990,14 +1108,19 @@ function _rdetailBuildInfoRows(r) {
 
 function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 
+    var whole_cn_json = js2JSON(cn);
+    var whole_cn_text = (cn[0] ? cn[0] + ' ' : '') + cn[1] + (cn[2] ? ' ' + cn[2] : '');
+
+	if(local) {
+		var cache = callnumberCache[whole_cn_json];
+		if( cache ) cache.count++;
+		else callnumberCache[whole_cn_json] = { count : 1 };
+	}
 
 	var depth = getDepth();
 	if( !local ) depth = findOrgDepth(globalOrgTree);
 
-        var cn_text = cn.toString();
-        cn_text = cn_text.replace(/,/g,'');
-
-	$n(row, 'callnumber').appendChild(text(cn_text));
+	$n(row, 'callnumber').appendChild(text(whole_cn_text));
 
         var myreq = new Request(FETCH_COPIES_FROM_VOLUME, record.doc_id(), cn, orgNode.id());
         if (record.doc_id()){
@@ -1006,7 +1129,7 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
                         row             : row,
                         contextTbody    : row.parentNode,
                         orgid           : orgNode.id(),
-                        callnumber      : cn,
+                        callnumber      : whole_cn_text,
                         record          : record,
                         depth           : depth
                 };
@@ -1020,12 +1143,12 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 //		unHideMe(cl_cell);
 //	}
 
-	_debug('setting action clicks for cn ' + cn);
+	_debug('setting action clicks for cn ' + whole_cn_text);
 
 //	var dHref = 'javascript:rdetailVolumeDetails('+
-//			'{copy_location : "'+cl.replace(/\"/g, '\\"')+'", rowid : "'+row.id+'", cn :"'+cn.replace(/\"/g, '\\"')+'", depth:"'+depth+'", org:"'+orgNode.id()+'", local: '+local+'});';
+//			'{copy_location : "'+cl.replace(/\"/g, '\\"')+'", rowid : "'+row.id+'", cn_prefix :"'+cn[0].replace(/\"/g, '\\"')+'",cn :"'+cn[1].replace(/\"/g, '\\"')+'",cn_suffix :"'+cn[2].replace(/\"/g, '\\"')+'", depth:"'+depth+'", org:"'+orgNode.id()+'", local: '+local+'});';
 
-//	var bHref = 'javascript:rdetailShowCNBrowse("' + cn.replace(/\"/g, '\\"') + '", '+orgNode.id()+', "'+depth+'");'; 
+//	var bHref = 'javascript:rdetailShowCNBrowse("'+cn[1].replace(/\"/g, '\\"') + '", '+orgNode.id()+', "'+depth+'");'; 
 
 //	unHideMe( $n(row, 'details') )
 //		$n(row, 'details').setAttribute('href', dHref);
@@ -1161,7 +1284,7 @@ function GBPreviewCallback(GBPBookInfo) {
 		$('rdetail_preview_div').style.height = 600;
 
 		/* Display the "Preview" tab in the Extras section */
-		unHideMe( $('rdetail_preview_div' ) );
+		unHideMe( $('rdetail_preview_link' ) );
 	}
 }
 
@@ -1189,32 +1312,75 @@ function rdetailGBPViewerLoadCallback() {
 }
 
 function rdetailDrawExpandedHoldings(anchor, bibid, type) {
-    anchor.innerHTML = "Hide holdings"; /* XXX i18n */
-    anchor.oldonclick = anchor.onclick;
-    anchor.onclick = function() { anchor.onclick = anchor.oldonclick; anchor.innerHTML = "Show holdings"; dojo.empty(target); };
-
     var offsets = {"basic": 0, "index": 0, "supplement": 0};
     var limit = 10; /* XXX give user control over this? */
-    var target = dojo.query("[expanded_holdings='" + type + "']")[0];
+    var target_id = "holding_type_" + type;
+    var target = dojo.byId(target_id);
+
+    anchor.innerHTML = "[-]";
+    anchor.oldonclick = anchor.onclick;
+    anchor.onclick = function() {
+        anchor.onclick = anchor.oldonclick;
+        anchor.innerHTML = "[+]";
+        dojo.empty(target);
+    };
 
     function _load() {
         dojo.empty(target);
         fieldmapper.standardRequest(
-            ["open-ils.serial", "open-ils.serial.received_siss.retrieve.by_bib.atomic"], {
+            ["open-ils.serial",
+                "open-ils.serial.received_siss.retrieve.by_bib.atomic"], {
                 "params": [bibid, {"offset": offsets[type], "limit": limit}],
                 "async": true,
                 "oncomplete": function(r) {
-                    if (r = openils.Util.readResponse(r)) {
-                        offsets[type] += r.length;
-                        dojo.forEach(
-                            r, function(sum) {
-                                dojo.create("span", {"innerHTML": sum.label()}, target);
+                    try {
+                        if (msg = r.recv().content()) { /* sic, assignment */
+                            if (!msg.length) return;
+                            offsets[type] += msg.length;
+                            var table = dojo.create("table", null, target);
+                            dojo.forEach(
+                                msg, function(o) {
+                                    var tr = dojo.create("tr", null, table);
+                                    dojo.create(
+                                        "td", {
+                                            "innerHTML": o.issuance.label(),
+                                            "style": {"paddingLeft": "3em"}
+                                        }, tr
+                                    );
+
+                                    if (!o.has_units) return;
+                                    /* can't place holds if no units */
+                                    var td = dojo.create("td", null, tr);
+                                    dojo.create(
+                                        "a", {
+                                            "href":"javascript:void(0);",
+                                            "style": {"marginLeft": "1.5em"},
+                                            "onclick": function() {
+                                                holdsDrawEditor({
+                                                    "type": "I",
+                                                    "issuance": o.issuance.id()
+                                                });
+                                            },
+                                            "innerHTML": "[" +
+                                                opac_strings.PLACE_HOLD + "]"
+                                        }, td
+                                    );
+                                }
+                            );
+                            if (msg.length == limit) {
                                 dojo.create("br", null, target);
+                                dojo.create(
+                                    "a", {
+                                        "href": "javascript:void(0);",
+                                        "innerHTML":
+                                            "[" + opac_strings.MORE + "]",
+                                        "onclick": _load
+                                    }, target
+                                );
                             }
-                        );
-                        /* XXX i18n */
-                        if (r.length == limit)
-                            dojo.create("a", {"style": "margin-top: 6px;", "innerHTML": "[More]", "onclick": _load}, target);
+                        }
+                    } catch (E) {
+                        void(0);
                     }
                 }
             }
