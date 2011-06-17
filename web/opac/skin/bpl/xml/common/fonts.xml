@@ -1,0 +1,10 @@
+<div id='fonts_div'>
+
+	<div id='text_size_div' style='position:absolute; top: 2px; right: 6px;'>
+		<span style='vertical-align: top;'>&common.textsize.title;</span>
+		<span style='vertical-align: top;'><a href="javascript:void(0);" onclick="setFontSize('regular');"> &common.textsize.regular; </a></span>
+		<span style='vertical-align: top;'> &common.textsize.separator; </span>
+		<span style='vertical-align: top;'><a href="javascript:void(0);" onclick="setFontSize('large');"> &common.textsize.large; </a></span>
+	</div>
+	
+</div>

@@ -1184,7 +1184,13 @@ function rdetailBuildStatusColumns() {
 	for( i = 0; i < cp_statuses.length; i++ ) {
 
 		var c = cp_statuses[i];
-		if( c && isTrue(c.opac_visible()) ) {
+		if( c && isTrue(c.opac_visible())
+//MIEG: Custom Status Columns
+                      && c.name() != 'Courtesy Hold'
+                      && c.name() != 'New Serial'
+		      && c.name() != 'Reserves'
+		 ) {
+
 			var name = c.name();
 			_statusPositions[i] = c;
 			var node = template.cloneNode(true);
