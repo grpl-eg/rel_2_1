@@ -1,0 +1,24 @@
+<div id='copyright_block'>
+		<div id='footer_links'>
+				<span class='footer_link'>
+					<a class='classic_link'
+						href='/opac/<!--#echo var="locale"-->/extras/slimpac/start.html'>&opac.basic;</a>
+				</span> 
+                                <span> | </span>
+                                <span class='footer_link'>
+                                        <a class='classic_link'
+                                                href='http://www.branchdistrictlibrary.org/new'>New Items at the Library</a>
+                                </span>
+				<span> | </span>
+				<span class='footer_link'>
+					<a target='_blank' class='classic_link'
+						href='&footer.help.url;'>&footer.help;</a>
+				</span>
+		</div>
+        <div id='copyright_text' class='hide_me'>
+            <span>&footer.copyright;</span>
+        </div>
+        <div id='footer_logo'>&footer.logo;
+            <a href='http://open-ils.org'><img style='border:none;' src='../../../../images/eg_tiny_logo.jpg'/></a>
+        </div>
+</div>
