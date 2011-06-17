@@ -47,7 +47,7 @@
 				<td type='opac/slot-data' query='datafield[tag^="1"]' class='rdetail_item'>
 					<script type='opac/slot-format'><![CDATA[
 						var cgi = new CGI();
-                        			var other_params = [ 'd', 'l', 'r', 'av', 's', 'sd' ];
+                        			var other_params = [ 'd', 'l', 'r', 'av', 's', 'sd', 'ol' ];
                         			var output = [];
 						var aname = dojo.query('subfield:not([code=c])', item);
 						var r_author = aname[0].textContent;
@@ -179,7 +179,7 @@
                 <td type='opac/slot-data' query='datafield[tag=650]' class='rdetail_item'>
                     <script type='opac/slot-format'><![CDATA[
                         var cgi = new CGI();
-                        var other_params = [ 'd', 'l', 'r', 'av', 's', 'sd' ];
+                        var other_params = [ 'd', 'l', 'r', 'av', 's', 'sd','ol' ];
                         var total = '';
                         var output = [];
                         var list = dojo.query( 'subfield', item );
