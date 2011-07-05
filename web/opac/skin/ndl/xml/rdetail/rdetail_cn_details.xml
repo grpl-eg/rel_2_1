@@ -1,54 +1,32 @@
 <table class='hide_me'>
-	<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/default/js/copy_details.js'></script>
+	<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/copy_details.js'></script>
 	<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/common/js/Date.W3CDTF.js'></script>
 	<tbody>
 		<tr style='border: 3px solid #E0E0E0;' id='rdetail_volume_details_row' templateRow='1'>
-			<td colspan='10'>
+			<td colspan='11'>
 				<div style='text-align: center; margin-top: 6px; margin-bottom: 6px'>
 				
 					<a name='print' href='javascript:void(0);' class='classic_link'>&rdetail.print;</a>
 					<table class='data_grid data_grid_center' style='width: 100%'>
-						<thead>
-							<tr>
-								<td width='33%'>&rdetail.cn.barcode;</td>
-								<td>&common.status;</td>
-								<td>&rdetail.cn.location;</td>
-								<td name='copy_part_label' class='hide_me'>&rdetail.cn.part;</td>
-								<td name='age_protect_label' class='hide_me'>&rdetail.cn.hold.age;</td>
-								<td name='create_date_label' class='hide_me'>&rdetail.cn.genesis;</td>
-								<td name='holdable_label' class='hide_me'>&rdetail.cn.holdable;</td>
-								<td name='due_date_label' class='hide_me'>&rdetail.cn.due;</td>
-							</tr>
-						</thead>
 						<tbody name='copies_tbody' class='copy_details_table' width='100%'>
 
 							<tr name='copies_row'>
 
-								<td>
-									<span name='barcode'> </span>
-									<a class='hide_me classic_link copy_more_info' name='details_link'>&rdetail.cn.more;</a>
-									<a class='hide_me classic_link copy_more_info' name='less_details_link'>&rdetail.cn.less;</a>
-									<a class='hide_me classic_link copy_more_info' name='copy_hold_link' 
-										href='javascript:void(0);'>&rdetail.cn.hold;</a>
-									<a class='hide_me classic_link copy_more_info' name='copy_reserve_link' 
-										href='javascript:void(0);'>&rdetail.cn.reserve;</a>
-									<a class='hide_me classic_link copy_more_info' name='copy_multi_home'
-										href='javascript:void(0);'>&rdetail.cn.multi_home;</a>
-								</td>
+                                                               <td name='library'></td>
+                                                                <td name='call_number'></td>
+                                                                <td name='location'></td>
+                                                                <td name='status'></td>
+                                                                <td name='copy_due_date'></td>
+                                                                <td class=''>
+                                                                        <span name='library'> </span>
 
-								<td name='status'> </td>
-								<td name='location'> </td>
-								<td name='copy_part' class='hide_me'> </td>
-								<td name='age_protect_value' class='hide_me'>&rdetail.cn.disabled;</td>
-								<td name='create_date_value' class='hide_me'> </td>
+                                                                        <a class='hide_me classic_link copy_more_info' name='details_link'>&rdetail.cn.more;</a>
+                                                                        <a class='hide_me classic_link copy_more_info' name='less_details_link'>&rdetail.cn.less;</a>
+                                                                        <a class='hide_me classic_link copy_more_info' name='copy_hold_link'
+                                                                                href='javascript:void(0);'>volume_hold</a>
+                                                                        <a class='hide_me classic_link copy_more_info' name='item_details_link'>copy_info</a>
+                                                                </td>
 
-								<td name='copy_holdable_td' class='hide_me'>
-									<span name='copy_is_holdable'> </span>
-								</td>
-
-								<td name='copy_due_date_td' class='hide_me'>
-									<span name='copy_due_date'> </span>
-								</td>
 
 							</tr>
 

@@ -3,7 +3,7 @@
 
 detachAllEvt('common', 'run');
 attachEvt("common", "run", rdetailDraw);
-attachEvt("rdetail", "recordDrawn", rdetailBuildStatusColumns);
+//attachEvt("rdetail", "recordDrawn", rdetailBuildStatusColumns);
 attachEvt("rdetail", "recordDrawn", rdetailBuildInfoRows);
 attachEvt("rdetail", "recordDrawn", rdetailGetPageIds);
 
@@ -138,8 +138,8 @@ function rdetailDraw() {
 
 	copyRowParent = G.ui.rdetail.cp_info_row.parentNode;
 	copyRow = copyRowParent.removeChild(G.ui.rdetail.cp_info_row);
-	statusRow = G.ui.rdetail.cp_status.parentNode;
-	statusRow.id = '__rdsrow';
+//	statusRow = G.ui.rdetail.cp_status.parentNode;
+//	statusRow.id = '__rdsrow';
 
 	G.ui.rdetail.cp_info_local.onclick = rdetailShowLocalCopies;
 	G.ui.rdetail.cp_info_all.onclick = rdetailShowAllCopies;
@@ -352,17 +352,17 @@ function loadMarcEditor(recId) {
  */
 function _holdingsDraw(h) {
     holdings = h.getResultObject();
-    if (!holdings) { return null; }
-
-    // Only draw holdings within our OU scope
-    var here = findOrgUnit(getLocation());
-    var entryNum = 0;
-    dojo.forEach(holdings, function (item) {
-        if (orgIsMine(here, findOrgUnit(item.owning_lib()))) {
-            _holdingsDrawMFHD(item, entryNum);
-            entryNum++;
-        }
-    });
+    if (holdings) {
+        // Only draw holdings within our OU scope
+        var here = findOrgUnit(getLocation());
+        var entryNum = 0;
+        dojo.forEach(holdings, function (item) {
+            if (orgIsMine(here, findOrgUnit(item.owning_lib()))) {
+                _holdingsDrawMFHD(item, entryNum);
+                entryNum++;
+            }
+        });
+    }
 
     // Populate XUL menus
     if (isXUL()) {
@@ -465,18 +465,18 @@ function _rdetailDraw(r) {
 	runEvt('rdetail', 'recordRetrieved', record.doc_id());
 
 	G.ui.rdetail.title.appendChild(text(record.title()));
-	buildSearchLink(STYPE_AUTHOR, record.author(), G.ui.rdetail.author);
-	G.ui.rdetail.isbn.appendChild(text(cleanISBN(record.isbn())));
-	G.ui.rdetail.edition.appendChild(text(record.edition()));
+//	buildSearchLink(STYPE_AUTHOR, record.author(), G.ui.rdetail.author);
+//	G.ui.rdetail.isbn.appendChild(text(cleanISBN(record.isbn())));
+//	G.ui.rdetail.edition.appendChild(text(record.edition()));
 	G.ui.rdetail.pubdate.appendChild(text(record.pubdate()));
-	G.ui.rdetail.publisher.appendChild(text(record.publisher()));
+//	G.ui.rdetail.publisher.appendChild(text(record.publisher()));
 	$('rdetail_physical_desc').appendChild(text(record.physical_description()));
 	r = record.types_of_resource();
 	if(r) {
 		G.ui.rdetail.tor.appendChild(text(r[0]));
 		setResourcePic( G.ui.rdetail.tor_pic, r[0]);
 	}
-	G.ui.rdetail.abstr.appendChild(text(record.synopsis()));
+//	G.ui.rdetail.abstr.appendChild(text(record.synopsis()));
 
 	try{
 		if(record.isbn()) {
@@ -632,6 +632,11 @@ function _rdetailDraw(r) {
         }
     }); 
     req.send();
+
+//GRPL: add hold count display
+        var curr_holds = getHoldCount(record.doc_id());
+        if (curr_holds)
+                $('rdetail_hold_count').appendChild(text(curr_holds));
 }
 
 
@@ -924,8 +929,8 @@ function rdetailShowTOC(r) {
 function rdetailBuildInfoRows() {
 	var req;
 	var method = FETCH_COPY_COUNTS_SUMMARY;
-	if (rdetailShowCopyLocation)
-		method = FETCH_COPY_LOCATION_COUNTS_SUMMARY;
+//	if (rdetailShowCopyLocation)
+//		method = FETCH_COPY_LOCATION_COUNTS_SUMMARY;
 	if( rdetailShowLocal ) 
 		req = new Request(method, record.doc_id(), getLocation(), getDepth())
 	else
@@ -977,7 +982,7 @@ function _rdetailRows(node) {
 
 		var libtd = findNodeByName( row, config.names.rdetail.lib_cell );
 		var cntd  = findNodeByName( row, config.names.rdetail.cn_cell );
-		var cpctd = findNodeByName( row, config.names.rdetail.cp_count_cell );
+//		var cpctd = findNodeByName( row, config.names.rdetail.cp_count_cell );
 		var actions = $n(row, 'rdetail_actions_cell');
 
 		var p = libtd.getElementsByTagName('a')[0];
@@ -987,7 +992,7 @@ function _rdetailRows(node) {
 		if(!findOrgType(node.ou_type()).can_have_vols()) {
 
 			row.removeChild(cntd);
-			row.removeChild(cpctd);
+//			row.removeChild(cpctd);
 			row.removeChild(actions);
 			row.setAttribute('novols', '1');
 
@@ -1019,8 +1024,8 @@ var localCNFound = false;
 var ctr = 0;
 function _rdetailBuildInfoRows(r) {
 
-	if (rdetailShowCopyLocation)
-		unHideMe( $n( $('rdetail_copy_info_table'), 'rdetail_copylocation_header' ) );
+//	if (rdetailShowCopyLocation)
+//		unHideMe( $n( $('rdetail_copy_info_table'), 'rdetail_copylocation_header' ) );
 
 	removeChildren(copyRowParent);
 
@@ -1066,8 +1071,8 @@ function _rdetailBuildInfoRows(r) {
 			rowNode.setAttribute("used", "1");
 		}
 
-		var cpc_temp = rowNode.removeChild(
-				findNodeByName(rowNode, config.names.rdetail.cp_count_cell));
+//		var cpc_temp = rowNode.removeChild(
+//				findNodeByName(rowNode, config.names.rdetail.cp_count_cell));
 
 		var statuses = arr[4];
 		var cl = '';
@@ -1077,7 +1082,7 @@ function _rdetailBuildInfoRows(r) {
 		}
 
 
-		rdetailApplyStatuses(rowNode, cpc_temp, statuses);
+//		rdetailApplyStatuses(rowNode, cpc_temp, statuses);
 
 		var isLocal = false;
 		if( orgIsMine( findOrgUnit(getLocation()), thisOrg ) ) { 
@@ -1115,25 +1120,40 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 	var depth = getDepth();
 	if( !local ) depth = findOrgDepth(globalOrgTree);
 
-	$n(row, 'rdetail_callnumber_cell').appendChild(text(whole_cn_text));
+	$n(row, 'callnumber').appendChild(text(whole_cn_text));
 
-	if (rdetailShowCopyLocation) {
-		var cl_cell = $n(row, 'rdetail_copylocation_cell');
-		cl_cell.appendChild(text(cl));
-		unHideMe(cl_cell);
-	}
+        var myreq = new Request(FETCH_COPIES_FROM_VOLUME, record.doc_id(), cn, orgNode.id());
+        if (record.doc_id()){
+                myreq.callback(oneLineDrawCopies);
+                myreq.request.args = {
+                        row             : row,
+                        contextTbody    : row.parentNode,
+                        orgid           : orgNode.id(),
+                        callnumber      : whole_cn_text,
+                        record          : record,
+                        depth           : depth
+                };
+                myreq.send();
+        }
+
+
+//	if (rdetailShowCopyLocation) {
+//		var cl_cell = $n(row, 'rdetail_copylocation_cell');
+//		cl_cell.appendChild(text(cl));
+//		unHideMe(cl_cell);
+//	}
 
 	_debug('setting action clicks for cn ' + whole_cn_text);
 
-	var dHref = 'javascript:rdetailVolumeDetails('+
-			'{copy_location : "'+cl.replace(/\"/g, '\\"')+'", rowid : "'+row.id+'", cn_prefix :"'+cn[0].replace(/\"/g, '\\"')+'",cn :"'+cn[1].replace(/\"/g, '\\"')+'",cn_suffix :"'+cn[2].replace(/\"/g, '\\"')+'", depth:"'+depth+'", org:"'+orgNode.id()+'", local: '+local+'});';
+//	var dHref = 'javascript:rdetailVolumeDetails('+
+//			'{copy_location : "'+cl.replace(/\"/g, '\\"')+'", rowid : "'+row.id+'", cn_prefix :"'+cn[0].replace(/\"/g, '\\"')+'",cn :"'+cn[1].replace(/\"/g, '\\"')+'",cn_suffix :"'+cn[2].replace(/\"/g, '\\"')+'", depth:"'+depth+'", org:"'+orgNode.id()+'", local: '+local+'});';
 
-	var bHref = 'javascript:rdetailShowCNBrowse("'+cn[1].replace(/\"/g, '\\"') + '", '+orgNode.id()+', "'+depth+'");'; 
+//	var bHref = 'javascript:rdetailShowCNBrowse("'+cn[1].replace(/\"/g, '\\"') + '", '+orgNode.id()+', "'+depth+'");'; 
 
-	unHideMe( $n(row, 'details') )
-		$n(row, 'details').setAttribute('href', dHref);
-	unHideMe( $n(row, 'browse') )
-		$n(row, 'browse').setAttribute('href', bHref);
+//	unHideMe( $n(row, 'details') )
+//		$n(row, 'details').setAttribute('href', dHref);
+//	unHideMe( $n(row, 'browse') )
+//		$n(row, 'browse').setAttribute('href', bHref);
 
 	if(isXUL()) {
 		unHideMe($n(row, 'hold_div'));
@@ -1184,13 +1204,7 @@ function rdetailBuildStatusColumns() {
 	for( i = 0; i < cp_statuses.length; i++ ) {
 
 		var c = cp_statuses[i];
-		if( c && isTrue(c.opac_visible())
-//MIEG: Custom Status Columns
-                      && c.name() != 'Courtesy Hold'
-                      && c.name() != 'New Serial'
-		      && c.name() != 'Reserves'
-		 ) {
-
+		if( c && isTrue(c.opac_visible()) ) {
 			var name = c.name();
 			_statusPositions[i] = c;
 			var node = template.cloneNode(true);
@@ -1266,7 +1280,7 @@ function GBPreviewCallback(GBPBookInfo) {
 		GBPBadgelink = document.createElement( 'a' );
 		GBPBadgelink.href = 'javascript:rdetailShowExtra("preview");';
 		GBPBadgelink.appendChild( GBPBadge );
-		$('rdetail_image_cell').appendChild( GBPBadgelink );
+//		$('google_preview_button').appendChild( GBPBadgelink );
 		$('rdetail_preview_div').style.height = 600;
 
 		/* Display the "Preview" tab in the Extras section */

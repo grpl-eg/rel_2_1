@@ -61,7 +61,7 @@
       <span>&navigate.facetRefine;</span>
 	</div>
 
-     <div dojoType='openils.widget.FacetSidebar' searchBox='facet_box' searchSubmit='search_submit' facetLimit='5' classOrder='["author","subject","series","title","keyword"]'>
+     <div dojoType='openils.widget.FacetSidebar' searchBox='facet_box' searchSubmit='search_submit' facetLimit='8' classOrder='["author","subject","series","title","keyword"]'>
             <script type='dojo/method' event='populate'><![CDATA[
                 var fblob = this;
                 attachEvt("result", "allRecordsReceived", function () {

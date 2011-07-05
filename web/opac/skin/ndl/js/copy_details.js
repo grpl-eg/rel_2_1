@@ -9,7 +9,7 @@ var showDueDate = false;
 */
 var showDueTime = false;
 
-function cpdBuild( contextTbody, contextRow, record, callnumber, orgid, depth, copy_location, already_fetched_copies, peer_types ) {
+function cpdBuild( contextTbody, contextRow, record, callnumber, orgid, depth, copy_location ) {
 	var i = cpdCheckExisting(contextRow);
 	if(i) return i;
 
@@ -29,7 +29,7 @@ function cpdBuild( contextTbody, contextRow, record, callnumber, orgid, depth, c
 
 	if(isXUL()) {
 		/* unhide before we unhide/clone the parent */
-		unHideMe($n(templateRow, 'age_protect_label'));
+//		unHideMe($n(templateRow, 'age_protect_label'));
 		unHideMe($n(templateRow, 'create_date_label'));
 		unHideMe($n(templateRow, 'holdable_label'));
 	}
@@ -40,54 +40,36 @@ function cpdBuild( contextTbody, contextRow, record, callnumber, orgid, depth, c
 
 	unHideMe(templateRow);
 
-	var print = $n(templateRow,'print');
-	print.onclick = function() { cpdBuildPrintPane(
-		contextRow, record, callnumber, orgid, depth) };
-    if (callnumber == null) {
-        addCSSClass(print,'hide_me');
-    }
+//	var print = $n(templateRow,'print');
+//	print.onclick = function() { cpdBuildPrintPane(
+//		contextRow, record, callnumber, orgid, depth) };
 
 	var mainTbody = $n(templateRow, 'copies_tbody');
-	var extrasRow = mainTbody.removeChild($n(mainTbody, 'copy_extras_row'));
+//	var extrasRow = mainTbody.removeChild($n(mainTbody, 'copy_extras_row'));
 
-    var request_args = {
-        peer_types      : peer_types, /* indexed the same as already_fetched_copies */
-        contextTbody	: contextTbody, /* tbody that holds the contextrow */
-        contextRow		: contextRow, /* the row our new row will be inserted after */
-        record			: record,
-        callnumber		: callnumber, 
-        orgid				: orgid,
-        depth				: depth,
-        templateRow		: templateRow, /* contains everything */
-        copy_location		: copy_location,
-        mainTbody		: mainTbody, /* holds the copy rows */
-        extrasRow		: extrasRow, /* wrapper row for all extras */
-        counter			: counter
-    }
+	var req = new Request(FETCH_COPIES_FROM_VOLUME, record.doc_id(), callnumber, orgid);
+	req.callback(cpdDrawCopies);
 
-    if (! already_fetched_copies) {
-        var req = new Request(FETCH_COPIES_FROM_VOLUME, record.doc_id(), callnumber, orgid);
-        req.callback(cpdDrawCopies);
-
-        req.request.args = request_args;
-
-        req.send();
-    } else {
-        setTimeout(
-            function() {
-                delete request_args['copy_location'];
-                cpdDrawCopies({
-                    'args' : request_args,
-                    'getResultObject' : function() { return already_fetched_copies; }
-                });
-            }, 0
-        );
-    }
+	req.request.args = { 
+		contextTbody	: contextTbody, /* tbody that holds the contextrow */
+		contextRow		: contextRow, /* the row our new row will be inserted after */
+		record			: record,
+		callnumber		: callnumber, 
+		orgid				: orgid,
+		depth				: depth,
+		templateRow		: templateRow, /* contains everything */
+		copy_location		: copy_location,
+		mainTbody		: mainTbody, /* holds the copy rows */
+		extrasRow		: extrasRow, /* wrapper row for all extras */
+		counter			: counter
+	};
 
 	if( contextRow.nextSibling ) 
 		contextTbody.insertBefore( templateRow, contextRow.nextSibling );
 	else
 		contextTbody.appendChild( templateRow );
+
+	req.send();
 	_debug('creating new details row with id ' + templateRow.id);
 	cpdNodes[templateRow.id] = { templateRow : templateRow };
 	return templateRow.id;
@@ -123,17 +105,17 @@ function cpdStylePopupWindow(div) {
 
 
 /* builds a friendly print window for this CNs data */
-function cpdBuildPrintPane(contextRow, record, cn, orgid, depth) {
+function cpdBuildPrintPane(contextRow, record, callnumber, orgid, depth) {
 
 	var div = cpdBuildPrintWindow( record, orgid);
 
-    var whole_cn_text = (cn[0] ? cn[0] + ' ' : '') + cn[1] + (cn[2] ? ' ' + cn[2] : '');
-	$n(div, 'cn').appendChild(text(whole_cn_text));
+	$n(div, 'cn').appendChild(text(callnumber));
 
 	unHideMe($n(div, 'copy_header'));
 
-	var subtbody = $n(contextRow.nextSibling, 'copies_tbody');
-	var rows = subtbody.getElementsByTagName('tr');
+//	var subtbody = $n(contextRow.nextSibling, 'copies_tbody');
+//	var rows = subtbody.getElementsByTagName('tr');
+	var rows = contextRow;
 
 	for( var r = 0; r < rows.length; r++ ) {
 		var row = rows[r];
@@ -203,39 +185,23 @@ function cpdDrawCopies(r) {
 
 	if(isXUL()) {
 		/* unhide before we unhide/clone the parent */
-		unHideMe($n(copyrow, 'age_protect_value'));
+//		unHideMe($n(copyrow, 'age_protect_value'));
 		unHideMe($n(copyrow, 'create_date_value'));
 		unHideMe($n(copyrow, 'copy_holdable_td'));
 	}
 
 	if(isXUL() || showDueDate) {
-		unHideMe($n(copyrow, 'copy_due_date_td'));
+//		unHideMe($n(copyrow, 'copy_due_date_td'));
 	}
 
 	for( var i = 0; i < copies.length; i++ ) {
 		var row = copyrow.cloneNode(true);
 		var copyid = copies[i];
-        var pt; if (args.peer_types) pt = args.peer_types[i];
-        if (typeof copyid != 'object') {
-            var req = new Request(FETCH_FLESHED_COPY, copyid);
-            req.callback(cpdDrawCopy);
-            req.request.args = r.args;
-            req.request.row = row;
-            req.send();
-        } else {
-            setTimeout(
-                function(copy,row,pt) {
-                    return function() {
-                        cpdDrawCopy({
-                            'getResultObject' : function() { return copy; },
-                            'args' : r.args,
-                            'peer_type' : pt,
-                            'row' : row
-                        });
-                    };
-                }(copies[i],row,pt), 0
-            );
-        }
+		var req = new Request(FETCH_FLESHED_COPY, copies[i]);
+		req.callback(cpdDrawCopy);
+		req.request.args = r.args;
+		req.request.row = row;
+		req.send();
 		copytbody.appendChild(row);
 	}
 }
@@ -243,61 +209,15 @@ function cpdDrawCopies(r) {
 function cpdDrawCopy(r) {
 	var copy = r.getResultObject();
 	var row  = r.row;
-	var pt   = r.peer_type;
-    var trow = r.args.templateRow;
 
     if (r.args.copy_location && copy.location().name() != r.args.copy_location) {
         hideMe(row);
         return;
     }
 
-    // Make barcode more useful for staff client usage
-    if(isXUL()) {
-        var my_a = document.createElement('a');
-        my_a.appendChild(text(copy.barcode()));
-        my_a.setAttribute("href","javascript:void(0);");
-        my_a.onclick = function() {
-            xulG.new_tab(xulG.urls.XUL_COPY_STATUS, {}, {'from_item_details_new': true, 'barcodes': [copy.barcode()]});
-		};
-        $n(row, 'barcode').appendChild(my_a);
-    }
-    else {
-    	$n(row, 'barcode').appendChild(text(copy.barcode()));
-    }
-
-    /* show the peer type*/
-    if (pt) {
-        $n(row, 'barcode').appendChild(text(' :: ' + pt));
-    }
-
+	$n(row, 'barcode').appendChild(text(copy.barcode()));
 	$n(row, 'location').appendChild(text(copy.location().name()));
 	$n(row, 'status').appendChild(text(copy.status().name()));
-
-    // append comma-separated list of part this copy is linked to
-    if(copy.parts() && copy.parts().length) {
-        unHideMe($n(trow, 'copy_part_label'));
-        unHideMe($n(row, 'copy_part'));
-        for(var i = 0; i < copy.parts().length; i++) {
-            var part = copy.parts()[i];
-            var node = $n(row, 'copy_part');
-            if(i > 0) node.appendChild(text(','));
-            node.appendChild(text(part.label()));
-        }
-    }
-
-    /* show the other bibs link */
-    if (copy.peer_record_maps().length > 0) {
-        var l = $n(row, 'copy_multi_home');
-        unHideMe(l);
-        var link_args = {};
-        link_args.page = RRESULT;
-        link_args[PARAM_RTYPE] = RTYPE_LIST;
-        link_args[PARAM_RLIST] = new Array();
-        for (var i = 0; i < copy.peer_record_maps().length; i++) {
-            link_args[PARAM_RLIST].push( copy.peer_record_maps()[i].peer_record() );
-        }
-        l.setAttribute('href',buildOPACLink(link_args));
-    }
 
 	if(isXUL()) {
 		/* show the hold link */
@@ -471,5 +391,86 @@ function cpdShowStats(copy, args) {
 		unHideMe(row);
 		tbody.appendChild(row);
 	}
+}
+
+function oneLineDrawCopies(r){
+        var copies = r.getResultObject();
+        var args = r.args;
+        for( var i = 0; i < copies.length; i++ ) {
+           if (i == 0 ) {
+                var newrow = args.row;
+           }else{
+                var newrow = args.row.cloneNode(true);
+           }
+           var copyid = copies[i];
+           var req = new Request(FETCH_FLESHED_COPY, copies[i]);
+           req.callback(oneLineDrawCopy);
+           req.request.args = r.args;
+           req.request.row = newrow;
+           req.send();
+           args.contextTbody.appendChild(newrow);
+        }
+
+}
+
+function oneLineDrawCopy(r){
+        var copy = r.getResultObject();
+        var row  = r.row;
+        var args = r.args;
+        var notes = copy.notes();
+
+    	var display_location = copy.location().name();
+
+        $n(row, 'location').appendChild(text(display_location));
+        $n(row, 'status').appendChild(text(copy.status().name()));
+
+if (notes && notes.length > 0){
+    for( var n in notes ) {
+        var note = notes[n];
+        if(!isTrue(note.pub())) continue;
+        $n(row, 'notes').appendChild(text(note.title()+' - '));
+        $n(row, 'notes').appendChild(text(note.value()+' '));
+    }
+}
+
+                if (isXUL()){
+                        unHideMe($n(row, 'xulonly_copy_links'));
+                        unHideMe($n(row, 'barcode_link'));
+                        var ib = $n(row, 'barcode_link');
+                        $n(row, 'barcode_link').appendChild(text(copy.barcode()));
+                        ib.onclick = function () { copy_to_clipboard(copy.barcode()); }
+                }
+
+                var print = $n(row,'print');
+                print.onclick = function() { cpdBuildPrintPane(
+                        row, args.record, args.callnumber, args.orgid, args.depth) };
+
+                var circ;
+                if( copy.circulations() ) {
+                        circ = copy.circulations()[0];
+                        if( circ )
+                                $n(row, 'copy_due_date').appendChild(text(circ.due_date().replace(/[T ].*/,'')));
+                }
+
+        if (isXUL()){
+                unHideMe($n(row, 'barcode_div'));
+                var l = $n(row, 'copy_hold_link');
+                unHideMe(l);
+                l.onclick = function() {
+                        holdsDrawEditor(
+                                {
+                                        type                    : 'C',
+                                        copyObject      : copy,
+                                        onComplete      : function(){}
+                                }
+                        );
+                }
+                var link = $n(row, 'item_details_link');
+                unHideMe(link);
+                link.onclick = function () {
+                        show_copy_details(copy.id());
+                }
+        }
+
 }
 
