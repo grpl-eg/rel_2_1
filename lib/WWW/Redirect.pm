@@ -63,6 +63,11 @@ sub handler {
 	my $locale = $apache_obj->dir_config('OILSRedirectLocale') || 'en-US';
 
 	my $hostname = $cgi->server_name();
+	unless ($hostname =~ /^eg\./){
+		$skin = $hostname;
+		$skin =~ s/(.*?)(\..*)/$1/;
+		$skin =~ s/(.*?)(-new)/$1/;
+	}
 	my $port		= $cgi->server_port();
 
 	my $proto = "http";
@@ -74,6 +79,7 @@ sub handler {
 	$logger->debug("Apache client connecting from $user_ip");
 
 	my ($shortname, $nskin, $nhostname) = redirect_libs($user_ip);
+	$shortname = $skin;
 	if ($shortname) {
 
 		if ($nskin =~ m/[^\s]/) { $skin = $nskin; }
