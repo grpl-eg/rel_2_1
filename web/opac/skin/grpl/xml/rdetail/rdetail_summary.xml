@@ -209,34 +209,86 @@
 				<td><span></span></td>
 			</tr>
 
-			<tr class='hide_me' id='rdetail_online_row'>
+                        <tr class='hide_me' id='rdetail_online_row'>
                                 <!-- *** Example of how to use the openils.BibTemplate infrastructure to augment the stock
                                      *** summary screen with complex information, such as location-specific URIs (856$9). -->
-                                <td nowrap='nowrap' class='rdetail_desc'>&rdetail.summary.online;
-                                        <span class='hide_me' type='opac/slot-data' query='datafield[tag=856] subfield[code=9]'>
-                                                <script type='opac/slot-format'><![CDATA[
-                                                        // There exists at least one localized URI. Clear all links.
-                                                        dojo.query('*:not([type^=opac])', 'rdetail_online').orphan();
-                                                        return '';
-                                                ]]></script>
-                                        </span>
-                                </td>
+                                <td nowrap='nowrap' class='rdetail_desc'>&rdetail.summary.online;</td>
                                 <td class='rdetail_item' id='rdetail_online' type='opac/slot-data' query='volumes volume uris uri' join=", ">
-                                        <script type='opac/slot-format'><![CDATA[
-						unHideMe($('rdetail_online_row')); 
-						var ltext = item.getAttribute('label')
-						if ( item.getAttribute('href').match(/netlibrary/i) )
-							ltext = 'Download From Netlibrary';
-						if ( item.getAttribute('href').match(/overdrive/i) )
-							ltext = 'Download From Overdrive';
-						var link = '<a href="' + item.getAttribute('href') + '" class="classic_link">' + ltext + '</a>';
-						if (item.getAttribute('use_restriction'))
-                                                        	link += ' - ' + item.getAttribute('use_restriction');
+                                        <script type='opac/slot-format' query='datafield[tag=856] subfield[code=9]'><![CDATA[
+						unHideMe('rdetail_online_row');
+                                                var ltext = item.getAttribute('label')
+                                                if ( item.getAttribute('href').match(/netlibrary/i) )
+                                                        ltext = 'Download From Netlibrary';
+                                                if ( item.getAttribute('href').match(/overdrive/i) )
+                                                        ltext = 'Download From Overdrive';
+
+                                                var link = '<a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank">' + ltext + '</a>';
+                                                if (item.getAttribute('use_restriction'))
+                                                        link += ' (Use restriction: ' + item.getAttribute('use_restriction') + ')';
                                                 return link;
                                         ]]></script>
                                 </td>
-
                         </tr>
+                        <tr name="serial_holdings_label"
+                                class="result_table_title_cell hide_me">
+                <td class="rdetail_desc">&rdetail.summary.issues_held;</td>
+                <td templated="true" type="opac/slot-data"
+                    query="datafield[tag='901'] subfield[code='c']"
+                    class="rdetail_item">
+                    ${holdingsStatement}
+                                        <span class="hide_me" name="holdingsStatement" type="opac/template-value"><![CDATA[
+                        if (fetchOrgSettingDefault(
+                            getLocation(),
+                            "opac.fully_compressed_serial_holdings"
+                        )) {
+                            var bibid = BT.textContent(item_list[0]);
+                            var blob = fieldmapper.standardRequest(
+                                ["open-ils.serial",
+                                    "open-ils.serial.bib.summary_statements"],
+                                [bibid, {
+                                    "orgid": getLocation(), "depth": getDepth()
+                                }]
+                            );
+
+                            var fake = dojo.create("td");
+                            var something = false;
+
+                            for (var i in blob) {
+                                if (!blob[i].length) continue;
+                                if (something) dojo.create("br", null, fake);
+                                something = true;
+
+                                var a = dojo.create(
+                                    "a", {
+                                        "innerHTML": "[+]",
+                                        "href": "javascript:void(0);",
+                                        "onclick":
+                                            "rdetailDrawExpandedHoldings(this,"+
+                                            bibid + ",'" + i + "');",
+                                        "style": {"marginRight": "1.5em"}
+                                    }, fake
+                                );
+                                dojo.create(
+                                    "span", {
+                                        "innerHTML": blob[i].join(", ")
+                                    }, fake
+                                );
+                                dojo.create(
+                                    "span", {"id": "holding_type_" + i}, fake
+                                );
+                            }
+
+                            if (something)
+                                unHideMe(slot.parentNode);
+
+                            return fake.innerHTML;
+                        } else {
+                            return "";
+                        }
+                                        ]]></span>
+                                </td>
+                        </tr>
+
 
 		</tbody>
 	</table>
