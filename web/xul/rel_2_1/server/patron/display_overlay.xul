@@ -14,6 +14,9 @@
     <hbox id="pdm2hb1">
         <hbox>
             <label id="patron_name" class="patronNameLarge" value="&staff.patron.display_overlay.none_selected.value;" flex="1"/>
+	</hbox>
+	<hbox>
+	    <label id="patron_id" class="" value="Patron ID"  onclick="try { copy_to_clipboard(event); } catch(E) { alert(E); }"/>
         </hbox>
         <deck id="PatronNavBar" flex="1" class="my_overflow" />
     </hbox>
