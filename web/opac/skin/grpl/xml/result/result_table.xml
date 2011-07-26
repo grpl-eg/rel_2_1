@@ -187,6 +187,10 @@
 										<img src='../../../../images/tor/cartographic.jpg' class='dim tor_pic' />
 									</a>
 
+                                                                        <a name='ebook_link' class='search_link'>
+                                                                                <img src='../../../../images/tor/ebook.jpg' class='dim tor_pic' />
+                                                                        </a>
+
                                                                         <a name='eaudio_link' class='search_link'>
                                                                                 <img src='../../../../images/tor/eaudio.jpg' class='dim tor_pic' />
                                                                         </a>
