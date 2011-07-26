@@ -62,6 +62,7 @@
 			<td>
 				<span type='opac/slot-data+marcxml-full' query='volumes'>
 					<script class='hide_me' debug='true' type='opac/slot-format'><![CDATA[
+
 						var item_cnt = 0;
 						var max_items = 4;
 
@@ -126,24 +127,13 @@
 					]]></script>
 				</span>
 
-				<span type='opac/slot-data' query='datafield[tag=856]'>
-                                <script type='opac/slot-format' debug='true'><![CDATA[ 
- 		                                                var org = dojox.data.dom.textContent(dojo.query('subfield[code=9]', item)[0]); 
- 		                                                var link = dojo.query('subfield[code=u]', item); 
- 		                                                var linktext = dojo.query('subfield[code=z]', item); 
- 		                                                linktext = 'Click for Online Resource'; 
-								var pattern = /netlibrary/i;
-								if (dojox.data.dom.textContent(link[0]).match(pattern)) 
-									linktext="Download from NetLibrary";
-								var pat = /GRPL/;
- 		                                                if ( org.match(pat) && link) { 
- 		                                                	var output = dojo.create('span');
-									var url = dojo.create('a', {"class":"search_link", "href": dojox.data.dom.textContent(link[0]), 'target':'_blank'});
-									var link_text = dojo.doc.createTextNode(linktext);
-									url.appendChild(link_text);
-                                                        		output.appendChild(url);
-									dojo.create('br', null, output);
-									return output.innerHTML;
+				<span type='opac/slot-data' query="datafield[tag='856']">
+                                <script type='opac/slot-format' ><![CDATA[ 
+								var org = BT.textContent(dojo.query("subfield[code='9']", item)[0]);
+ 		                                                var url = BT.textContent(dojo.query("subfield[code='u']", item)[0]); 
+ 		                                                if (org.match(/GRPL/) && url) { 
+									var link = '<a href="' + url +'" target=\"_blank\" class=\"classic_link\">Click for Online Resource</a><br/>';
+									return link;
 								}
  		                                    ]]></script> 
 				</span>
@@ -304,6 +294,7 @@
 		config.names.result.format_link = 'resource_link'
 		config.names.result.format_pic = 'format_pic'
 		dojo.require('openils.BibTemplate');
+
 	</script>
 
 </div>
