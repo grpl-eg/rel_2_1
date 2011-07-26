@@ -84,6 +84,37 @@ circ.util.show_copy_details = function(copy_id) {
     }
 };
 
+function show_copy_details(copy_id) {
+    var obj = {};
+    JSAN.use('util.error'); obj.error = new util.error();
+    JSAN.use('util.window'); obj.win = new util.window();
+    JSAN.use('util.network'); obj.network = new util.network();
+    JSAN.use('OpenILS.data'); obj.data = new OpenILS.data(); obj.data.init({'via':'stash'});
+
+    if (typeof copy_id == 'object' && copy_id != null) copy_id = copy_id.id();
+
+    try {
+        var url = xulG.url_prefix( urls.XUL_COPY_DETAILS ); // + '?copy_id=' + copy_id;
+        var my_xulG = obj.win.open( url, 'show_copy_details', 'chrome,resizable,modal', { 'copy_id' : copy_id, 'new_tab' : xulG.new_tab, 'url_prefix' : xulG.url_prefix } );
+
+        if (typeof my_xulG.retrieve_these_patrons == 'undefined') return;
+        var patrons = my_xulG.retrieve_these_patrons;
+        for (var j = 0; j < patrons.length; j++) {
+            if (typeof window.xulG == 'object' && typeof window.xulG.new_tab == 'function') {
+                try {
+                    window.xulG.new_patron_tab( {}, { 'id' : patrons[j] } );
+                } catch(E) {
+                    obj.error.standard_unexpected_error_alert(document.getElementById('circStrings').getString('staff.circ.utils.retrieve_patron.failure'), E);
+                }
+            }
+        }
+
+    } catch(E) {
+        obj.error.standard_unexpected_error_alert(document.getElementById('circStrings').getString('staff.circ.utils.retrieve_copy.failure'),E);
+    }
+}
+
+
 circ.util.item_details_new = function(barcodes) {
     try {
         var content_params = {
