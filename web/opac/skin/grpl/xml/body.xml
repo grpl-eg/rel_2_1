@@ -1,5 +1,4 @@
 
-<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/advanced.js'> </script>
 <body class='tundra' onload='getId("header_myopac_link").setAttribute("href", buildOPACLink({page:MYOPAC}, false, true));'>
 		
 <div id="content">
