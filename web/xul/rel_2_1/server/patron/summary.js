@@ -458,6 +458,7 @@ if (ses('ws_ou') == 4){
                                         );
                                         if (under_btn) util.widgets.set_text(under_btn, req.getResultObject().ready + '/' + req.getResultObject().total );
                                         obj.holds_summary = robj;
+if (req.getResultObject().ready > 0){e2.setAttribute('style','color: red');document.getElementById('PatronSummaryStatus_holds_available_label').setAttribute('style','color: red');}
                                         if (obj.holds_summary && obj.bills_summary) 
                                             if (typeof window.xulG == 'object' && typeof window.xulG.stop_sign_page == 'function')
                                                 window.xulG.stop_sign_page( obj.patron, { 'holds_summary' : obj.holds_summary, 'bills_summary' : obj.bills_summary } ); 
