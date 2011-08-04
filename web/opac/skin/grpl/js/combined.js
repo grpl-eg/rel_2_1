@@ -2430,9 +2430,9 @@ var checkOrgHiding_cached = false;
 var checkOrgHiding_cached_context_org;
 var checkOrgHiding_cached_depth;
 function checkOrgHiding() {
-    if (isXUL()) {
-        return false; // disable org hiding for staff client
-    }
+//    if (isXUL()) {
+//        return false; // disable org hiding for staff client
+//    }
     var context_org = getOrigLocation() || globalOrgTree.id();
     var depth;
     if (checkOrgHiding_cached) {

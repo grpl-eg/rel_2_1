@@ -8,8 +8,8 @@ attachEvt("rdetail", "recordDrawn", rdetailBuildInfoRows);
 attachEvt("rdetail", "recordDrawn", rdetailGetPageIds);
 
 /* Per-skin configuration settings */
-var rdetailLocalOnly = true;
-var rdetailShowLocal = true;
+var rdetailLocalOnly = false;
+var rdetailShowLocal = false;
 var rdetailShowCopyLocation = true;
 var rdetailGoogleBookPreview = true;
 var rdetailDisplaySerialHoldings = true;
@@ -474,14 +474,7 @@ function _rdetailDraw(r) {
 	r = record.types_of_resource();
 	if(r) {
 		G.ui.rdetail.tor.appendChild(text(r[0]));
-//MIEG: a little "E" icon voodo
-		if (record.physical_description().match(/electronic/) && r[0].match(/sound/) )
-			setResourcePic( G.ui.rdetail.tor_pic, 'eaudio');
-		else
-			if (record.physical_description().match(/electronic/) && r[0].match(/text/) )
-				setResourcePic( G.ui.rdetail.tor_pic, 'ebook');
-			else
-				setResourcePic( G.ui.rdetail.tor_pic, r[0]);
+		setResourcePic( G.ui.rdetail.tor_pic, r[0]);
 	}
 //	G.ui.rdetail.abstr.appendChild(text(record.synopsis()));
 
@@ -499,7 +492,6 @@ function _rdetailDraw(r) {
 			hideMe($("rdetail_img_link"));
 		}
 	} catch(E) {}
-
 
 	// see if the record has any external links 
 	var links = record.online_loc();
@@ -1162,9 +1154,9 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 //	unHideMe( $n(row, 'browse') )
 //		$n(row, 'browse').setAttribute('href', bHref);
 
-	if(isXUL()) {
+	if(isXUL()  || record.series() > ' ' || cn.match(/\d of \d/) || cn.match(/\sv\.\d+(\s|$)/) ) {
 		unHideMe($n(row, 'hold_div'));
-		$n(row, 'hold').onclick = function() {
+		$n(row, 'vol_hold_link').onclick = function() {
 			var req = new Request(FETCH_VOLUME_BY_INFO, cn, record.doc_id(), orgNode.id());
 			req.callback(
 					function(r) {

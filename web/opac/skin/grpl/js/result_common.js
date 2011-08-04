@@ -630,13 +630,6 @@ function resultBuildFormatIcons( row, rec, is_mr ) {
 		var res = ress[i];
 		if(!res) continue;
 
-//MIEG: a little "E" icon voodo
-if (rec.physical_description().match(/electronic/) && res.match(/sound/) )
-	res='eaudio';
-
-if (rec.physical_description().match(/electronic/) && res.match(/text/) )
-        res='ebook';
-
 		var link = $n(row, res + "_link");
 		link.title = res;
 		var img = link.getElementsByTagName("img")[0];
@@ -706,7 +699,7 @@ function resultAddCopyCounts(rec, pagePosition) {
 	var ccell = $n(countsrow, config.names.result.count_cell);
 
 	var nodes = orgNodeTrail(findOrgUnit(getLocation()));
-	var start_here = 0;
+	var start_here = 1;
 	var orgHiding = checkOrgHiding();
 	if (orgHiding) {
 		for (var i = 0; i < nodes.length; i++) {
@@ -730,13 +723,10 @@ function resultAddCopyCounts(rec, pagePosition) {
 	if(!resultCCHeaderApplied && !getLasso()) {
 		ccrow = $('result_thead_row');
 		ccheadcell =  ccrow.removeChild($n(ccrow, "result_thead_ccell"));
-//GRPL: Hide Everywhere
-                if (type.opac_label() != 'Everywhere'){
-			var t = ccheadcell.cloneNode(true);
-			lastheadcell = t;
-			t.appendChild(text(type.opac_label()));
-			ccrow.appendChild(t);
-		}
+		var t = ccheadcell.cloneNode(true);
+		lastheadcell = t;
+		t.appendChild(text(type.opac_label()));
+		ccrow.appendChild(t);
 		resultCCHeaderApplied = true;
 	}
 
