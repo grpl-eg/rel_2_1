@@ -630,6 +630,13 @@ function resultBuildFormatIcons( row, rec, is_mr ) {
 		var res = ress[i];
 		if(!res) continue;
 
+//MIEG: a little "E" icon voodo
+	if (rec.physical_description().match(/electronic/) && res.match(/sound/) )
+  		res='eaudio';
+
+	if (rec.physical_description().match(/electronic/) && res.match(/text/) )
+        	res='ebook';
+
 		var link = $n(row, res + "_link");
 		link.title = res;
 		var img = link.getElementsByTagName("img")[0];

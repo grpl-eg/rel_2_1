@@ -474,8 +474,17 @@ function _rdetailDraw(r) {
 	r = record.types_of_resource();
 	if(r) {
 		G.ui.rdetail.tor.appendChild(text(r[0]));
-		setResourcePic( G.ui.rdetail.tor_pic, r[0]);
-	}
+//MIEG: a little "E" icon voodo
+
+	if (record.physical_description().match(/electronic/) && r[0].match(/sound/) )
+      		setResourcePic( G.ui.rdetail.tor_pic, 'eaudio');
+    	else
+      		if (record.physical_description().match(/electronic/) && r[0].match(/text/) )
+        		setResourcePic( G.ui.rdetail.tor_pic, 'ebook');
+      		else
+        		setResourcePic( G.ui.rdetail.tor_pic, r[0]);
+    	}
+
 //	G.ui.rdetail.abstr.appendChild(text(record.synopsis()));
 
 	try{
