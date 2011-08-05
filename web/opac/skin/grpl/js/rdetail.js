@@ -8,8 +8,8 @@ attachEvt("rdetail", "recordDrawn", rdetailBuildInfoRows);
 attachEvt("rdetail", "recordDrawn", rdetailGetPageIds);
 
 /* Per-skin configuration settings */
-var rdetailLocalOnly = false;
-var rdetailShowLocal = false;
+var rdetailLocalOnly = true;
+var rdetailShowLocal = true;
 var rdetailShowCopyLocation = true;
 var rdetailGoogleBookPreview = true;
 var rdetailDisplaySerialHoldings = true;
@@ -1048,6 +1048,9 @@ function _rdetailBuildInfoRows(r) {
 	for( var i = 0; i < summary.length; i++ ) {
 
 		var arr = summary[i];
+//GRPL: only the entities we want to see
+                if (arr[0] < 9 || arr[0] > 18) continue;
+
 		globalCNCache[js2JSON([arr[1],arr[2],arr[3]])] = 1; // prefix, label, suffix.  FIXME - Am I used anywhere?
 		var thisOrg = findOrgUnit(arr[0]);
 		var rowNode = $("cp_info_" + thisOrg.id());
@@ -1128,6 +1131,12 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 	var depth = getDepth();
 	if( !local ) depth = findOrgDepth(globalOrgTree);
 
+//GRPL:Add Library-Use-Only string for in-house items
+var tmpCN = whole_cn_text;
+var cnRegex = /^R |^Consumer R |^Found. Coll. R |^Small Bus. R |^Career R |^Civil Service R |^Phone R.|^Info. Desk R|^Desk R |^Computer Center R |^Admin. R|^RAS R|^TS R|^Teen R |^YA R |^jR |^Furn. Coll|^Furn. Folio|^Geneal.|^Mss|^M |^MK |^MKG |^Michigan |^Rare Book Coll|^Archives |^Coll. /;
+if (whole_cn_text.match(cnRegex)){ tmpCN = whole_cn_text+' (Library-Use-Only)';}
+
+
 	$n(row, 'callnumber').appendChild(text(whole_cn_text));
 
         var myreq = new Request(FETCH_COPIES_FROM_VOLUME, record.doc_id(), cn, orgNode.id());
@@ -1145,26 +1154,11 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
         }
 
 
-//	if (rdetailShowCopyLocation) {
-//		var cl_cell = $n(row, 'rdetail_copylocation_cell');
-//		cl_cell.appendChild(text(cl));
-//		unHideMe(cl_cell);
-//	}
-
 	_debug('setting action clicks for cn ' + whole_cn_text);
 
-//	var dHref = 'javascript:rdetailVolumeDetails('+
-//			'{copy_location : "'+cl.replace(/\"/g, '\\"')+'", rowid : "'+row.id+'", cn_prefix :"'+cn[0].replace(/\"/g, '\\"')+'",cn :"'+cn[1].replace(/\"/g, '\\"')+'",cn_suffix :"'+cn[2].replace(/\"/g, '\\"')+'", depth:"'+depth+'", org:"'+orgNode.id()+'", local: '+local+'});';
 
-//	var bHref = 'javascript:rdetailShowCNBrowse("'+cn[1].replace(/\"/g, '\\"') + '", '+orgNode.id()+', "'+depth+'");'; 
-
-//	unHideMe( $n(row, 'details') )
-//		$n(row, 'details').setAttribute('href', dHref);
-//	unHideMe( $n(row, 'browse') )
-//		$n(row, 'browse').setAttribute('href', bHref);
-
-	if(isXUL()  || record.series() > ' ' || cn.match(/\d of \d/) || cn.match(/\sv\.\d+(\s|$)/) ) {
-		unHideMe($n(row, 'hold_div'));
+	if(isXUL()  || record.series() > ' ' || whole_cn_text.match(/\d of \d/) || whole_cn_text.match(/\sv\.\d+(\s|$)/) ) {
+		unHideMe($n(row, 'vol_hold_link'));
 		$n(row, 'vol_hold_link').onclick = function() {
 			var req = new Request(FETCH_VOLUME_BY_INFO, cn, record.doc_id(), orgNode.id());
 			req.callback(
