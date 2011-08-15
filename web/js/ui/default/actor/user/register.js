@@ -231,6 +231,7 @@ function load() {
     dojo.connect(allCards, 'onClick', drawAllCards);
     dojo.connect(clearAlert, 'onClick', clearMessage);
     dojo.connect(genISM, 'onClick', replaceISMCard);
+    dojo.connect(suffixSelector, 'onChange', updateSuffix);
 
     if(patron.cards().length > 1)
         dojo.removeClass(dojo.byId('uedit-all-barcodes'), 'hidden');
@@ -381,6 +382,11 @@ function makePrimaryCard(id) {
 function clearMessage(){
     var input = findWidget('au', 'alert_message');
     input.widget.attr('disabled', false).attr('readOnly', false).attr('value', null).focus();
+}
+
+function updateSuffix(){
+    var suffix = findWidget('au', 'suffix');
+    suffix.widget.attr('value',dojo.byId("suffixSelector").value);
 }
 
 function replaceISMCard(){
@@ -1350,6 +1356,7 @@ if (newVal.length > 22){
                     }   
                 );
                 return;
+
             case 'city':
                 dojo.connect(widget.widget, 'onChange',
                     function(e) {
@@ -1367,6 +1374,27 @@ if (newVal.length > 22){
 			var city = findWidget('aua', 'city');
                         e = e.toUpperCase();
 			city.widget.attr('value',e);
+                    }
+                );
+		return;
+
+            case 'state':
+                dojo.connect(widget.widget, 'onChange',
+                    function(e) {
+                        var callback = function(w) { return w._addr == widget._addr; };
+                        var args = {
+                            street1 : findWidget('aua', 'street1', callback).widget.attr('value'),
+                            street2 : findWidget('aua', 'street2', callback).widget.attr('value'),
+                            state : findWidget('aua', 'state', callback).widget.attr('value'),
+                            post_code : findWidget('aua', 'post_code', callback).widget.attr('value')
+                        };
+                        if(args.street1 && args.state && args.post_code)
+                            uEditDupeSearch('address', args);
+                        //MIEG:  GRPL address formatting
+                        if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
+                        var state = findWidget('aua', 'state');
+                        e = e.toUpperCase();
+                        state.widget.attr('value',e);
                     }
                 );
                 return;
