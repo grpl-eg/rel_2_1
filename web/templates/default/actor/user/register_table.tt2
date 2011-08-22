@@ -28,50 +28,7 @@
     <tr fmclass='au' fmfield='first_given_name' required='required'/>
     <tr fmclass='au' fmfield='second_given_name'/>
     <tr fmclass='au' fmfield='family_name' required='required'/>
-    <tr fmclass='au' fmfield='suffix' id='suffix'><td/><td/><td/>
-										<td>
-                                                                                        <select id='suffixSelector' jsID='suffixSelector' dojoType='dijit.form.FilteringSelect'>
-                                                                                                <option value=''></option>
-                                                                                                <option value='Jr'>Jr</option>
-                                                                                                <option value='Sr'>Sr</option>
-                                                                                                <option value='II'>II</option>
-                                                                                                <option value='III'>III</option>
-                                                                                                <option value='AA'>AA</option>
-                                                                                                <option value='AS'>AS</option>
-                                                                                                <option value='AAS'>AAS</option>
-                                                                                                <option value='BA'>BA</option>
-                                                                                                <option value='BS'>BS</option>
-                                                                                                <option value='CFPIM'>CFPIM</option>
-                                                                                                <option value='CPA'>CPA</option>
-                                                                                                <option value='CPIM'>CPIM</option>
-                                                                                                <option value='CPM'>CPM</option>
-                                                                                                <option value='CXE'>CXE</option>
-                                                                                                <option value='DC'>DC</option>
-                                                                                                <option value='DDS'>DDS</option>
-                                                                                                <option value='DO '>DO</option>
-                                                                                                <option value='DPM'>DPM</option>
-                                                                                                <option value='DVM'>DVM</option>
-                                                                                                <option value='Esq'>Esq</option>
-                                                                                                <option value='FACAAI'>FACAAI</option>
-                                                                                                <option value='FACP'>FACP</option>
-                                                                                                <option value='FACS'>FACS</option>
-                                                                                                <option value='FACEP'>FACEP</option>
-                                                                                                <option value='FCP'>FCP</option>
-                                                                                                <option value='FICS'>FICS</option>
-                                                                                                <option value='GYN'>GYN</option>
-                                                                                                <option value='JD'>JD</option>
-                                                                                                <option value='LPN'>LPN</option>
-                                                                                                <option value='MA'>MA</option>
-                                                                                                <option value='MCSE'>MCSE</option>
-                                                                                                <option value='MD'>MD</option>
-                                                                                                <option value='MS'>MS</option>
-                                                                                                <option value='NMD'>NMD</option>
-                                                                                                <option value='OB'>OB</option>
-                                                                                                <option value='PhD'>PhD</option>
-                                                                                                <option value='RN'>RN</option>
-                                                                                       </select>
-									</td>
-    </tr>
+    <tr fmclass='au' fmfield='suffix'/>
     <tr fmclass='au' fmfield='alias'/>
     <tr fmclass='au' fmfield='ident_value'/>
     <tr fmclass='au' fmfield='ident_type' required='required'/>
