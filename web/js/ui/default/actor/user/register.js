@@ -1169,9 +1169,41 @@ if (barcode.length > 22){
                 return;
 
             case 'first_given_name':
+		dojo.connect(widget.widget, 'onChange',
+                    function(newVal) {
+			uEditDupeSearch('name', newVal);
+			//MIEG:  GRPL name formatting
+			if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
+			var fname = findWidget('au', 'first_given_name');
+			newVal = newVal.toUpperCase();
+			fname.widget.attr('value',newVal);
+		    }
+		);
+		return;
+
+	    case 'second_given_name':
+                dojo.connect(widget.widget, 'onChange',
+                    function(newVal) {
+                        //MIEG:  GRPL name formatting
+                        if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
+                        var fname = findWidget('au', 'second_given_name');
+                        newVal = newVal.toUpperCase();
+                        fname.widget.attr('value',newVal);
+                    }
+                );
+                return;
+
             case 'family_name':
                 dojo.connect(widget.widget, 'onChange',
-                    function(newVal) { uEditDupeSearch('name', newVal); });
+                    function(newVal) { 
+                        uEditDupeSearch('name', newVal);
+                        //MIEG:  GRPL name formatting
+                        if (staff.ws_ou() < 10 || staff.ws_ou() > 17) return;
+                        var fname = findWidget('au', 'family_name');
+                        newVal = newVal.toUpperCase();
+                        fname.widget.attr('value',newVal);
+                    }
+                );
                 return;
 
             case 'email':
