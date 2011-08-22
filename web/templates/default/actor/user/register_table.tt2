@@ -30,7 +30,7 @@
     <tr fmclass='au' fmfield='family_name' required='required'/>
     <tr fmclass='au' fmfield='suffix' id='suffix'><td/><td/><td/>
 										<td>
-                                                                                        <select id='suffixSelector' jsID='suffixSelector' dojoType='dijit.form.FilteringSelect'>
+                                                                                        <select id='suffixSelector' jsID='suffixSelector' dojoType='dijit.form.FilteringSelect' required='false'>
                                                                                                 <option value=''></option>
                                                                                                 <option value='Jr'>Jr</option>
                                                                                                 <option value='Sr'>Sr</option>
