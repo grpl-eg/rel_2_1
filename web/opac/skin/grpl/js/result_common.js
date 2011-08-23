@@ -94,11 +94,14 @@ function resultCollectSearchIds( type, method, handler ) {
 	_debug('Search args: ' + js2JSON(args));
 	_debug('Raw query: ' + getTerm());
 
-	var atomfeed = "/opac/extras/opensearch/1.1/" + findOrgUnit(args.org_unit).shortname() + "/atom-full/" + getStype() + '?searchTerms=' + getTerm();
-	if (args.facets) { atomfeed += ' ' + args.facets; }
-	if (sort) { atomfeed += '&searchSort=' + sort; }
-	if (sortdir) { atomfeed += '&searchSortDir=' + sortdir; }
-	dojo.create('link', {"rel":"alternate", "href":atomfeed, "type":"application/atom+xml"}, dojo.query('head')[0]);
+        var my_ou = findOrgUnit(args.org_unit);
+        if (my_ou && my_ou.shortname()) {
+                var atomfeed = "/opac/extras/opensearch/1.1/" + my_ou.shortname() + "/atom-full/" + getStype() + '?searchTerms=' + getTerm();
+                if (args.facets) { atomfeed += ' ' + args.facets; }
+                if (sort) { atomfeed += '&searchSort=' + sort; }
+                if (sortdir) { atomfeed += '&searchSortDir=' + sortdir; }
+                dojo.create('link', {"rel":"alternate", "href":atomfeed, "type":"application/atom+xml"}, dojo.query('head')[0]);
+        }
 
 	var req = new Request(method, args, getTerm(), 1);
 	req.callback(handler);
@@ -328,7 +331,7 @@ function resultSuggestSpelling(r) {
 		if( blob ) blob = blob[0];
 		else continue;
 		if( blob.word == word ) {
-			if( blob.suggestions && blob.suggestions[0] ) {
+			if( !blob.found && blob.suggestions && blob.suggestions[0] ) {
 				newterm += " " + blob.suggestions[0];
 				unHideMe($('did_you_mean'));
 			} else {
@@ -531,8 +534,7 @@ function resultDisplayRecord(rec, pos, is_mr) {
 		}
 
 		unHideMe($n(r,'place_hold_span'));
-		$n(r,'place_hold_link').setAttribute(
-			'href','javascript:holdsDrawEditor({record:"'+rec.doc_id()+'",type:"M"});');
+		$n(r,'place_hold_link').onclick = function() { resultDrawHoldsWindow(rec.doc_id(), 'M'); }
 
 	} else {
 		onlyrec = rec.doc_id();
@@ -546,8 +548,7 @@ function resultDisplayRecord(rec, pos, is_mr) {
 		pic.parentNode.setAttribute("href", buildOPACLink(args));
 
 		unHideMe($n(r,'place_hold_span'));
-		$n(r,'place_hold_link').setAttribute(
-			'href','javascript:holdsDrawEditor({record:"'+rec.doc_id()+'",type:"T"});');
+		$n(r,'place_hold_link').onclick = function() { resultDrawHoldsWindow(rec.doc_id(), 'T'); }
 
 	}
 
@@ -610,6 +611,28 @@ function resultDisplayRecord(rec, pos, is_mr) {
 	}
 	*/
 }
+
+function resultDrawHoldsWindow(hold_target, hold_type) {
+    var src = location.href;
+
+    if(forceLoginSSL && src.match(/^http:/)) {
+
+        src = src.replace(/^http:/, 'https:');
+
+        if(src.match(/&hold_target=/)) {
+            src.replace(/&hold_target=(\d+)/, hold_target);
+
+        } else {
+            src += '&hold_target=' + hold_target;
+        }
+
+        location.href = src;
+
+    } else {
+        holdsDrawEditor({record:hold_target, type:hold_type});
+    }
+}
+
 
 function _resultFindRec(id) {
 	for( var i = 0; i != recordsCache.length; i++ ) {
