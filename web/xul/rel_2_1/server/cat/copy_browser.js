@@ -1060,7 +1060,7 @@ cat.copy_browser.prototype = {
                     ml.getElementsByAttribute('value',obj.org_ids[i])[0].setAttribute('class','has_copies');
                 }
                 ml.firstChild.addEventListener(
-                    'popupshown',
+                    'popupshowing',
                     function(ev) {
                         document.getElementById('legend').setAttribute('hidden','false');
                     },
@@ -1663,7 +1663,6 @@ cat.copy_browser.prototype = {
                 {
                     'no_auto_select' : true,
                     'columns' : columns,
-                    'map_row_to_columns' : circ.util.std_map_row_to_columns(' '),
                     'retrieve_row' : function(params) {
 
                         var row = params.row;

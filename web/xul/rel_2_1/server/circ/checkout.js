@@ -31,7 +31,6 @@ circ.checkout.prototype = {
         obj.list.init(
             {
                 'columns' : columns,
-                'map_row_to_columns' : circ.util.std_map_row_to_columns(),
                 'on_select' : function() {
                     var sel = obj.list.retrieve_selection();
                     document.getElementById('clip_button').disabled = sel.length < 1;
@@ -741,7 +740,7 @@ circ.checkout.prototype = {
 
                 for (var i = 0; i < test_permit.length; i++) {
                     dump('found [' + test_permit[i].ilsevent + ']\n');
-                    switch(test_permit[i].ilsevent == null ? null : Number(test_permit[i].ilsevent)) {
+                    switch(test_permit[i].ilsevent == null || test_permit[i].ilsevent == '' ? null : Number(test_permit[i].ilsevent)) {
                         case null /* custom event */ :
                             found_handled = true;
                         break;

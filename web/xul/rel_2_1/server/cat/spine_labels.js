@@ -170,21 +170,23 @@
                 /* take the call number and split it on whitespace */
                 callnum = String(volume.label());
             }
+            /* handle spine labels differently if using LC */
+            if (volume.label_class() == 3) {
+                /* for LC, split between classification subclass letters and numbers */
+                var lc_class_re = /^([A-Z]{1,3})([0-9]+.*?)$/i;
+                var lc_class_match = lc_class_re.exec(callnum);
+                if (lc_class_match && lc_class_match.length > 1) {
+                    callnum = lc_class_match[1] + ' ' + lc_class_match[2];
+                }
 
-            /* for LC, split between classification subclass letters and numbers */
-            var lc_class_re = /^([A-Z]{1,3})([0-9]+.*?)$/i;
-            var lc_class_match = lc_class_re.exec(callnum);
-            if (lc_class_match && lc_class_match.length > 1) {
-                callnum = lc_class_match[1] + ' ' + lc_class_match[2];
-            }
-
-            /* for LC, split between Cutter numbers */
-            var lc_cutter_re = /^(.*)(\.[A-Z]{1}[0-9]+.*?)$/ig;
-            var lc_cutter_match = lc_cutter_re.exec(callnum);
-            if (lc_cutter_match && lc_cutter_match.length > 1) {
-                callnum = '';
-                for (var i = 1; i < lc_cutter_match.length; i++) {
-                    callnum += lc_cutter_match[i] + ' ';
+                /* for LC, split between Cutter numbers */
+                var lc_cutter_re = /^(.*)(\.[A-Z]{1}[0-9]+.*?)$/ig;
+                var lc_cutter_match = lc_cutter_re.exec(callnum);
+                if (lc_cutter_match && lc_cutter_match.length > 1) {
+                    callnum = '';
+                    for (var i = 1; i < lc_cutter_match.length; i++) {
+                        callnum += lc_cutter_match[i] + ' ';
+                    }
                 }
             }
 
@@ -517,7 +519,7 @@
                     if (!lm) {
                         lm = g.data.hash.aous['cat.spine.line.margin'] || 0;
                     }
-                    var mm = Number($('mm').value); if (mm == NaN) mm = 2; /* middle margin */
+                    var mm = Number($('mm').value); if (isNaN(mm)) mm = 2; /* middle margin */
                     var lw = Number($('lw').value); /* spine label width */
                     if (!lw) {
                         lw = g.data.hash.aous['cat.spine.line.width'] || 8;

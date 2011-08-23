@@ -3,7 +3,7 @@ function my_init() {
         netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
         if (typeof JSAN == 'undefined') { throw( $("commonStrings").getString('common.jsan.missing') ); }
         JSAN.errorLevel = "die"; // none, warn, or die
-        JSAN.addRepository('/xul/server/');
+        JSAN.addRepository('/xul/rel_2_1/server/');
 
         JSAN.use('util.error'); g.error = new util.error();
         JSAN.use('util.network'); g.network = new util.network();
@@ -180,6 +180,7 @@ function event_listeners() {
                 try {
                     $('apply_payment_btn').disabled = true;
                     apply_payment();
+                    tally_all();
                     $('apply_payment_btn').disabled = false;
                 } catch(E) {
                     alert('Error in bill2.js, apply_payment_btn: ' + E);

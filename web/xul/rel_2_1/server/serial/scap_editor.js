@@ -142,7 +142,7 @@ serial.scap_editor.prototype = {
         };
         netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
         window.openDialog(
-            xulG.url_prefix("/xul/server/serial/pattern_wizard.xul"),
+            xulG.url_prefix("/xul/rel_2_1/server/serial/pattern_wizard.xul"),
             "pattern_wizard",
             "width=800",
             onsubmit

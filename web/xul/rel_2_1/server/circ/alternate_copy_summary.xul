@@ -195,18 +195,6 @@
                             </row>
                         </rows>
                     </grid>
-                    <grid id="grid3" flex="1">
-                        <columns>
-                            <column id="g3column1" />
-                            <column flex="1" />
-                        </columns>
-                        <rows>
-                            <row>
-                                <label value="&staff.circ.alternate_copy_summary.CopyNote.label;" />
-                                <textbox name="notes" multiline="true"  context="clipboard"/>
-                            </row>
-                        </rows>
-                    </grid>
                 </tabpanel>
                 <tabpanel><!-- Circulation History -->
                     <grid>

@@ -671,6 +671,10 @@ function uEditDrawSettingRow(tbody, dividerRow, template, stype) {
     dojo.connect(cb, 'onChange', function(newVal) { userSettingsToUpdate[stype.name()] = newVal; });
     tbody.insertBefore(row, dividerRow.nextSibling);
     openils.Util.show(row, 'table-row');
+
+    if(stype.name() == 'circ.collections.exempt') {
+        checkCollectionsExemptPerm(cb);
+    }
 }
 
 function uEditUpdateUserSettings(userId) {
@@ -896,6 +900,11 @@ function fleshFMRow(row, fmcls, args) {
         wargs.forceSync = false;
     }
 
+    if(fmcls == 'au' && fmfield == 'home_ou'){
+	wargs.labelAttr = 'name';
+	wargs.searchAttr = 'name';
+    }
+
     var widget = new openils.widget.AutoFieldWidget(wargs);
     widget.build(
         function(w, ww) {
@@ -952,6 +961,22 @@ function checkClaimsReturnCountPerm() {
                 cr.widget.attr('disabled', true);
             else
                 cr.widget.attr('disabled', false);
+        },
+        true, 
+        true
+    );
+}
+
+var collectExemptCBox;
+function checkCollectionsExemptPerm(cbox) {
+    if(cbox) collectExemptCBox = cbox;
+    new openils.User().getPermOrgList(
+        'UPDATE_PATRON_COLLECTIONS_EXEMPT',
+        function(orgList) { 
+            if(orgList.indexOf(patron.home_ou()) == -1) 
+                collectExemptCBox.attr('disabled', true);
+            else
+                collectExemptCBox.attr('disabled', false);
         },
         true, 
         true
@@ -1318,6 +1343,7 @@ if (newVal.length > 22){
                     function(newVal) { 
                         checkClaimsReturnCountPerm(); 
                         checkClaimsNoCheckoutCountPerm();
+			checkCollectionsExemptPerm();
                     }
                 );
                 return;

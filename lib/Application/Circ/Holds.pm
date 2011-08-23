@@ -2077,6 +2077,7 @@ sub do_possibility_checks {
     my $pickup_lib   = $params{pickup_lib};
     my $hold_type    = $params{hold_type}    || 'T';
     my $selection_ou = $params{selection_ou} || $pickup_lib;
+    my $holdable_formats = $params{holdable_formats};
 
 
 	my $copy;
@@ -2127,9 +2128,9 @@ sub do_possibility_checks {
 		my @status = ();
 		for my $rec (@recs) {
 			@status = _check_title_hold_is_possible(
-				$rec, $depth, $request_lib, $patron, $e->requestor, $pickup_lib, $selection_ou
+				$rec, $depth, $request_lib, $patron, $e->requestor, $pickup_lib, $selection_ou, $holdable_formats
 			);
-			last if $status[1];
+			last if $status[0];
 		}
 		return @status;
 	}
@@ -2162,8 +2163,13 @@ sub create_ranged_org_filter {
 
 
 sub _check_title_hold_is_possible {
-    my( $titleid, $depth, $request_lib, $patron, $requestor, $pickup_lib, $selection_ou ) = @_;
+    my( $titleid, $depth, $request_lib, $patron, $requestor, $pickup_lib, $selection_ou, $holdable_formats ) = @_;
    
+    my ($types, $formats, $lang);
+    if (defined($holdable_formats)) {
+        ($types, $formats, $lang) = split '-', $holdable_formats;
+    }
+
     my $e = new_editor();
     my %org_filter = create_ranged_org_filter($e, $selection_ou, $depth);
 
@@ -2181,15 +2187,27 @@ sub _check_title_hold_is_possible {
                                 field  => 'id',
                                 filter => { id => $titleid },
                                 fkey   => 'record'
+                            },
+                            mrd => {
+                                field  => 'record',
+                                fkey   => 'record',
+                                filter => {
+                                    record => $titleid,
+                                    ( $types   ? (item_type => [split '', $types])   : () ),
+                                    ( $formats ? (item_form => [split '', $formats]) : () ),
+                                    ( $lang    ? (item_lang => $lang)                : () )
+                                }
                             }
                         }
                     },
                     acpl => { field => 'id', filter => { holdable => 't'}, fkey => 'location' },
-                    ccs  => { field => 'id', filter => { holdable => 't'}, fkey => 'status'   }
+                    ccs  => { field => 'id', filter => { holdable => 't'}, fkey => 'status'   },
+                    acpm => { field => 'target_copy', type => 'left' } # ignore part-linked copies
                 }
             }, 
             where => {
-                '+acp' => { circulate => 't', deleted => 'f', holdable => 't', %org_filter }
+                '+acp' => { circulate => 't', deleted => 'f', holdable => 't', %org_filter },
+                '+acpm' => { target_copy => undef } # ignore part-linked copies
             }
         }
     );
@@ -2558,6 +2576,14 @@ sub _check_volume_hold_is_possible {
 	my $copies = new_editor->search_asset_copy({call_number => $vol->id, %org_filter});
 	$logger->info("checking possibility of volume hold for volume ".$vol->id);
 
+    my $filter_copies = [];
+    for my $copy (@$copies) {
+        # ignore part-mapped copies for regular volume level holds
+        push(@$filter_copies, $copy) unless
+            new_editor->search_asset_copy_part_map({target_copy => $copy->id})->[0];
+    }
+    $copies = $filter_copies;
+
     return (
         0, 0, [
             new OpenILS::Event(
@@ -2596,7 +2622,8 @@ sub verify_copy_for_hold {
 
     return (
         (not scalar @$permitted), # true if permitted is an empty arrayref
-        (
+        (   # XXX This test is of very dubious value; someone should figure
+            # out what if anything is checking this value
 	        ($copy->circ_lib == $pickup_lib) and 
             ($copy->status == OILS_COPY_STATUS_AVAILABLE)
         ),
@@ -3422,6 +3449,22 @@ __PACKAGE__->register_method(
     }
 );
 
+__PACKAGE__->register_method(
+    method    => 'change_hold_title_for_specific_holds',
+    api_name  => 'open-ils.circ.hold.change_title.specific_holds',
+    signature => {
+        desc => q/
+            Updates specified holds to target new bib./,
+        params => [
+            { desc => 'Authentication Token', type => 'string' },
+            { desc => 'New Target Bib Id',    type => 'number' },
+            { desc => 'Holds Ids for holds to update',   type => 'array'  },
+        ],
+        return => { desc => '1 on success' }
+    }
+);
+
+
 sub change_hold_title {
     my( $self, $client, $auth, $new_bib_id, $bib_ids ) = @_;
 
@@ -3453,9 +3496,46 @@ sub change_hold_title {
 
     $e->commit;
 
+    _reset_hold($self, $e->requestor, $_) for @$holds;
+
     return 1;
 }
 
+sub change_hold_title_for_specific_holds {
+    my( $self, $client, $auth, $new_bib_id, $hold_ids ) = @_;
+
+    my $e = new_editor(authtoken=>$auth, xact=>1);
+    return $e->die_event unless $e->checkauth;
+
+    my $holds = $e->search_action_hold_request(
+        [
+            {
+                cancel_time      => undef,
+                fulfillment_time => undef,
+                hold_type        => 'T',
+                id               => $hold_ids
+            },
+            {
+                flesh        => 1,
+                flesh_fields => { ahr => ['usr'] }
+            }
+        ],
+        { substream => 1 }
+    );
+
+    for my $hold (@$holds) {
+        $e->allowed('UPDATE_HOLD', $hold->usr->home_ou) or return $e->die_event;
+        $logger->info("Changing hold " . $hold->id . " target from " . $hold->target . " to $new_bib_id in title hold target change");
+        $hold->target( $new_bib_id );
+        $e->update_action_hold_request($hold) or return $e->die_event;
+    }
+
+    $e->commit;
+
+    _reset_hold($self, $e->requestor, $_) for @$holds;
+
+    return 1;
+}
 
 __PACKAGE__->register_method(
     method    => 'rec_hold_count',

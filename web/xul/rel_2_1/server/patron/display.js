@@ -911,6 +911,7 @@ patron.display.prototype = {
         // FIXME - replace this generated "stop sign" page with a dedicated XUL file or template
         return function(patron,params) {
             try {
+		obj._already_defaulted_once = true;
                 var msg = ''; obj.stop_checkouts = false;
                 if (patron.alert_message())
                     msg += $("patronStrings").getFormattedString('staff.patron.display.init.network_request.alert_message', [patron.alert_message()]);
@@ -960,7 +961,7 @@ patron.display.prototype = {
                         msg += '<dt>';
                         msg += obj.OpenILS.data.hash.aou[ penalties[i].org_unit() ].shortname() + ' : ' + penalties[i].standing_penalty().label() + '<br/>';
                         msg += '</dt><dd>';
-                        msg += penalties[i].note();
+                        msg += (penalties[i].note())?penalties[i].note():'';
                         msg += '</dd>';
                     }
                 }

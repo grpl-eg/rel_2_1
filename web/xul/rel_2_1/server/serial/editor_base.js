@@ -16,7 +16,7 @@ serial.editor_base = {
                 throw( $('commonStrings').getString('common.jsan.missing') );
             }
             JSAN.errorLevel = "die"; // none, warn, or die
-            JSAN.addRepository('/xul/server/');
+            JSAN.addRepository('/xul/rel_2_1/server/');
             JSAN.use('util.error'); obj.error = new util.error();
             obj.error.sdump('D_TRACE','my_init() for serial/editor_base.js');
 

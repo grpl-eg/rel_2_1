@@ -14,6 +14,7 @@ my %scripts;
 my $script_libs;
 my $legacy_script_support = 0;
 my $booking_status;
+my $opac_renewal_use_circ_lib;
 
 sub determine_booking_status {
     unless (defined $booking_status) {
@@ -752,8 +753,11 @@ sub mk_env {
 		my $card = $e->search_actor_card({barcode => $self->patron_barcode})->[0] 
 			or return $self->bail_on_events(OpenILS::Event->new('ACTOR_USER_NOT_FOUND'));
 
-		$patron = $e->search_actor_user([{card => $card->id}, $flesh])->[0]
+		$patron = $e->retrieve_actor_user($card->usr)
 			or return $self->bail_on_events(OpenILS::Event->new('ACTOR_USER_NOT_FOUND'));
+
+        # Use the card we looked up, not the patron's primary, for card active checks
+        $patron->card($card);
 
     } else {
         if( my $copy = $self->copy ) {
@@ -1159,11 +1163,11 @@ sub run_indb_circ_test {
         $logger->info("circulator: circ policy test found matchpoint built via rows " . $results->[0]->{buildrows});
         $self->circ_matrix_matchpoint($self->editor->retrieve_config_circ_matrix_matchpoint($mp));
         $self->circ_matrix_matchpoint->duration_rule($self->editor->retrieve_config_rules_circ_duration($results->[0]->{duration_rule}));
-        if($results->[0]->{renewals}) {
+        if(defined($results->[0]->{renewals})) {
             $self->circ_matrix_matchpoint->duration_rule->max_renewals($results->[0]->{renewals});
         }
         $self->circ_matrix_matchpoint->recurring_fine_rule($self->editor->retrieve_config_rules_recurring_fine($results->[0]->{recurring_fine_rule}));
-        if($results->[0]->{grace_period}) {
+        if(defined($results->[0]->{grace_period})) {
             $self->circ_matrix_matchpoint->recurring_fine_rule->grace_period($results->[0]->{grace_period});
         }
         $self->circ_matrix_matchpoint->max_fine_rule($self->editor->retrieve_config_rules_max_fine($results->[0]->{max_fine_rule}));
@@ -1992,7 +1996,7 @@ sub booking_adjusted_due_date {
         my $booking_ses = OpenSRF::AppSession->create( 'open-ils.booking' );
         my $bookings = $booking_ses->request(
             'open-ils.booking.reservations.filtered_id_list', $self->editor->authtoken,
-            { resource => $booking_item->id, search_start => 'now', search_end => $circ->due_date, fields => { cancel_time => undef }}
+            { resource => $booking_item->id, search_start => 'now', search_end => $circ->due_date, fields => { cancel_time => undef, return_time => undef}}
         )->gather(1);
         $booking_ses->disconnect;
         
@@ -3268,6 +3272,20 @@ sub do_renew {
     $self->parent_circ($circ->id);
     $self->renewal_remaining( $circ->renewal_remaining - 1 );
     $self->circ($circ);
+
+    # Opac renewal - re-use circ library from original circ (unless told not to)
+    if($self->opac_renewal) {
+        unless(defined($opac_renewal_use_circ_lib)) {
+            my $use_circ_lib = $self->editor->retrieve_config_global_flag('circ.opac_renewal.use_original_circ_lib');
+            if($use_circ_lib and $U->is_true($use_circ_lib->enabled)) {
+                $opac_renewal_use_circ_lib = 1;
+            }
+            else {
+                $opac_renewal_use_circ_lib = 0;
+            }
+        }
+        $self->circ_lib($circ->circ_lib) if($opac_renewal_use_circ_lib);
+    }
 
     # Run the fine generator against the old circ
     $self->generate_fines_start;

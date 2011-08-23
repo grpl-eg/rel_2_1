@@ -1,5 +1,5 @@
 // vim:et:sw=4:ts=4
-var g = {};
+var g = { 'disabled' : false };
 g.map_acn = {};
 
 function $(id) { return document.getElementById(id); }
@@ -14,7 +14,7 @@ function my_init() {
             throw( $('commonStrings').getString('common.jsan.missing') );
         }
         JSAN.errorLevel = "die"; // none, warn, or die
-        JSAN.addRepository('/xul/server/');
+        JSAN.addRepository('/xul/rel_2_1/server/');
         JSAN.use('util.error'); g.error = new util.error();
         g.error.sdump('D_TRACE','my_init() for cat/copy_editor.xul');
 
@@ -65,12 +65,11 @@ function my_init() {
 
         if (xul_param('edit',{'modal_xulG':true}) == '1') { 
 
-            g.edit = true;
+            g.edit = false;
 
             if (g.copies.length > 0) { // When loaded in the unified interface, there may be no copies yet (from the volum/item creator) 
 
                 // Editor desired, but let's check permissions
-                g.edit = false;
 
                 try {
                     var check = g.network.simple_request(
@@ -114,10 +113,11 @@ function my_init() {
             if (g.edit) {
                 $('caption').setAttribute('label', $('catStrings').getString('staff.cat.copy_editor.caption')); 
                 $('save').setAttribute('hidden','false'); 
-                g.retrieve_templates();
             } else {
                 $('top_nav').setAttribute('hidden','true');
             }
+
+            g.retrieve_templates();
 
         } else {
             $('top_nav').setAttribute('hidden','true');
@@ -164,17 +164,43 @@ function my_init() {
         g.check_for_unmet_required_fields();
 
         if (xulG.unified_interface) {
+            xulG.disable_copy_editor = function(c) {
+                addCSSClass(document.documentElement,'disabled_copy_editor');
+                g.disabled = true;
+            }
+            xulG.enable_copy_editor = function(c) {
+                removeCSSClass(document.documentElement,'disabled_copy_editor');
+                g.disabled = false;
+                xulG.refresh_copy_editor();
+            }
             xulG.refresh_copy_editor = function() {
+                dump('refresh_copy_editor\n');
+                addCSSClass(document.documentElement,'enabling_copy_editor');
                 try {
+                    xulG.clear_update_copy_editor_timeout();
                     g.copies = xulG.copies;
+                    g.edit = g.copies.length > 0;
+                    if (g.edit) {
+                        $('caption').setAttribute('label', $('catStrings').getString('staff.cat.copy_editor.caption'));
+                    }
                     g.original_copies = js2JSON( g.copies );
                     g.hide_copy_notes_button();
                     for (var i = 0; i < g.applied_templates.length; i++) {
                         g._apply_template( g.applied_templates[i], false);
                     }
+                    if (g.copies.length > 0) {
+                        // Stop tracking these templates once they're applied
+                        // to actual copies
+                        g.applied_templates = [];
+                    }
                     g.summarize( g.copies );
                     g.render();
                     g.check_for_unmet_required_fields();
+                    setTimeout(
+                        function() {
+                            removeCSSClass(document.documentElement,'enabling_copy_editor');
+                        }, 1000
+                    );
                 } catch(E) {
                     alert('Error in copy_editor.js, xulG.refresh_copy_editor(): ' + E);
                 }
@@ -264,7 +290,12 @@ g.apply_template = function(apply_volume_editor_template_changes) {
     try {
         var name = g.template_menu.value;
         if (g.templates[ name ] != 'undefined') {
-            g.applied_templates.push( name );
+            if (g.copies == 0) {
+                // We're only tracking these applied templates temporarily,
+                // specifically when they're used prior to copies being
+                // created in the unified interface.
+                g.applied_templates.push( name );
+            }
             g._apply_template(name,apply_volume_editor_template_changes);
             g.summarize( g.copies );
             g.render();
@@ -1271,7 +1302,10 @@ g.render_input = function(node,blob) {
 
         function on_click(ev){
             try {
-                if (block) return; block = true;
+                if (block || g.disabled || !g.edit) {
+                    return;
+                }
+                block = true;
 
                 oils_lock_page();
 
