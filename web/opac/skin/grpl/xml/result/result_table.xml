@@ -39,7 +39,7 @@
 
 								<td class='result_table_title_cell' name='result_table_title_cell'>
 									<!-- Title goes here -->
-									<a title="&result.table.keyword;" name='item_title' class='search_link'> 
+									<a title="&result.table.keyword;" name='item_title' id='item_title' class='search_link'> 
 										<!-- Title goes here -->
 									</a>
 								</td>

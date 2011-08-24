@@ -88,6 +88,11 @@
                         data.stash_retrieve(); 
                         document.getElementById('staffname').innerHTML = ", " + data.list.au[0].first_given_name(); 
                         home_ou_id = data.list.au[0].ws_ou();
+			if (home_ou_id < 10 || home_ou_id > 17)
+				document.getElementById('MIEGBits').style.display='block';
+			   else
+				document.getElementById('GRPLBits').style.display='block';
+
                 }
                 function jb_open_eg_web_page(path, label) {
                         var loc = urls.XUL_BROWSER + '?url=' + window.escape(xulG.url_prefix(urls.EG_WEB_BASE) + '/' + path);
@@ -545,28 +550,31 @@
             </tr>
           </table>
         </div>
-      </td>
-    </tr>
-   <tr>
+
+	<div id='GRPLBits' style='display:none;'>
+	<hr/>
+        <table><tr>
         <td valign='top'><form method='post' action='http://grpl.michiganevergreen.org/cgi-bin/utils/iiipapi.cgi'>
                 <input id='box' type='text' name='card' size='20'/>
                 <input type='submit' value='LLC patron info'/>
             </form>
-        </td>
-        <td valign='top' style='padding-left: 50px;'><input type='button' value='ISM Admin' onclick="location='http://ism1/cgi-bin/ismadmin/admin.cgi'"/></td>
-        <td valign='top' align='right'>
+	<br/><br/><br/>
                 <form method='post' action='/cgi-bin/utils/llc_lostcard.cgi'>
                         <b>Notify LLC of lost card:</b> <input type='text' size='20' name='card'/><br/>
                         Notes: <textarea name='notes' rows='2' cols='40'></textarea><br/>
                         <input type='submit' value='Send'/>
                 </form>
         </td>
+	</tr></table>
+	</div>
+	<div id='MIEGBits' style='display:none;'>
+		<center><b><a href="/cgi-bin/utils/helpdesk.cgi?org=" style="text-decoration: underline">Contact Michigan Evergreen Support</a></b><br/></center>
+	</div>
+     </td> 
    </tr>
 
   </table>
 
-  <div class="attribution c1">&staff.client.portal.copyright;<br />
-  &staff.client.portal.poweredby; <img src="skin/media/images/portal/eg_tiny_logo.jpg" alt="Evergreen logo" /></div>
 </body>
 </html>
 

@@ -32,7 +32,8 @@ table { border-collapse: collapse; }
 .classic_link_col { color: #006699;}
 .classic_link:hover { text-decoration: underline; color: #06a1ff;}
 
-.search_link { color: #006699;}
+.search_link { color: #006699; }
+#item_title { font-size: 14px; }
 .search_link:visited { color: #006699;}
 .search_link_col { color: #006699;}
 .search_link:hover { text-decoration: underline; color: #06a1ff;}

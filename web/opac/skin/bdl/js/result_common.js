@@ -96,11 +96,14 @@ function resultCollectSearchIds( type, method, handler ) {
 	_debug('Search args: ' + js2JSON(args));
 	_debug('Raw query: ' + getTerm());
 
-	var atomfeed = "/opac/extras/opensearch/1.1/" + findOrgUnit(args.org_unit).shortname() + "/atom-full/" + getStype() + '?searchTerms=' + getTerm();
-	if (args.facets) { atomfeed += ' ' + args.facets; }
-	if (sort) { atomfeed += '&searchSort=' + sort; }
-	if (sortdir) { atomfeed += '&searchSortDir=' + sortdir; }
-	dojo.create('link', {"rel":"alternate", "href":atomfeed, "type":"application/atom+xml"}, dojo.query('head')[0]);
+        var my_ou = findOrgUnit(args.org_unit);
+        if (my_ou && my_ou.shortname()) {
+                var atomfeed = "/opac/extras/opensearch/1.1/" + my_ou.shortname() + "/atom-full/" + getStype() + '?searchTerms=' + getTerm();
+                if (args.facets) { atomfeed += ' ' + args.facets; }
+                if (sort) { atomfeed += '&searchSort=' + sort; }
+                if (sortdir) { atomfeed += '&searchSortDir=' + sortdir; }
+                dojo.create('link', {"rel":"alternate", "href":atomfeed, "type":"application/atom+xml"}, dojo.query('head')[0]);
+        }
 
 	var req = new Request(method, args, getTerm(), 1);
 	req.callback(handler);
@@ -463,6 +466,7 @@ function resultDisplayRecord(rec, pos, is_mr) {
         }
     }
 
+/*
     if (currentISBN && chilifresh && chilifresh != '(none)') {
         var cfrow = $n(r, "chilifreshReview");
         if (cfrow) {
@@ -483,6 +487,7 @@ function resultDisplayRecord(rec, pos, is_mr) {
             )
         }
     }
+*/
 
 /*
 	try {
@@ -494,12 +499,12 @@ function resultDisplayRecord(rec, pos, is_mr) {
 	} catch(e){ }
 */
 
-	var pic = $n(r, config.names.result.item_jacket);
-	if (currentISBN) {
-		pic.setAttribute("src", buildISBNSrc(currentISBN));
-	} else {
-		pic.setAttribute("src", "/opac/images/blank.png");
-	}
+        var pic = $n(r, config.names.result.item_jacket);
+        if (currentISBN) {
+                pic.setAttribute("src", buildISBNSrc(currentISBN));
+        } else {
+                pic.setAttribute("src", "/opac/images/blank.png");
+        }
 
 	var title_link = $n(r, config.names.result.item_title);
 	var author_link = $n(r, config.names.result.item_author);
@@ -532,7 +537,6 @@ function resultDisplayRecord(rec, pos, is_mr) {
 
 		unHideMe($n(r,'place_hold_span'));
 		$n(r,'place_hold_link').onclick = function() { resultDrawHoldsWindow(rec.doc_id(), 'M'); }
-            
 
 	} else {
 		onlyrec = rec.doc_id();
@@ -547,6 +551,7 @@ function resultDisplayRecord(rec, pos, is_mr) {
 
 		unHideMe($n(r,'place_hold_span'));
 		$n(r,'place_hold_link').onclick = function() { resultDrawHoldsWindow(rec.doc_id(), 'T'); }
+
 	}
 
 	buildSearchLink(STYPE_AUTHOR, rec.author(), author_link);
@@ -631,7 +636,6 @@ function resultDrawHoldsWindow(hold_target, hold_type) {
 }
 
 
-
 function _resultFindRec(id) {
 	for( var i = 0; i != recordsCache.length; i++ ) {
 		var rec = recordsCache[i];
@@ -694,8 +698,9 @@ function fetchGoogleBooksLink () {
 }
 
 function fetchChiliFreshReviews() {
+    return;  // wtf is chilifresh?
     if (chilifresh && chilifresh != '(none)') {
-        try { chili_init(); } catch(E) { console.log(E + '\n'); }
+        try { chili_init(); } catch(E) { dump(E + '\n'); }
     }
 }
 
@@ -719,7 +724,7 @@ function resultAddCopyCounts(rec, pagePosition) {
 	var ccell = $n(countsrow, config.names.result.count_cell);
 
 	var nodes = orgNodeTrail(findOrgUnit(getLocation()));
-	var start_here = 0;
+	var start_here = 1;
 	var orgHiding = checkOrgHiding();
 	if (orgHiding) {
 		for (var i = 0; i < nodes.length; i++) {
@@ -837,7 +842,7 @@ function resultDisplayCopyCounts(rec, pagePosition, copy_counts) {
 			if(isXUL()) {
 				/* here we style opac-invisible records for xul */
 
-				if( cts.depth == 0 ) {
+				if( cts.depth == 1 ) {
 					if(cts.transcendant == null && cts.unshadow == 0) {
 						_debug("found an opac-shadowed record: " + rec.doc_id());
 						var row = cell.parentNode.parentNode.parentNode.parentNode.parentNode; 
