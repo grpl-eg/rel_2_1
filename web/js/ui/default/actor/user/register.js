@@ -253,9 +253,13 @@ function load() {
         
     lock_ready = true;
 
-    // we'll use this to hide features between systems
-    if (staff.ws_ou() > 9 && staff.ws_ou() < 18)
+    //MIEG: we'll use this to hide features between systems
+    if (staff.ws_ou() > 9 && staff.ws_ou() < 18){
 	dojo.removeClass(dojo.byId('ISMbutton'),"hidden");
+	openils.Util.hide('claims_never_checked_out_count');
+        openils.Util.hide('juvenile');
+	openils.Util.hide('master_account');
+    }
 	
 }
 
@@ -446,6 +450,17 @@ function generatePasswordHandler() {
 	f.widget.attr('value', patron.passwd());
 	f = findWidget('au', 'passwd2');
 	f.widget.attr('value', patron.passwd());
+//MIEG: if you use the phone number, reset to the phone number
+                            if(uEditUsePhonePw) {
+                                // if configured, use the last four digits of the day phone number as the password
+                                var newVal = findWidget('au', 'day_phone').widget.value;
+                                if(newVal && newVal.length >= 4) {
+                                    var pw1 = findWidget('au', 'passwd').widget;
+                                    var pw2 = findWidget('au', 'passwd2').widget;
+                                    pw1.attr('value', newVal.substring(newVal.length - 4));
+                                    pw2.attr('value', newVal.substring(newVal.length - 4));
+                                }
+                            }
 }
 
 /**
@@ -1202,6 +1217,8 @@ if (barcode.length > 22){
 			var fname = findWidget('au', 'first_given_name');
 			newVal = newVal.toUpperCase();
 			fname.widget.attr('value',newVal);
+			var alias = findWidget('au', 'alias');
+			alias.widget.attr('value',newVal.substring(0,2));
 		    }
 		);
 		return;
