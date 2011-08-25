@@ -110,12 +110,27 @@ util.widgets.dispatch = function(ev,el) {
     util.widgets.get(el).dispatchEvent(evt);
 }
 
-util.widgets.make_menulist = function( items, dvalue ) {
+util.widgets.make_menulist = function( items, dvalue, lib_list ) {
     var menulist = document.createElement('menulist');
     var menupopup = document.createElement('menupopup'); menulist.appendChild(menupopup);
     for (var i = 0; i < items.length; i++) {
         if (typeof items[i] == 'undefined') { continue; }
         var label = items[i][0]; var value = items[i][1]; var disabled = items[i][2]; var indent = items[i][3];
+//MIEG: hide the unwanted
+var show='true';
+if (lib_list){
+   if ((dvalue > 1 && dvalue < 9) && (value < 2 || value > 9) ) show='false';   //BDL
+   if ((dvalue > 8 && dvalue < 18) && (value < 9 || value > 18) ) show='false'; //GRPL
+   if ((dvalue == 21) && (value != 21) ) show='false'; //NDL
+   if ((dvalue > 21 && dvalue < 29) && (value < 22 || value > 29) ) show='false'; //TADL
+   if ((dvalue > 29 && dvalue < 34) && (value < 30 || value > 34) ) show='false'; //OE
+   if ((dvalue == 35) && (value != 35) ) show='false'; //LPL
+   if ((dvalue == 37) && (value != 37) ) show='false'; //OCL
+   if ((dvalue == 40) && (value != 40) ) show='false'; //DLB
+   if ((dvalue == 41) && (value != 41) ) show='false'; //BPL
+}else{show='true'}
+
+  if (show == 'true'){
         if (indent) {
             for (var j = 0; j < Number(indent); j++) {
                 //label = ' ' + label;
@@ -133,6 +148,7 @@ util.widgets.make_menulist = function( items, dvalue ) {
             menuitem.disabled = true;
             menuitem.setAttribute('disabled','true');
         }
+  }
     }
     if (typeof dvalue != 'undefined') {
         menulist.setAttribute('value',dvalue);

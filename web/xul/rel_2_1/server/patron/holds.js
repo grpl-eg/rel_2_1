@@ -494,7 +494,7 @@ patron.holds.prototype = {
                                         ];
                                     }
                                 );
-                                ml = util.widgets.make_menulist( list, obj.data.list.au[0].ws_ou() );
+                                ml = util.widgets.make_menulist( list, obj.data.list.au[0].ws_ou(), 1 );
                                 ml.setAttribute('id','lib');
                                 ml.setAttribute('name','fancy_data');
                                 var xml = '<vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" flex="1" style="overflow: vertical">';

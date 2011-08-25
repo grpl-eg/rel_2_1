@@ -427,7 +427,14 @@ function replaceCardHandler() {
     
     // pull old card off the cards list so we don't have a dupe sitting in there
     var old = patron.cards().filter(function(c){return (c.id() == patron.card().id())})[0];
-    old.active('f');
+//MIEG: TADL may not disable card
+if (staff.ws_ou() < 22 || staff.ws_ou() > 29) {
+       old.active('f');
+  } else {
+	var add = confirm('Deactivate the original card?');
+	if (add)
+		old.active('f');
+}
     old.ischanged(1);
 
     var newc = new fieldmapper.ac();
