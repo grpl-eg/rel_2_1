@@ -561,6 +561,7 @@ function myOPACShowFines() {
 	var req = new Request(FETCH_FINES_SUMMARY, G.user.session, G.user.id() );
 	req.callback(_myOPACShowFines);
 	req.send();
+	$('myopac_fines_pay_ses').value = G.user.session;
 }
 
 function _myOPACShowFines(r) {
@@ -870,7 +871,8 @@ function _myOPACSummaryShowUer(r) {
 	appendClear($('myopac_summary_barcode'),text(user.card().barcode()));
 	appendClear($('myopac_summary_ident1'),text(iv1));
 	appendClear($('myopac_summary_homelib'),text(findOrgUnit(user.home_ou()).name()));
-	appendClear($('myopac_summary_create_date'),text(_trimTime(user.create_date())));
+	//appendClear($('myopac_summary_create_date'),text(_trimTime(user.create_date())));
+	appendClear($('myopac_summary_expire_date'),text(_trimTime(user.expire_date())));
 
 	var req = new Request( 
 		FETCH_USER_NOTES, G.user.session, {pub:1, patronid:G.user.id()});
