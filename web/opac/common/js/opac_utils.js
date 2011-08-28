@@ -730,7 +730,7 @@ function doLogin(suppressEvents) {
 		org		: getOrigLocation()
 	};
 
-    r = fetchOrgSettingDefault(globalOrgTree.id(), 'opac.barcode_regex');
+    r = fetchOrgSettingDefault(getLocation(), 'opac.barcode_regex');
     if(r) REGEX_BARCODE = new RegExp(r);
     
     if( uname.match(REGEX_BARCODE) ) args.barcode = uname;
