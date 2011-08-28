@@ -162,6 +162,11 @@
 				<td class='color_4 light_border'>&myopac.summary.genesis;</td>
 				<td class='light_border' id='myopac_summary_create_date'> </td>
 			</tr>
+                        <tr>  
+ 		                <td class='color_4 light_border'>Expiration Date</td>  
+ 		                <td class='light_border' id='myopac_summary_expire_date'> </td>  
+ 	                </tr>
+
 
 		</tbody>
 	</table>
