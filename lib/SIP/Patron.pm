@@ -1,6 +1,4 @@
-#
-# 
-# A Class for hiding the ILS's concept of the patron from the OpenSIP
+ Class for hiding the ILS's concept of the patron from the OpenSIP
 # system
 #
 
@@ -79,10 +77,26 @@ sub new {
         $$usr_flesh{flesh} += 1;
         $$usr_flesh{flesh_fields}{ac} = ['usr'];
 
-        my $card = $e->search_actor_card([{barcode => $patron_id}, $usr_flesh])->[0];
+        my $card = $e->search_actor_card([{barcode => $patron_id, active => 't'}, $usr_flesh])->[0];
 
         if(!$card) {
-            syslog("LOG_WARNING", "No such patron barcode: $patron_id");
+            if ($patron_id =~ /^[A-Z].*/i) {
+                syslog("LOG_WARNING", "Trying lowercased/transformed value for barcode: $patron_id");
+                my $bc = lc($patron_id);
+                if (length($bc) == 25) {
+                    $bc = substr($bc, 0, 13);
+                } elsif (length($bc) == 23) {
+                    $bc = substr($bc, 0, 12);
+                }
+                $card = $e->search_actor_card([{barcode => $bc, active => 't'}, $usr_flesh])->[0];
+            } else {
+                syslog("LOG_WARNING", "No such patron barcode: $patron_id");
+                return undef;
+            }
+        }
+
+        if (!$card) {
+            syslog("LOG_WARNING", "Failed even after lowercase/transformed attempt, barcode: $patron_id");
             return undef;
         }
 
