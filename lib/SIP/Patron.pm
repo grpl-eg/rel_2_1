@@ -1,4 +1,4 @@
- Class for hiding the ILS's concept of the patron from the OpenSIP
+# Class for hiding the ILS's concept of the patron from the OpenSIP
 # system
 #
 
