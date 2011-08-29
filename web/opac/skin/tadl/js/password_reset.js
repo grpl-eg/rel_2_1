@@ -41,8 +41,11 @@ dojo.addOnLoad(function() {
         }
         var deferred = dojo.xhrPost(xhrArgs);
     });
+    dojo.place("<tr><td colspan='2' align='center'><a class='classic_link' href='http://www.tadl.org/evergreen/catalog/'>Having trouble logging in?</a></td></tr>", config.ids.login.tbody);
+    /* remove Evergreen password resets for now
     dojo.place("<tr><td colspan='2' align='center'><a class='classic_link' id='pwResetLink' onClick='dijit.byId(\"pwResetFormDlg\").show();'</a></td></tr>", config.ids.login.tbody);
     dojo.query("#pwResetLink").attr("innerHTML", opac_strings.PWD_RESET_FORGOT_PROMPT);
+    */
 
 });
 
