@@ -266,6 +266,7 @@ function resultZeroHits() {
 
 function resultExpandSearch() {
 	var top = findOrgDepth(globalOrgTree);
+        if (top == 0) top=1;
 	if(getDepth() == top) return;
 	unHideMe($('low_hits_expand_range'));
 	var par = $('low_hits_expand_link').parentNode;
