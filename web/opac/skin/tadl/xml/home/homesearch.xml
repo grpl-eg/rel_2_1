@@ -134,8 +134,8 @@
         <img src="<!--#echo var="OILS_BASE"-->/images/tadl/overdrive.png" /></a></p>
 </div>
 <div style="float: right;">
-        <p><a href="http://www.tadl.org/go/netlibrary">Download audiobooks and read e-books online:<br />
-        <img src="<!--#echo var="OILS_BASE"-->/images/tadl/netlibrary.gif" /></a></p>
+        <p><a href="http://www.tadl.org/elibrary">More Electronic Resources available at: <br />
+        tadl.org/elibrary</a></p>
 </div>
 
 

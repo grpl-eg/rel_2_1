@@ -29,9 +29,6 @@
 			id='logout_link_div' class="side_bar_item hide_me ">
 			<a id='logout_link' href='javascript:void(0);'>&navigate.logout;</a>
 		</div>
-        <div id='netlibrary' class='side_bar_item hide_me'>
-            <span><a href="http://www.tadl.org/go/netlibrary">Access NetLibrary Recorded Books from home</a></span>
-        </div>
 
         <div id='overdrive' class='side_bar_item hide_me'>
             <span><a href="http://www.tadl.org/go/overdrive">Access OverDrive downloadable audiobooks and music</a></span>

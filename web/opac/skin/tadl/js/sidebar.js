@@ -51,7 +51,6 @@ function initSideBar() {
 		unHideMe(G.ui.sidebar.logoutbox);
 		unHideMe(G.ui.sidebar.logged_in_as);
 		hideMe(G.ui.sidebar.loginbox);
-        unHideMe($("netlibrary"));
         unHideMe($("overdrive"));
 	}
 
