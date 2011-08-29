@@ -1068,7 +1068,7 @@ function myOPACUpdateUsername() {
 		return;
 	}
 
-    r = fetchOrgSettingDefault(globalOrgTree.id(), 'opac.barcode_regex');
+    r = fetchOrgSettingDefault(getLocation(), 'opac.barcode_regex');
     if(r) REGEX_BARCODE = new RegExp(r);
 
     if(username.match(REGEX_BARCODE)) {
