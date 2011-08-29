@@ -6,7 +6,7 @@ var recordsHandled = 0;
 var recordsCache = [];
 var lowHitCount = 4;
 var isbnList = '';
-var googleBooksLink = true;
+var googleBooksLink = false;
 
 var resultFetchAllRecords = false;
 var resultCompiledSearch = null;

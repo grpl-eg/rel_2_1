@@ -11,7 +11,7 @@ attachEvt("rdetail", "recordDrawn", rdetailGetPageIds);
 var rdetailLocalOnly = true;
 var rdetailShowLocal = true;
 var rdetailShowCopyLocation = true;
-var rdetailGoogleBookPreview = true;
+var rdetailGoogleBookPreview = false;
 var rdetailDisplaySerialHoldings = true;
 var rdetailEnableRefWorks = false;
 var rdetailRefWorksHost = 'http://www.refworks.com';
