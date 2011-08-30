@@ -11,6 +11,11 @@ util.barcode.EXPORT_TAGS    = { ':all' : util.barcode.EXPORT_OK };
 util.barcode.check = function(bc) {
     if (bc != Number(bc)) return false;
     bc = bc.toString();
+//MIEG: 
+if (ses('ws_ou') > 22 && ses('ws_ou') < 29){
+    if (bc.length != 7 && bc.length != 14) return false; // TADL: 7 or 14 digits 
+    if (bc.length == 7) return true; // TADL: no checkdigit on these 
+}
     var last_digit = bc.substr(bc.length-1);
     var stripped_barcode = bc.substr(0,bc.length-1);
     return util.barcode.checkdigit(stripped_barcode).toString() == last_digit;
