@@ -68,6 +68,10 @@ sub handler {
 		$skin =~ s/(.*?)(\..*)/$1/;
 		$skin =~ s/(.*?)(-new)/$1/;
 	}
+	if ($hostname =~ /^catalog.tadl/){
+		$skin='tadl';
+	}
+
 	my $port		= $cgi->server_port();
 
 	my $proto = "http";
