@@ -495,6 +495,7 @@ circ.checkin.prototype = {
             ) ) {
                 return true;
             } else {
+		obj.on_failure();
                 return false;
             }
         }
