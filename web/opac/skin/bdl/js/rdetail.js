@@ -1035,6 +1035,9 @@ function _rdetailBuildInfoRows(r) {
 	for( var i = 0; i < summary.length; i++ ) {
 
 		var arr = summary[i];
+//MIEG: only the entities we want to see
+                if (arr[0] < 2 || arr[0] > 8) continue;
+
 		globalCNCache[js2JSON([arr[1],arr[2],arr[3]])] = 1; // prefix, label, suffix.  FIXME - Am I used anywhere?
 		var thisOrg = findOrgUnit(arr[0]);
 		var rowNode = $("cp_info_" + thisOrg.id());

@@ -1048,7 +1048,7 @@ function _rdetailBuildInfoRows(r) {
 	for( var i = 0; i < summary.length; i++ ) {
 
 		var arr = summary[i];
-//GRPL: only the entities we want to see
+//MIEG: only the entities we want to see
                 if (arr[0] < 9 || arr[0] > 18) continue;
 
 		globalCNCache[js2JSON([arr[1],arr[2],arr[3]])] = 1; // prefix, label, suffix.  FIXME - Am I used anywhere?
