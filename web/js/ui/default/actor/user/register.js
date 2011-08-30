@@ -402,6 +402,7 @@ function replaceISMCard(){
     var profile = findWidget('au', 'profile');
     profile.widget.attr('value',71);
 
+if (!patron.isnew()){
     var old = patron.cards().filter(function(c){return (c.id() == patron.card().id())})[0];
     old.active('f');
     old.ischanged(1);
@@ -415,6 +416,7 @@ function replaceISMCard(){
         if (!t) { t = []; }
         t.push(newc);
         patron.cards(t);
+}
 }
 
 /**
