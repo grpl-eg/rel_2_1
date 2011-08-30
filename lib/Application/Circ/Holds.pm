@@ -2777,6 +2777,19 @@ sub all_rec_holds {
     $args->{fulfillment_time} = undef; #  we don't want to see old fulfilled holds
 	$args->{cancel_time} = undef;
 
+# MIEG: limit the record hold list to individual library systems
+    if ($args->{pickup_lib} =~ /a$/) {
+	chop $args->{pickup_lib};
+        CASE: {
+                $_ = $args->{pickup_lib} || '';
+                /[3..8]/  and do  { $args->{pickup_lib} = { between => [2,8]   }; last CASE; };
+                /[10..17]/ and do  { $args->{pickup_lib} = { between => [10,17] }; last CASE; };
+                /[23..28]/ and do  { $args->{pickup_lib} = { between => [23,28] }; last CASE; };
+                /[31..33]/   and do  { $args->{pickup_lib} = { between => [31,33] }; last CASE; };
+        }
+    }
+
+
 	my $resp = { volume_holds => [], copy_holds => [], metarecord_holds => [], part_holds => [], issuance_holds => [] };
 
     my $mr_map = $e->search_metabib_metarecord_source_map({source => $title_id})->[0];

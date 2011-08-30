@@ -425,7 +425,7 @@ patron.holds.prototype = {
                                         ];
                                     }
                                 );
-                                ml = util.widgets.make_menulist( list, obj.data.list.au[0].ws_ou() );
+                                ml = util.widgets.make_menulist( list, obj.data.list.au[0].ws_ou(), 1 );
                                 ml.setAttribute('id','selection');
                                 ml.setAttribute('name','fancy_data');
                                 var xml = '<vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" flex="1" style="overflow: vertical">';
@@ -1467,7 +1467,12 @@ patron.holds.prototype = {
                                 x[ x_lib_type_menu.value ] = obj.controller.view.lib_menu.value;
                                 params.push( x );
                             }
-                        }
+                        }else{
+//MIEG: limit pickup locations displayed. This requires CASE statement in Holds.pm to work correctly
+ 	                            var x = {};
+ 	                            x[ 'pickup_lib' ] = obj.data.list.au[0].ws_ou()+'a';
+ 	                            params.push( x );
+			}
                     }
                     obj.controller.view.cmd_retrieve_patron.setAttribute('hidden','false');
                 break;
@@ -1599,7 +1604,7 @@ patron.holds.prototype = {
             var file = new util.file('offline_ou_list');
             if (file._file.exists()) {
                 var list_data = file.get_object(); file.close();
-                var ml = util.widgets.make_menulist( list_data[0], obj.data.list.au[0].ws_ou() );
+                var ml = util.widgets.make_menulist( list_data[0], obj.data.list.au[0].ws_ou(), 1 );
                 ml.setAttribute('id','lib_menu');
                 x.appendChild( ml );
                 ml.addEventListener(
