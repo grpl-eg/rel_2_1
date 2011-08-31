@@ -994,8 +994,12 @@ function _rdetailRows(node) {
 		var actions = $n(row, 'rdetail_actions_cell');
 
 		var p = libtd.getElementsByTagName('a')[0];
-	if (p)
-		libtd.insertBefore(text(node.name()), p);
+//		libtd.insertBefore(text(node.name()), p);
+
+var tmpName = node.name();
+tmpName = tmpName.replace("Grand Rapids - ","");
+                libtd.appendChild(text(tmpName));
+
 		libtd.setAttribute("style", "padding-left: " + ((findOrgDepth(node) - 1)  * 9) + "px;");
 
 		if(!findOrgType(node.ou_type()).can_have_vols()) {
