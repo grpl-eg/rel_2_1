@@ -150,7 +150,12 @@ function handle_apply_penalty(ev) {
         penalty.usr( xulG.patron.id() );
         penalty.isnew( 1 );
         penalty.standing_penalty( my_xulG.id );
+//MIEG: penalty at the system, not branch
+   if(ses('ws_ou') > 9 && ses('ws_ou') < 19) {
+        penalty.org_unit('9');
+     }else{
         penalty.org_unit( ses('ws_ou') );
+   }
         penalty.note( my_xulG.note );
         net.simple_request(
             'FM_AUSP_APPLY', 
