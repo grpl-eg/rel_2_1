@@ -382,7 +382,10 @@ function myOPACDrawHolds(r) {
 		form.id = "myopac_holds_form_" + h.id();
 
 		var orglink = $n(row, "myopac_holds_location");
-		orglink.appendChild(text(findOrgUnit(h.pickup_lib()).name()));
+	//MIEG: drop the "Grand Rapids-"
+	var libname = findOrgUnit(h.pickup_lib()).name();
+	libname = libname.replace("Grand Rapids - ","");
+		orglink.appendChild(text(libname));
 
 		tbody.appendChild(row);
 
@@ -456,6 +459,7 @@ function myOShowHoldStatus(r) {
 
 	var row = $("myopac_holds_row_" + r.hold.id());
 
+/*
     if(qstats.estimated_wait || myopacShowHoldEstimate) {
         myopacShowHoldEstimate = true;
         if(qstats.estimated_wait) {
@@ -466,7 +470,7 @@ function myOShowHoldStatus(r) {
         unHideMe($('myopac_holds_estimated_wait_column'));
         unHideMe($n(row, 'myopac_holds_estimated_wait'));
     } 
-
+*/
 	if( qstats.status == 4 ) {
 		unHideMe($n(row, 'hold_status_available'));
 		hideMe($n(row, 'myopac_holds_cancel_link'));
@@ -561,7 +565,6 @@ function myOPACShowFines() {
 	var req = new Request(FETCH_FINES_SUMMARY, G.user.session, G.user.id() );
 	req.callback(_myOPACShowFines);
 	req.send();
-	$('myopac_fines_pay_ses').value = G.user.session;
 }
 
 function _myOPACShowFines(r) {

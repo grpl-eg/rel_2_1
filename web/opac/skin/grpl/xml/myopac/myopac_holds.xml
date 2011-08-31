@@ -2,6 +2,7 @@
 <div id='myopac_holds_div' xmlns:xi="http://www.w3.org/2001/XInclude" >
 
 	<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/holds.js'> </script>
+	<script language='javascript' type='text/javascript' src='<!--#echo var="OILS_OPAC_JS_HOST"-->/skin/grpl/js/sorttable.js'></script>
 
 	<table width='100%'>
         <tbody><tr><td width='100%' align='right'>
@@ -36,26 +37,25 @@
         </p>
     </div>
 
-	<table width='100%' class='light_border data_grid data_grid_center' id='myopac_holds_main_table'>
+	<table width='100%' class='light_border data_grid data_grid_center sortable' id='myopac_holds_main_table'>
 
 		<thead class='color_3'>
 			<tr>
-				<td width=''>&common.title;</td>
-				<td width=''>&common.author;</td>
-				<td>&myopac.holds.formats;</td>
-				<td>&myopac.holds.location;</td>
-				<td>&common.status;</td>
-				<td class='hide_me' id='myopac_holds_estimated_wait_column'>&myopac.holds.estimated_wait;</td>
-				<td>&myopac.holds.unfrozen;</td>
-				<td>&myopac.holds.frozen.until;</td>
-				<td>&opac.holds.expire_time;</td>
-                <td width=''>&common.select;
+				<th width=''>&common.title;</th>
+				<th width=''>&common.author;</th>
+				<th class='unsortable'>&myopac.holds.formats;</th>
+				<th>&myopac.holds.location;</th>
+				<th>&common.status;</th>
+				<th>&myopac.holds.unfrozen;</th>
+				<th>&myopac.holds.frozen.until;</th>
+				<th>&opac.holds.expire_time;</th>
+                <th width='' class='unsortable'>&common.select;
                     (<a id='myopac_select_all_holds' onclick='myopacSelectAllHolds();' 
                         class='classic_link' href='javascript:void(0);'>&common.all;</a>/<a id='myopac_select_none_holds' 
                         onclick='myopacSelectNoneHolds();' class='classic_link'  href='javascript:void(0);'>&common.none;</a>)
-                </td>
+                </th>
 
-				<td>&myopac.holds.edit;</td>
+				<th class='unsortable'>&myopac.holds.edit;</th>
 			</tr>
 		</thead>
 
@@ -89,7 +89,6 @@
 					<span class='hide_me' name='hold_status_available'><b style='color:red'>&myopac.holds.status.available;</b></span>
 					<span class='hide_me' name='hold_qstats'></span>
 				</td>
-                <td class='hide_me' name='myopac_holds_estimated_wait'/>
 
                 <td>
                     <!-- These characaters do not display in Internet Exploror, *sigh*

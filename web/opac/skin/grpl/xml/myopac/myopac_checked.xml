@@ -1,9 +1,7 @@
 
 <div id='myopac_checked_div' xmlns:xi="http://www.w3.org/2001/XInclude" >
 
-    <!--
-	<script language='javascript' type='text/javascript' src='<!||#echo var="OILS_JS_BASE"||>/Date.W3CDTF.js'/>
-    -->
+	<script language='javascript' type='text/javascript' src='/opac/en-US/skin/grpl/js/sorttable.js'/>
 
    <table width='100%'><tbody>
       <tr>
@@ -21,19 +19,19 @@
        <tr id='my_renewing' class='hide_me'><td align='center'><b>&myopac.checked.renewing;</b></td></tr>
    </tbody></table>
 
-	<table width='100%' class='light_border data_grid'>
+	<table width='100%' class='light_border data_grid sortable' id='myopac_items_out_table'>
 
 		<thead class='color_3'>
 			<tr>
-				<td width='45%'>&common.title;</td>
-				<td width='20%'>&common.author;</td>
-				<td width='10%' nowrap='nowrap' align='center'>&myopac.fines.due;</td>
-				<td width='10%' nowrap='nowrap' align='center'>&myopac.checked.renew.remaining;</td>
-            <td width='15%'>&common.select;
+				<th width='45%'>&common.title;</th>
+				<th width='20%'>&common.author;</th>
+				<th width='10%' nowrap='nowrap' align='center'>&myopac.fines.due;</th>
+				<th width='10%' nowrap='nowrap' align='center'>&myopac.checked.renew.remaining;</th>
+            <th width='15%' class='unsortable'>&common.select;
                (<a id='myopac_select_all_checked' onclick='myopacSelectAllChecked();' 
                   class='classic_link' href='javascript:void(0);'>&common.all;</a>/<a id='myopac_select_none_checked' 
                   onclick='myopacSelectNoneChecked();' class='classic_link'   href='javascript:void(0);'>&common.none;</a>)
-            </td>
+            </th>
 			</tr>
 		</thead>
 
