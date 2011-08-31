@@ -986,6 +986,7 @@ function _rdetailRows(node) {
 		var actions = $n(row, 'rdetail_actions_cell');
 
 		var p = libtd.getElementsByTagName('a')[0];
+	if (p)
 		libtd.insertBefore(text(node.name()), p);
 		libtd.setAttribute("style", "padding-left: " + ((findOrgDepth(node) - 1)  * 9) + "px;");
 
