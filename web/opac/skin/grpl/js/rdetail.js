@@ -994,6 +994,7 @@ function _rdetailRows(node) {
 		var actions = $n(row, 'rdetail_actions_cell');
 
 		var p = libtd.getElementsByTagName('a')[0];
+	if (p)
 		libtd.insertBefore(text(node.name()), p);
 		libtd.setAttribute("style", "padding-left: " + ((findOrgDepth(node) - 1)  * 9) + "px;");
 
@@ -1048,7 +1049,7 @@ function _rdetailBuildInfoRows(r) {
 	for( var i = 0; i < summary.length; i++ ) {
 
 		var arr = summary[i];
-//MIEG: only the entities we want to see
+//GRPL: only the entities we want to see
                 if (arr[0] < 9 || arr[0] > 18) continue;
 
 		globalCNCache[js2JSON([arr[1],arr[2],arr[3]])] = 1; // prefix, label, suffix.  FIXME - Am I used anywhere?

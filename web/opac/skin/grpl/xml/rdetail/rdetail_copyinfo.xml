@@ -1,9 +1,11 @@
-
+<!--[if !IE]>
+        <script language="javascript" type="text/javascript" src="/xul/server/circ/util.js"></script> 
+        <script language="javascript" type="text/javascript" src="/xul/server/OpenILS/global_util.js"></script>
         <script language="javascript" type="text/javascript" src="/xul/server/main/constants.js"></script>
         <script language="javascript" type="text/javascript" src="/xul/server/main/JSAN.js"></script>
-        <script language="javascript" type="text/javascript" src="/xul/server/circ/util.js"></script>
-        <script language="javascript" type="text/javascript" src="/xul/server/OpenILS/global_util.js"></script>
-	<script language="javascript" type="text/javascript" src="/opac/skin/grpl/js/sorttable.js"></script>
+<[endif]-->
+        <script language="javascript" type="text/javascript" src="/opac/skin/grpl/js/sorttable.js"></script>
+
 
 
 <!-- This holds information for copies attached to this record -->
