@@ -987,7 +987,7 @@ function _rdetailRows(node) {
 
 		var p = libtd.getElementsByTagName('a')[0];
 //		libtd.insertBefore(text(node.name()), p);
-		libtd.appendChild(text(node.name());
+		libtd.appendChild(text(node.name()));
 		libtd.setAttribute("style", "padding-left: " + ((findOrgDepth(node) - 1)  * 9) + "px;");
 
 		if(!findOrgType(node.ou_type()).can_have_vols()) {
