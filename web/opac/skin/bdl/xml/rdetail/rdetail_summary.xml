@@ -117,6 +117,11 @@
                     ]]></script>
                 </td>
             </tr>
+                        <tr id='rdetail_hold_count_row' class=''>
+                                <td nowrap='nowrap' class='rdetail_desc'>Current Holds</td>
+                                <td class='rdetail_item' id='rdetail_hold_count'> </td>
+                        </tr>
+
 
 			<tr class='hide_me' id='rdetail_online_row'>
 				<!-- *** Example of how to use the openils.BibTemplate infrastructure to augment the stock

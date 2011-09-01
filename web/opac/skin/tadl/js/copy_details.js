@@ -315,7 +315,7 @@ function cpdDrawCopy(r) {
 
 		/* show the book now link */
 		l = $n(row, 'copy_reserve_link');
-		unHideMe(l);
+//		unHideMe(l);
 		l.onclick = function() {
 			// XXX FIXME this duplicates things in cat/util.js
 			// Also needs i18n

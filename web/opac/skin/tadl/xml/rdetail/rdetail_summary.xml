@@ -66,6 +66,11 @@
 				<td class='rdetail_item' id='rdetail_publisher'> </td>
 			</tr>
 
+                        <tr id='series_row' class='hide_me less'>
+                                <td nowrap='nowrap' class='rdetail_desc'>Series</td>
+                                <td class='rdetail_item' id='rdetail_series'> </td>
+                        </tr>
+
 
 			<tr>
 				<td nowrap='nowrap' class='rdetail_desc'>&common.physical;</td>		
@@ -117,6 +122,10 @@
                     ]]></script>
                 </td>
             </tr>
+                        <tr id='rdetail_hold_count_row' class=''>
+                                <td nowrap='nowrap' class='rdetail_desc'>Current Holds</td>
+                                <td class='rdetail_item' id='rdetail_hold_count'> </td>
+                        </tr>
 
 			<tr class='hide_me' id='rdetail_online_row'>
 				<!-- *** Example of how to use the openils.BibTemplate infrastructure to augment the stock

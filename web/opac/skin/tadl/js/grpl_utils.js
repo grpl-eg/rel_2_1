@@ -62,7 +62,7 @@ function getHoldCount(id){
     holdCount = new ActiveXObject( "Microsoft.XMLHTTP" );
   }
 
-   holdCount.open( "GET", "/cgi-bin/utils/public/hold_count_grpl.cgi?id=" + id, false )
+   holdCount.open( "GET", "/cgi-bin/utils/public/hold_count_tadl.cgi?id=" + id, false )
    holdCount.onreadystatechange = function() {
         if (holdCount.readyState == 4) {
             result = holdCount.responseText;

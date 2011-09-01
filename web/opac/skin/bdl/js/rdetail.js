@@ -632,6 +632,10 @@ function _rdetailDraw(r) {
         }
     }); 
     req.send();
+
+        var curr_holds = getHoldCount(record.doc_id());
+        if (curr_holds)
+                $('rdetail_hold_count').appendChild(text(curr_holds));
 }
 
 

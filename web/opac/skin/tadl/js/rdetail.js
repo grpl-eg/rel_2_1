@@ -471,6 +471,11 @@ function _rdetailDraw(r) {
 	G.ui.rdetail.pubdate.appendChild(text(record.pubdate()));
 	G.ui.rdetail.publisher.appendChild(text(record.publisher()));
 	$('rdetail_physical_desc').appendChild(text(record.physical_description()));
+if (record.series()){
+   unHideMe($("series_row"));
+   $('rdetail_series').appendChild(text(record.series()));
+}
+
 	r = record.types_of_resource();
 	if(r) {
 		G.ui.rdetail.tor.appendChild(text(r[0]));
@@ -632,6 +637,10 @@ function _rdetailDraw(r) {
         }
     }); 
     req.send();
+
+        var curr_holds = getHoldCount(record.doc_id());
+        if (curr_holds)
+                $('rdetail_hold_count').appendChild(text(curr_holds));
 }
 
 
