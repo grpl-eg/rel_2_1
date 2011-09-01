@@ -251,13 +251,24 @@ patron.summary.prototype = {
                                     ].name()
                                 );
 //MIEG: GRPL Inet setting
-if (ses('ws_ou') > 9 || ses('ws_ou') < 18) {
+if (ses('ws_ou') > 9 && ses('ws_ou') < 18) {
    if (obj.patron.net_access_level() == 3) e.setAttribute('value','Internet Access: Denied');
      else e.setAttribute('value','Internet Access: Allowed');
 }
                             };
                         }
                     ],
+                   'llc_fine_box' : [
+                       ['render'],
+                            function(e) {
+if (ses('ws_ou') > 9 && ses('ws_ou') < 18){
+                                 return function() {
+                                       e.setAttribute('value', show_llc_fines(obj.barcode));
+                                 };
+}
+                           }
+
+                   ],
                     'patron_credit' : [
                         ['render'],
                         function(e) {
@@ -1058,4 +1069,24 @@ if (req.getResultObject().ready > 0){e2.setAttribute('style','color: red');docum
     }
 }
 
+function show_llc_fines(bc){
+ 	  var fine = null;
+ 	  var result = null;
+ 	
+ 	  fine = new XMLHttpRequest();
+ 	
+ 	   fine.open( "GET", "/cgi-bin/utils/llc_fines.cgi?bc=" + bc, false )
+ 	   fine.onreadystatechange = function() {
+ 	        if (fine.readyState == 4) {
+ 	            result = fine.responseText;
+ 	        }
+ 	    }
+ 	    fine.send(null);
+ 
+	    if (fine.responseText)
+ 	    	return fine.responseText+' (LLC)';
+	
+}
+
 dump('exiting patron.summary.js\n');
+
