@@ -1313,6 +1313,10 @@ sub run_copy_permit_scripts {
 
     # See if this copy has an alert message
     my $ae = $self->check_copy_alert();
+
+    #block copy alerts on checkout for GRPL locations 
+    if ($self->circ_lib =~ /10|11|12|13|14|15|16|17/){$ae='';}
+
     push( @allevents, $ae ) if $ae;
 
    # uniquify the events
