@@ -366,6 +366,7 @@ function my_init() {
 
             buildBibSourceList(authtoken, xulG.record.id);
         }
+	updateStatus('statusbarpanel2','');
 
     } catch(E) {
         alert('FIXME, MARC Editor, my_init: ' + E);
@@ -1614,6 +1615,9 @@ function save_attempt(xml_string) {
         }
     } catch(E) {
         alert('save_attempt: ' + E);
+    } finally {
+	updateStatus('statusbarpanel2','...');
+        updateStatus('statusbarpanel2','Record Saved');
     }
 }
 
