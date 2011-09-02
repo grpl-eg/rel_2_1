@@ -1269,8 +1269,9 @@ if (barcode.length > 22){
                     function(newVal) { uEditDupeSearch('ident_value', newVal); 
 //MIEG: TADL Michigan ID - reused for ID and dob population
 if (newVal.length > 22){
-        if (newVal.length == 25) {var bc = newVal.substr(0,13);}
-        if (newVal.length == 23) {var bc = newVal.substr(0,11);}
+        if (newVal.match(/\D\d{24}/)) {var bc = newVal.substr(0,13);}
+        if (newVal.match(/\D\d{22}/)) {var bc = newVal.substr(0,11);}
+
         var dob = findWidget('au', 'dob');
         var ident = findWidget('au', 'ident_value');
         var id_type = findWidget('au', 'ident_type');
