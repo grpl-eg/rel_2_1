@@ -72,6 +72,10 @@ sub handler {
 		$skin='tadl';
 	}
 
+	if ($hostname =~ /^master/){
+		$skin='grpl';
+	}
+
 	my $port		= $cgi->server_port();
 
 	my $proto = "http";
