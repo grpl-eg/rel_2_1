@@ -1203,7 +1203,7 @@ circ.util.columns = function(modify,params) {
         {
             'persist' : 'hidden width ordinal',
             'fm_class' : 'circ',
-            'id' : 'due_date',
+            'id' : 'due_time',
             'label' : document.getElementById('commonStrings').getString('staff.circ_label_due_date'),
             'flex' : 1,
             'sort_type' : 'date',
@@ -1212,6 +1212,24 @@ circ.util.columns = function(modify,params) {
             'editable' : false, 'render' : function(my) {
                 if (my.circ) {
                     return util.date.formatted_date( my.circ.due_date(), '%{localized}' );
+                } else {
+                    return "";
+                }
+            }
+            ,'sort_value' : function(my) { return util.date.db_date2Date( my.circ.due_date() ).getTime(); }
+        },
+        {
+            'persist' : 'hidden width ordinal',
+            'fm_class' : 'circ',
+            'id' : 'due_date',
+            'label' : document.getElementById('commonStrings').getString('staff.circ_label_due_date'),
+            'flex' : 1,
+            'sort_type' : 'date',
+            'primary' : false,
+            'hidden' : true,
+            'editable' : false, 'render' : function(my) {
+                if (my.circ) {
+		    return util.date.formatted_date( my.circ.due_date(), '%{localized}' ).replace(/\s\d\d:\d\d.*/,'');
                 } else {
                     return "";
                 }
