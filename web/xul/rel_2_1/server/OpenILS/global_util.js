@@ -651,6 +651,8 @@
 
         function updateStatus(panel,value) {
 
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+
 		var mainWindow = window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
                    .getInterface(Components.interfaces.nsIWebNavigation)
                    .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
