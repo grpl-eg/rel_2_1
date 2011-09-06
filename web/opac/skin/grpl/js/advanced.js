@@ -149,7 +149,7 @@ function advGenericSearch() {
 
 
 function advFindBarcode(barcode) {
-    var req = new Request(FETCH_BIB_ID_BY_BARCODE, barcode);
+    var req = new Request(FETCH_BIB_IDS_BY_BARCODE, barcode);
     req.callback(advDrawBarcode);
     req.request.alertEvent = false;
     req.send();
