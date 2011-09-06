@@ -100,6 +100,7 @@ function xml_escape_unicode ( str ) {
 }
 
 function wrap_long_fields (node) {
+   if(ses('ws_ou') > 9 && ses('ws_ou') < 19) return;
     var text_size = dojo.attr(node, 'size');
     var hard_width = 100; 
     if (text_size > hard_width) {
