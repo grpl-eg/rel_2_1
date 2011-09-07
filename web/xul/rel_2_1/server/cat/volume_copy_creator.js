@@ -21,7 +21,7 @@ function my_init() {
         netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
         if (typeof JSAN == 'undefined') { throw( $("commonStrings").getString('common.jsan.missing') ); }
         JSAN.errorLevel = "die"; // none, warn, or die
-        JSAN.addRepository('/xul/rel_2_1/server/');
+        JSAN.addRepository('/xul/server/');
         JSAN.use('util.error'); g.error = new util.error();
         g.error.sdump('D_TRACE','my_init() for cat/volume_copy_creator.xul');
 
@@ -406,6 +406,7 @@ g.render_callnumber_copy_count_entry = function(row,ou_id,count) {
         dump('\tcomposite_key = ' + callnumber_composite_key + '\n');
 
         _call_number_column_textbox.setAttribute('callkey',callnumber_composite_key);
+        //_call_number_column_textbox.setAttribute('tooltiptext',callnumber_composite_key);
         _call_number_column_textbox.setAttribute('acnc_id',acnc_id);
         _call_number_column_textbox.setAttribute('acnp_id',acnp_id);
         _call_number_column_textbox.setAttribute('acns_id',acns_id);
@@ -474,25 +475,17 @@ g.render_callnumber_copy_count_entry = function(row,ou_id,count) {
                     call_number_column_textbox.addEventListener( 'focus', function(ev) { g.last_focus = ev.target; }, false );
 
                     /**** CLASSIFICATION COLUMN revisited ****/
-                    var classification_column_menulist = g.render_class_menu(call_number_column_textbox);
-                    classification_column_menulist.addEventListener(
-                        'command',
-                        function() {
-                            handle_change_to_callnumber_data({'target':call_number_column_textbox});
-                        }
-                        ,false
+                    var classification_column_menulist = g.render_class_menu(
+                        call_number_column_textbox,
+                        handle_change_to_callnumber_data
                     );
                     classification_column_box.appendChild(classification_column_menulist);
                     classification_column_menulist.value = g.label_class;
 
                     /**** PREFIX COLUMN revisited ****/
-                    var prefix_column_menulist = g.render_prefix_menu(call_number_column_textbox);
-                    prefix_column_menulist.addEventListener(
-                        'command',
-                        function() {
-                            handle_change_to_callnumber_data({'target':call_number_column_textbox});
-                        }
-                        ,false
+                    var prefix_column_menulist = g.render_prefix_menu(
+                        call_number_column_textbox,
+                        handle_change_to_callnumber_data
                     );
 
                     prefix_column_box.appendChild(prefix_column_menulist);
@@ -502,13 +495,9 @@ g.render_callnumber_copy_count_entry = function(row,ou_id,count) {
             suffix_column_box.setAttribute('class','cn_suffix');
             r.appendChild(suffix_column_box);
             suffix_column_box.width = $('batch_suffix').parentNode.boxObject.width;
-                var suffix_column_menulist = g.render_suffix_menu(call_number_column_textbox);
-                suffix_column_menulist.addEventListener(
-                    'command',
-                    function() {
-                        handle_change_to_callnumber_data({'target':call_number_column_textbox});
-                    }
-                    ,false
+                var suffix_column_menulist = g.render_suffix_menu(
+                    call_number_column_textbox,
+                    handle_change_to_callnumber_data
                 );
                 suffix_column_box.appendChild(suffix_column_menulist);
 
@@ -572,9 +561,25 @@ g.render_callnumber_copy_count_entry = function(row,ou_id,count) {
                             var acnp_id = callnumber_composite_key.split(/:/)[1];
                             var acns_id = callnumber_composite_key.split(/:/).slice(-1)[0];
                             call_number_column_textbox.value = acn_label;
-                            classification_column_menulist.value = acnc_id;
-                            prefix_column_menulist.value = acnp_id;
-                            suffix_column_menulist.value = acns_id;
+
+                            var _call_number_column_box = call_number_column_textbox.parentNode;
+
+                            var _classification_column_box =
+                                _call_number_column_box.previousSibling.previousSibling; /* two over to the left */
+                            var _classification_column_menulist =
+                                _classification_column_box.firstChild;
+                            var _prefix_column_box =
+                                _call_number_column_box.previousSibling; /* one over to the left */
+                            var _prefix_column_menulist =
+                                _prefix_column_box.firstChild;
+                            var _suffix_column_box =
+                                _call_number_column_box.nextSibling; /* one over to the right */
+                            var _suffix_column_menulist =
+                                _suffix_column_box.firstChild;
+
+                            _classification_column_menulist.value = acnc_id;
+                            _prefix_column_menulist.value = acnp_id;
+                            _suffix_column_menulist.value = acns_id;
                             dump('\tacn_label = ' + acn_label + ' acnc_id = ' + acnc_id + ' acnp_id = ' + acnp_id + ' acns_id = ' + acns_id + '\n');
                             handle_change_to_callnumber_data({'target':call_number_column_textbox});
                         } else {
@@ -713,6 +718,7 @@ g.render_barcode_entry = function(node,callnumber_composite_key,count,ou_id) {
             }
             tb.setAttribute('ou_id',ou_id);
             tb.setAttribute('callkey',callnumber_composite_key);
+            //tb.setAttribute('tooltiptext',callnumber_composite_key);
             tb.setAttribute('rel_vert_pos',rel_vert_pos_barcode);
             part_menu.firstChild.setAttribute('rel_vert_pos',rel_vert_pos_part);
             if (!tb.value && g.org_label_existing_copy_map[ ou_id ]) {
@@ -720,7 +726,7 @@ g.render_barcode_entry = function(node,callnumber_composite_key,count,ou_id) {
                 tb.setAttribute('acp_id', g.org_label_existing_copy_map[ ou_id ][ callnumber_composite_key ][i].id());
                 var temp_parts = g.org_label_existing_copy_map[ ou_id ][ callnumber_composite_key ][i].parts();
                 temp_parts = util.functional.filter_list(
-                    temp_parts,
+                    temp_parts || [],
                     function(p) {
                         return p.record() == g.doc_id; // filter out foreign parts
                     }
@@ -1258,13 +1264,14 @@ g.render_class_menu = function(call_number_tb) {
         'command',
         function() {
             call_number_tb.setAttribute('acnc_id',ml.value);
+            update_func({'target':call_number_tb});
         },
         false
     );
     return ml;
 }
 
-g.render_prefix_menu = function(call_number_tb) {
+g.render_prefix_menu = function(call_number_tb,update_func) {
     var ou_id = call_number_tb.getAttribute('ou_id');
     var org = g.data.hash.aou[ ou_id ];
     var menulist = document.createElement('menulist');
@@ -1287,6 +1294,7 @@ g.render_prefix_menu = function(call_number_tb) {
         'command',
         function() {
             call_number_tb.setAttribute('acnp_id',menulist.value);
+            update_func({'target':call_number_tb});
         },
         false
     );
@@ -1320,7 +1328,7 @@ g.render_prefix_menu_items = function(menupopup,ou_id) {
     }
 }
 
-g.render_suffix_menu = function(call_number_tb) {
+g.render_suffix_menu = function(call_number_tb,update_func) {
     var ou_id = call_number_tb.getAttribute('ou_id');
     var org = g.data.hash.aou[ ou_id ];
     var menulist = document.createElement('menulist');
@@ -1343,6 +1351,7 @@ g.render_suffix_menu = function(call_number_tb) {
         'command',
         function() {
             call_number_tb.setAttribute('acns_id',menulist.value);
+            update_func({'target':call_number_tb});
         },
         false
     );
@@ -1495,7 +1504,7 @@ g.render_batch_button = function() {
     btn.setAttribute('id','batch_button');
     btn.setAttribute('label',$('catStrings').getString('staff.cat.volume_copy_creator.my_init.btn.label'));
     btn.setAttribute('accesskey',$('catStrings').getString('staff.cat.volume_copy_creator.my_init.btn.accesskey'));
-    btn.setAttribute('image','/xul/rel_2_1/server/skin/media/images/down_arrow.gif');
+    btn.setAttribute('image','/xul/server/skin/media/images/down_arrow.gif');
     hbox.appendChild(btn);
     btn.addEventListener(
         'command',
