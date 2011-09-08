@@ -1204,7 +1204,7 @@ if (barcode.length > 22){
                         var oldDob = patron.dob();
                         if(dojo.date.stamp.fromISOString(oldDob) == newDob) return;
 //MIEG: kludge to fix timezone issue
-		newDob = dojo.date.add(newDob,'hour',1);
+		newDob = dojo.date.add(newDob,'hours',3);
 
                         var juvInterval = orgSettings['global.juvenile_age_threshold'] || '18 years';
                         var juvWidget = findWidget('au', 'juvenile');
