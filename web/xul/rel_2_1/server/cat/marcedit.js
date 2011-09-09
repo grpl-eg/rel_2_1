@@ -40,6 +40,8 @@ var p;
 var auth_pages = {};
 var show_auth_menu = false;
 
+var usr_settings;
+
 function $(id) { return document.getElementById(id); }
 
 function mangle_005() {
@@ -100,7 +102,7 @@ function xml_escape_unicode ( str ) {
 }
 
 function wrap_long_fields (node) {
-   if(ses('ws_ou') > 9 && ses('ws_ou') < 19) return;
+    if (usr_settings['staff_client.marcedit.no_wrap']) return;
     var text_size = dojo.attr(node, 'size');
     var hard_width = 100; 
     if (text_size > hard_width) {
@@ -154,6 +156,10 @@ function my_init() {
         if (typeof JSAN == 'undefined') { throw( $("commonStrings").getString('common.jsan.missing') ); }
         JSAN.errorLevel = "die"; // none, warn, or die
         JSAN.addRepository('/xul/rel_2_1/server/');
+
+        JSAN.use('util.network');
+        var network = new util.network();
+        usr_settings  = network.simple_request('FM_AUS_RETRIEVE',[ses()]);
 
         // Fake xulG for standalone...
         try {
