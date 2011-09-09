@@ -277,6 +277,10 @@ util.print.prototype = {
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
             try{b = s; s=s.replace(/%TODAY_F%/g,(util.date.formatted_date(new Date(),'%F')));}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
+	    var grplDate = new Date();
+	    grplDate.setDate(grplDate.getDate()+8);
+            try{b = s; s=s.replace(/%TODAY_PLUS8%/g,(util.date.formatted_date(grplDate,'%m/%d')));}
+                catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
 
             try {
                 if (typeof params.row != 'undefined') {
@@ -471,10 +475,10 @@ util.print.prototype = {
             var html_path = '"' + html_file._file.path + '"';
             html_file.close();
             
-            var cmd = params.dos_print ?
-                'copy ' + text_path + ' lpt1 /b\n'
-                : obj.oils_printer_external_cmd.replace('%receipt.txt%',text_path).replace('%receipt.html%',html_path)
-            ;
+            var cmd = params.dos_print ? 
+		 'copy ' + text_path + ' lpt1 /b\n' 
+		 : obj.oils_printer_external_cmd.replace('%receipt.txt%',text_path).replace('%receipt.html%',html_path)
+	    ;
 
             file = new util.file('receipt.bat');
             file.write_content('truncate+exec',cmd);
