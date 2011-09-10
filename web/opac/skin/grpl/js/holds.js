@@ -759,6 +759,7 @@ function holdsBuildOrgSelector(node) {
 
 	if(!node) node = globalOrgTree;
     if(!isTrue(node.opac_visible())) return;
+    if(node.id() != 1 && (node.id() < 9 || node.id() > 17)) return;
 
 	var selector = $('holds_org_selector');
 	var index = selector.options.length;

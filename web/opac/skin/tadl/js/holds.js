@@ -862,6 +862,7 @@ function holdsBuildOrgSelector(node) {
 
 	if(!node) node = globalOrgTree;
 	if(!isTrue(node.opac_visible())) return;
+	if(node.id() != 1 && (node.id() < 22|| node.id() > 28)) return;
 
 	var render_this_org = true;
 	var orgHiding = checkOrgHiding(); // value here is cached so not too painful with the recursion
