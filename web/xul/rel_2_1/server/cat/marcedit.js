@@ -102,7 +102,7 @@ function xml_escape_unicode ( str ) {
 }
 
 function wrap_long_fields (node) {
-    if (usr_settings['staff_client.marcedit.no_wrap']) return;
+    if (usr_settings && usr_settings['staff_client.marcedit.no_wrap']) return;
     var text_size = dojo.attr(node, 'size');
     var hard_width = 100; 
     if (text_size > hard_width) {
@@ -157,15 +157,13 @@ function my_init() {
         JSAN.errorLevel = "die"; // none, warn, or die
         JSAN.addRepository('/xul/rel_2_1/server/');
 
-        JSAN.use('util.network');
-        var network = new util.network();
-        usr_settings  = network.simple_request('FM_AUS_RETRIEVE',[ses()]);
 
         // Fake xulG for standalone...
         try {
             window.xulG.record;
-        } catch (e) {
-            window.xulG = {};
+
+        } catch (e) { 
+	    window.xulG = {};
             window.xulG.record = {};
             window.xulG.save = {};
             window.xulG.marc_control_number_identifier = 'CONS';
@@ -179,7 +177,7 @@ function my_init() {
                 window.xulG.record.id = _rid;
                 window.xulG.record.url = '/opac/extras/supercat/retrieve/marcxml/record/' + _rid;
             }
-        }
+        } 
 
         // End faking part...
 
@@ -214,6 +212,11 @@ function my_init() {
             req.open('POST',window.xulG.record.url,false);
             req.send(null);
             window.xulG.record.marc = req.responseText.replace(xmlDeclaration, '');
+
+//MIEG: load the usr_settings, but only if we have an existing record, not a brand new one
+                JSAN.use('util.network');
+                var network = new util.network();
+                usr_settings  = network.simple_request('FM_AUS_RETRIEVE',[ses()]);
         }
 
         xml_record = new XML( window.xulG.record.marc );
@@ -378,6 +381,7 @@ function my_init() {
     } catch(E) {
         alert('FIXME, MARC Editor, my_init: ' + E);
     }
+
 }
 
 
@@ -1623,7 +1627,6 @@ function save_attempt(xml_string) {
     } catch(E) {
         alert('save_attempt: ' + E);
     } finally {
-	updateStatus('statusbarpanel2','...');
         updateStatus('statusbarpanel2','Record Saved');
     }
 }
