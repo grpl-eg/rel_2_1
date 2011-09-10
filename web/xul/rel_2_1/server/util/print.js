@@ -96,6 +96,7 @@ util.print.prototype = {
     },
 
     'escape_html' : function(data) {
+      if(data)
         return data.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     },
 
@@ -288,14 +289,16 @@ util.print.prototype = {
                         alert('debug - please tell the developers that deprecated template code tried to execute');
                         for (var i = 0; i < cols.length; i++) {
                             var re = new RegExp(cols[i],"g");
-                            try{b = s; s=s.replace(re, this.escape_html(params.row[i]));}
+			    //try{b = s; s=s.replace(re, this.escape_html(params.row[i]));}
+                            try{b = s; s=s.replace(re, (typeof params.row[i] == 'string' ? this.escape_html(params.row[i]) : params.row[i]));}
                                 catch(E){s = b; this.error.standard_unexpected_error_alert('print.js, template_sub(): 1 string = <' + s + '>',E);}
                         }
                     } else { 
                         /* for dump_with_keys */
                         for (var i in params.row) {
                             var re = new RegExp('%'+i+'%',"g");
-                            try{b = s; s=s.replace(re, this.escape_html(params.row[i]));}
+			    //try{b = s; s=s.replace(re, this.escape_html(params.row[i]));}
+			    try{b = s; s=s.replace(re, (typeof params.row[i] == 'string' ? this.escape_html(params.row[i]) : params.row[i]));}
                                 catch(E){s = b; this.error.standard_unexpected_error_alert('print.js, template_sub(): 2 string = <' + s + '>',E);}
                         }
                     }

@@ -267,7 +267,7 @@ circ.print_list_template_editor.prototype = {
                                             + '%PATRON_FIRSTNAME%, %PATRON_ALIAS%, %PATRON_ALIAS_OR_FIRSTNAME%, %PATRON_LASTNAME%, '
                                             + '%PATRON_BARCODE%, %patron_barcode%, '
                                             + '%TODAY%, %TODAY_TRIM%, %TODAY_m%, %TODAY_d%, %TODAY_Y%, %TODAY_H%, %TODAY_I%, '
-                                            + '%TODAY_M%, %TODAY_D%, %TODAY_F% '
+                                            + '%TODAY_M%, %TODAY_D%, %TODAY_F%, %TODAY_PLUS8% '
                                             + '</p>'
                                             + '<h1>'
                                             + document.getElementById('circStrings').getFormattedString('staff.circ.print_list_template.window.template_type', [template_type])
