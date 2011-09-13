@@ -2781,11 +2781,11 @@ sub all_rec_holds {
     if ($args->{pickup_lib} =~ /a$/) {
 	chop $args->{pickup_lib};
         CASE: {
-                $_ = $args->{pickup_lib} || '';
-                /[3..8]/  and do  { $args->{pickup_lib} = { between => [2,8]   }; last CASE; };
-                /[10..17]/ and do  { $args->{pickup_lib} = { between => [10,17] }; last CASE; };
-                /[23..28]/ and do  { $args->{pickup_lib} = { between => [23,28] }; last CASE; };
-                /[31..33]/   and do  { $args->{pickup_lib} = { between => [31,33] }; last CASE; };
+                my $a = $args->{pickup_lib} || '';
+                ($a > 2  && $a < 9)  and do  { $args->{pickup_lib} = { between => [2,8]   }; last CASE; };
+                ($a > 9  && $a < 18) and do  { $args->{pickup_lib} = { between => [10,17] }; last CASE; };
+                ($a > 22 && $a < 29) and do  { $args->{pickup_lib} = { between => [23,28] }; last CASE; };
+                ($a > 30 && $a < 34) and do  { $args->{pickup_lib} = { between => [31,33] }; last CASE; };
         }
     }
 
