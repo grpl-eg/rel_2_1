@@ -421,6 +421,10 @@ function oneLineDrawCopy(r){
 
     	var display_location = copy.location().name();
 
+//GRPL : add note on Storage items
+        if (display_location == 'Storage')
+               display_location = display_location+' (see staff)';
+
         $n(row, 'location').appendChild(text(display_location));
         $n(row, 'status').appendChild(text(copy.status().name()));
 
