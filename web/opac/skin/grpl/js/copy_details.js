@@ -430,9 +430,16 @@ function oneLineDrawCopy(r){
 
         var tit = args.record.title(); 
  	var cn = args.callnumber; 
+	var loc = display_location;
  	tit = tit.replace(/'/g,''); 
  	cn = cn.replace(/'/g,''); 
+	loc = loc.replace(/'/g,'');	
  	$n(row, 'txt').appendChild(elem('img', {src:'/opac/images/grpl/txt.gif','onclick':"txtCallNumber(\'" +tit+"\',\'" +cn+ "\');"})); 
+	$n(row, 'QRcode').appendChild(elem('img', {src:'/opac/images/grpl/qr.gif','onmouseover':"showQR(\'" +tit+"\',\'" +cn+ "\',\'" +loc+ "\');"}));
+if (IE) {
+	hideMe($n(row, 'txt'));
+	hideMe($n(row, 'QRcode'));
+}
 
 if (notes && notes.length > 0){
     for( var n in notes ) {

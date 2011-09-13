@@ -83,9 +83,9 @@ function txtCallNumber(tit,cn){
 	var carrier = dojo.cookie('txtCarrier') || '';
 	var number = dojo.cookie('txtNumber') || '';		
 
-	var win = window.open('','',"location=no,width=450,height=230,scrollbars");
+	var win = window.open('','',"location=no,width=450,height=230,left=300,top=200,scrollbars");
 	var content = "<body>";
-	content += '<link type="text/css" rel="stylesheet" href="http://grpl-new.michiganevergreen.org//opac//common/css/mediumfont.css">';
+	content += '<link type="text/css" rel="stylesheet" href="http://grpl.michiganevergreen.org//opac//common/css/mediumfont.css">';
 	content += "<span>Call number and title information can be sent via text message to certain mobile devices.  Please select your carrier and enter your 10-digit mobile number.</span><br/>&nbsp;";
 	content += "<form method='post' action='/cgi-bin/utils/public/txtCallNumber.cgi'>";
 	content += "<select name='carrier' id='carrier'><option>"+carrier;
@@ -105,3 +105,19 @@ function txtCallNumber(tit,cn){
 
 	win.document.write(content);
 }
+
+function showQR(tit,cn,loc){
+	$("QR_cell").innerHTML='';
+	$("QR_cell").appendChild(elem('img', {src:'http://chart.apis.google.com/chart?chs=90x90&cht=qr&chld=L|0&chl='+tit+'%0A'+loc+'%0A'+cn}));	
+	$("QR_cell").appendChild(elem('br'));
+	var QRclose = document.createElement('a');
+	QRclose.href = 'javascript:clearQR()';
+	QRclose.appendChild(text('Close'));
+	$("QR_cell").appendChild(QRclose);
+}
+
+function clearQR(){
+	$("QR_cell").innerHTML='';
+}
+
+

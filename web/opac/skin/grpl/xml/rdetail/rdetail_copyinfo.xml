@@ -1,7 +1,9 @@
+<!--[if !IE]>
         <script language="javascript" type="text/javascript" src="/xul/server/circ/util.js"></script> 
         <script language="javascript" type="text/javascript" src="/xul/server/OpenILS/global_util.js"></script>
         <script language="javascript" type="text/javascript" src="/xul/server/main/constants.js"></script>
         <script language="javascript" type="text/javascript" src="/xul/server/main/JSAN.js"></script>
+<[endif]-->
         <script language="javascript" type="text/javascript" src="/opac/skin/grpl/js/sorttable.js"></script>
 
 
@@ -52,6 +54,7 @@
                                                                         <a class='hide_me classic_link' style='font-size: 8pt;' name='item_details_link'>copy_info</a>
                                         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 									<a class='hide_me classic_link' style='font-size: 8pt;' name='barcode_link'></a>
+					<span name='QRcode'/>
 					<span name='txt'/>
                                 </td>
 				<td name='notes'></td>
