@@ -83,6 +83,7 @@
         </row>
 <row id='llc_fine_row'>
         <label class="text_left bill label" value=""/><label id="llc_fine_box" class="bill value"/>
+        <label class="click_link" id="llc_info_link"/>
 </row>
         <row id="pdsgr3">
             <label id="PatronSummaryStatus_checkouts_label" class="copyable text_left items_out label"

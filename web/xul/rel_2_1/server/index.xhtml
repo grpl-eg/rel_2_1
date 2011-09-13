@@ -554,11 +554,12 @@
 	<div id='GRPLBits' style='display:none;'>
 	<hr/>
         <table><tr>
-        <td valign='top'><form method='post' action='http://grpl.michiganevergreen.org/cgi-bin/utils/iiipapi.cgi'>
+        <td valign='top'><form method='post' action='http://grpl.michiganevergreen.org/cgi-bin/utils/iiipapi.cgi' target='LLC'
+				onsubmit="window.open('','LLC', 'width=300,height=300,right=20,top=20,toolbar=no,resizable=yes');" >
                 <input id='box' type='text' name='card' size='20'/>
                 <input type='submit' value='LLC patron info'/>
             </form>
-	<br/><br/><br/>
+	<br/><br/><br/><br/>
                 <form method='post' action='/cgi-bin/utils/llc_lostcard.cgi'>
                         <b>Notify LLC of lost card:</b> <input type='text' size='20' name='card'/><br/>
                         Notes: <textarea name='notes' rows='2' cols='40'></textarea><br/>

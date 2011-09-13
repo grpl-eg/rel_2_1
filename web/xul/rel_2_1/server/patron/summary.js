@@ -263,7 +263,19 @@ if (ses('ws_ou') > 9 && ses('ws_ou') < 18) {
                             function(e) {
 if (ses('ws_ou') > 9 && ses('ws_ou') < 18){
                                  return function() {
-                                       e.setAttribute('value', show_llc_fines(obj.barcode));
+                                       e.setAttribute('value', show_llc_fines(obj.patron.card().barcode()));
+                                 };
+}
+                           }
+
+                   ],
+                   'llc_info_link' : [
+                       ['render'],
+                            function(e) {
+if (ses('ws_ou') > 9 && ses('ws_ou') < 18){
+                                 return function() {
+                                       e.setAttribute('value', 'LLC Info');
+                                       e.setAttribute('onclick', 'try {fetch_llc('+obj.patron.card().barcode()+');}catch(E){alert(E);}');
                                  };
 }
                            }

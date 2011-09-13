@@ -674,3 +674,9 @@
                 }
 
         }
+
+function fetch_llc(bc) {
+        var url = '/cgi-bin/utils/iiipapi.cgi?card='+bc;
+        window.open(url,"LLC_Info","right=20,top=20,width=400,height=600,toolbar=0,resizable=1");
+}
+
