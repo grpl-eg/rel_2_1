@@ -87,7 +87,7 @@ function txtCallNumber(tit,cn){
 	var content = "<body>";
 	content += '<link type="text/css" rel="stylesheet" href="http://grpl-new.michiganevergreen.org//opac//common/css/mediumfont.css">';
 	content += "<span>Call number and title information can be sent via text message to certain mobile devices.  Please select your carrier and enter your 10-digit mobile number.</span><br/>&nbsp;";
-	content += "<form method='post' action='/cgi-bin/utils/txtCallNumber.cgi'>";
+	content += "<form method='post' action='/cgi-bin/utils/public/txtCallNumber.cgi'>";
 	content += "<select name='carrier' id='carrier'><option>"+carrier;
 	content += "<option>Alltel<option>AT&T<option>BoostMobile<option>MetroPCS<option>Sprint/Nextel<option>T-Mobile<option>USCellular<option>VirginMobile<option>Verizon</select>";
 	content += "<input type='text' name='number' id='number' size='15' value='" + number + "'/>";

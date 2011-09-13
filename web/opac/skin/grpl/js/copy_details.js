@@ -424,6 +424,12 @@ function oneLineDrawCopy(r){
         $n(row, 'location').appendChild(text(display_location));
         $n(row, 'status').appendChild(text(copy.status().name()));
 
+        var tit = args.record.title(); 
+ 	var cn = args.callnumber; 
+ 	tit = tit.replace(/'/g,''); 
+ 	cn = cn.replace(/'/g,''); 
+ 	$n(row, 'txt').appendChild(elem('img', {src:'/opac/images/grpl/txt.gif','onclick':"txtCallNumber(\'" +tit+"\',\'" +cn+ "\');"})); 
+
 if (notes && notes.length > 0){
     for( var n in notes ) {
         var note = notes[n];
