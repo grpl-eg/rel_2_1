@@ -436,10 +436,6 @@ function oneLineDrawCopy(r){
 	loc = loc.replace(/'/g,'');	
  	$n(row, 'txt').appendChild(elem('img', {src:'/opac/images/grpl/txt.gif','onclick':"txtCallNumber(\'" +tit+"\',\'" +cn+ "\');"})); 
 	$n(row, 'QRcode').appendChild(elem('img', {src:'/opac/images/grpl/qr.gif','onmouseover':"showQR(\'" +tit+"\',\'" +cn+ "\',\'" +loc+ "\');"}));
-if (IE) {
-	hideMe($n(row, 'txt'));
-	hideMe($n(row, 'QRcode'));
-}
 
 if (notes && notes.length > 0){
     for( var n in notes ) {
