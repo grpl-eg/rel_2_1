@@ -107,7 +107,7 @@ function patron_bill_init() {
         JSAN.use('util.widgets');
         JSAN.use('util.functional');
         var override_default_billing_type = xul_param('override_default_billing_type',{'modal_xulG':true});
-        var billing_list = util.functional.filter_list( g.OpenILS.data.list.cbt, function (x) { return x.id() >= 100 || x.id() == override_default_billing_type } );
+        var billing_list = util.functional.filter_list( g.OpenILS.data.list.cbt, function (x) { return ((x.id() >= 100) && ( !x.name().match(/Legacy/)) ) || x.id() == override_default_billing_type } );
         var ml = util.widgets.make_menulist(
             util.functional.map_list(
                 billing_list.sort( function(a,b) { if (a.name()>b.name()) return 1; if (a.name()<b.name()) return -1; return 0; } ), //g.OpenILS.data.list.billing_type.sort(),
