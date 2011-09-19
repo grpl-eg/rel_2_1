@@ -481,7 +481,8 @@ if (notes && notes.length > 0){
                 var link = $n(row, 'item_details_link');
                 unHideMe(link);
                 link.onclick = function () {
-                        show_copy_details(copy.id());
+                       // show_copy_details(copy.id());
+			xulG.new_tab(xulG.urls.XUL_COPY_STATUS, {}, {'from_item_details_new': true, 'barcodes': [copy.barcode()]});
                 }
         }
 
