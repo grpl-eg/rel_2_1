@@ -617,6 +617,8 @@ function load_item() {
             JSAN.use('patron.util'); 
             var au_obj = patron.util.retrieve_fleshed_au_via_id( ses(), details.hold.usr() );
             $('hold_patron_name').setAttribute('value', $('circStrings').getFormattedString('staff.circ.copy_details.user_details', [au_obj.family_name(), au_obj.first_given_name(), au_obj.card().barcode()]) );
+//MIEG:
+	    $('hold_patron_name').setAttribute('onclick','circ.util.show_copy_details('+details.copy.id()+')');
 
             set("hold_status", details.hold.status()); 
             set("transit", details.hold.transit()); 
