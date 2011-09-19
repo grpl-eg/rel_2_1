@@ -565,6 +565,7 @@ function myOPACShowFines() {
 	var req = new Request(FETCH_FINES_SUMMARY, G.user.session, G.user.id() );
 	req.callback(_myOPACShowFines);
 	req.send();
+	 $('myopac_fines_pay_ses').value = G.user.session;
 }
 
 function _myOPACShowFines(r) {
