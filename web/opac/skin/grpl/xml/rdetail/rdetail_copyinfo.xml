@@ -1,3 +1,4 @@
+
         <script language="javascript" type="text/javascript" src="/opac/skin/grpl/js/sorttable.js"></script>
 
 
@@ -45,11 +46,11 @@
 									<a class='hide_me classic_link' style='font-size: 8pt;' name='copy_hold_link'
                                                                                 href='javascript:void(0);'>copy_hold</a>
 					<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>	
-                                                                        <a class='hide_me classic_link' style='font-size: 8pt;' name='item_details_link' href='javascript:void(0);'>copy_info</a>
+                                                                        <a class='hide_me classic_link' style='font-size: 8pt;' name='item_details_link' href='javascript:void(0);' >copy_info</a>
                                         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 									<a class='hide_me classic_link' style='font-size: 8pt;' name='barcode_link' href='javascript:void(0);'></a>
-					<span name='QRcode'/>
-					<span name='txt'/>
+					<a href='javascript:void(0);' name='QRcode'/>
+					<a href='javascript:void(0);' name='txt'/>
                                 </td>
 				<td name='notes'></td>
                   	</tr>

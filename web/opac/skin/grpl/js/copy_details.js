@@ -434,8 +434,10 @@ function oneLineDrawCopy(r){
  	tit = tit.replace(/'/g,''); 
  	cn = cn.replace(/'/g,''); 
 	loc = loc.replace(/'/g,'');	
- 	$n(row, 'txt').appendChild(elem('img', {src:'/opac/images/grpl/txt.gif','onclick':"txtCallNumber(\'" +tit+"\',\'" +cn+ "\');"})); 
-	$n(row, 'QRcode').appendChild(elem('img', {src:'/opac/images/grpl/qr.gif','onmouseover':"showQR(\'" +tit+"\',\'" +cn+ "\',\'" +loc+ "\');"}));
+	$n(row, 'txt').appendChild(elem('img', {src:'/opac/images/grpl/txt.gif'}));
+	$n(row, 'txt').onclick = function () { txtCallNumber(tit,cn); }
+	$n(row, 'QRcode').appendChild(elem('img', {src:'/opac/images/grpl/qr.gif'}));
+	$n(row, 'QRcode').onclick = function () { showQR(tit,cn,loc); }
 
 if (notes && notes.length > 0){
     for( var n in notes ) {
@@ -481,8 +483,8 @@ if (notes && notes.length > 0){
                 var link = $n(row, 'item_details_link');
                 unHideMe(link);
                 link.onclick = function () {
-                       // show_copy_details(copy.id());
-			xulG.new_tab(xulG.urls.XUL_COPY_STATUS, {}, {'from_item_details_new': true, 'barcodes': [copy.barcode()]});
+                //        show_copy_details(copy.id());
+            		xulG.new_tab(xulG.urls.XUL_COPY_STATUS, {}, {'from_item_details_new': true, 'barcodes': [copy.barcode()]});
                 }
         }
 
