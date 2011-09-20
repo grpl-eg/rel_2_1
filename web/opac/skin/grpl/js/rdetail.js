@@ -994,12 +994,12 @@ function _rdetailRows(node) {
 		var actions = $n(row, 'rdetail_actions_cell');
 
 		var p = libtd.getElementsByTagName('a')[0];
-//		libtd.insertBefore(text(node.name()), p);
+//              libtd.insertBefore(text(node.name()), p);
 
 var tmpName = node.name();
 tmpName = tmpName.replace("Grand Rapids - ","");
-                libtd.appendChild(text(tmpName));
-
+		libtd.appendChild(text(tmpName));
+        
 		libtd.setAttribute("style", "padding-left: " + ((findOrgDepth(node) - 1)  * 9) + "px;");
 
 		if(!findOrgType(node.ou_type()).can_have_vols()) {
@@ -1079,7 +1079,11 @@ function _rdetailBuildInfoRows(r) {
 			}
 
 			var n = findNodeByName( rowNode, config.names.rdetail.lib_cell );
-			n.appendChild(text(thisOrg.name()));
+//			n.appendChild(text(thisOrg.name()));
+var tmpName = thisOrg.name();
+tmpName = tmpName.replace("Grand Rapids - ","");
+                n.appendChild(text(tmpName));
+
 			n.setAttribute("style", "padding-left: " + ((findOrgDepth(thisOrg) - 1)  * 9) + "px;");
 			rowNode.id = "cp_info_" + thisOrg.id() + '_' + (++ctr); 
 
