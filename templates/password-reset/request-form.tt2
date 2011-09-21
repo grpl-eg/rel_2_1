@@ -1,5 +1,6 @@
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>[% i18n.REQUEST_TITLE %]</title>
   <link rel="stylesheet" type="text/css" href="/js/dojo/dijit/themes/tundra/tundra.css" />
   <style type="text/css">
@@ -17,7 +18,7 @@
       </tr>
       <tr>
         <td><label for="username">[% i18n.USERNAME_PROMPT %] </label></td>
-        <td><input type="text" id="barcode" name="username" dojoType="dijit.form.TextBox"/></td>
+        <td><input type="text" id="username" name="username" dojoType="dijit.form.TextBox"/></td>
       </tr>
     </table>
     <!--<label for="email">[% i18n.EMAIL_PROMPT %] </label><input type="text" name="email"/></br>-->
