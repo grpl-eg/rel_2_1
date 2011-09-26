@@ -83,7 +83,7 @@
 		<div id='adv_quick_search'>
 			<div class='adv_quick_search color_4'><b>&sidebar.quick.search;</b></div>
 			<div style='margin-top: 8px;'>
-				<table><tbody><tr>
+				<table><tbody id='adv_quick_tbody'><tr>
 					<td>
 						<select id='adv_quick_type' style='width: 6em;'>
 							<option value='isbn'>&opac.advanced.quick.isbn;</option>
@@ -94,7 +94,7 @@
 							<option value='barcode'>&opac.advanced.quick.barcode;</option>
 						</select>
 					</td><td>
-						<input type='text' id='adv_quick_text' size='16' />
+						<input type='text' name='adv_quick_text' id='adv_quick_text' size='16' />
 					</td>
 				</tr></tbody></table>
 			</div>

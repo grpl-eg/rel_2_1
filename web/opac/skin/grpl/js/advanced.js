@@ -82,6 +82,10 @@ function advGenericSearch() {
 	var type = getSelectorVal($('adv_quick_type'));
 	
 	var term = $('adv_quick_text').value;
+
+        dojo.cookie('focusWhere','quick'); 
+ 	focusWhere = dojo.cookie('focusWhere');
+
 	if(!term) return;
 
 	var arg = {};

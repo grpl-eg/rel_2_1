@@ -5,14 +5,19 @@ attachEvt("common", "locationChanged", advSyncCopyLocLink );
 var COOKIE_NOGROUP_RECORDS = 'grpt';
 var advSelectedOrg = null;
 
+dojo.require('dojo.cookie'); 
+var focusWhere = dojo.cookie('focusWhere');
+
 function advgInit() {
 
 	/* XXX */
-    dojo.require('dojo.cookie');
+//    dojo.require('dojo.cookie');
 	if( dojo.cookie(COOKIE_NOGROUP_RECORDS) || SHOW_MR_DEFAULT )
 		$('adv_group_titles').checked = true;
 
 	$n($('adv_global_tbody'), 'term').focus();
+        if(focusWhere == 'quick') 
+ 	        $n($('adv_quick_tbody'), 'adv_quick_text').focus(); 
 
 	var extras = [ 
 		FETCH_LIT_FORMS, 
@@ -36,9 +41,13 @@ function advgInit() {
 		req.send();
 	}
 
+if(focusWhere != 'quick'){
 	var input = $n($('adv_global_trow'), 'term');
 	input.focus();
 	setEnterFunc(input, advSubmitGlobal);
+}else{ 
+        $n($('adv_quick_tbody'), 'adv_quick_text').focus(); 
+} 
 
     if(getSort() && getSortDir()) {
 	    setSelector($('adv_global_sort_by'), getSort());
@@ -112,6 +121,11 @@ function clearSearchBoxes() {
 function initSearchBoxes() {
     /* loads the compiled search from the search cookie 
         and sets the widgets accordingly */
+    if(dojo.cookie('focusWhere') == 'quick'){ 
+ 	$n($('adv_quick_tbody'), 'adv_quick_text').focus(); 
+        return; 
+    }
+ 	        
 
     search = dojo.cookie(COOKIE_SEARCH);
     if(!search) return;
@@ -119,6 +133,8 @@ function initSearchBoxes() {
 
     search = JSON2js(search);
     if(!search) return;
+
+    dojo.cookie('focusWhere','normal');
 
     var types = getObjectKeys(search.searches);
 
@@ -197,6 +213,8 @@ function advGetVisSelectorVals(id) {
 
 function advSubmitGlobal() {
 	
+	dojo.cookie('focusWhere','normal');
+
 	var sortdir = getSelectorVal($('adv_global_sort_dir'));
 	var sortby  = getSelectorVal($('adv_global_sort_by'));
 
