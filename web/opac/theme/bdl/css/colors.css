@@ -93,7 +93,7 @@ a:focus { background: #e5f1fd; color: #000000;}
 .nav_link_active {font-weight: bold;}
 
 .search_link { text-decoration: none; color: #0e63ba;}
-.result_table_subtable { border-top: 1px solid #Eeffff; }
+.result_table_subtable { border-bottom: 1px solid #acc4de;}
 
 .copy_count_cell { border-right: 1px solid #E0E0E0; } 
 .copy_count_div {	border-left: 2px solid #99ccff; border-right: 2px solid #99ccff; }
