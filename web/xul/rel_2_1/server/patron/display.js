@@ -953,7 +953,8 @@ patron.display.prototype = {
                 if (!penalties) { penalties = []; }
                 var dl_flag_opened = false;
                 for (var i = 0; i < penalties.length; i++) {
-                    if (penalties[i].standing_penalty().block_list() || penalties[i].standing_penalty().id() == 20 /* ALERT_NOTE */) {
+//MIEG: let's see them all
+                   // if (penalties[i].standing_penalty().block_list() || penalties[i].standing_penalty().id() == 20 /* ALERT_NOTE */) {
                         if (!dl_flag_opened) {
                             msg += '<dl>';
                             dl_flag_opened = true;
@@ -963,7 +964,7 @@ patron.display.prototype = {
                         msg += '</dt><dd>';
                         msg += (penalties[i].note())?penalties[i].note():'';
                         msg += '</dd>';
-                    }
+                  //  }
                 }
                 if (dl_flag_opened) { msg += '</dl>'; }
                 var holds = params.holds_summary;
