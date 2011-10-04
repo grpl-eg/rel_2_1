@@ -1142,11 +1142,11 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 
 //GRPL:Add Library-Use-Only string for in-house items
 var tmpCN = whole_cn_text;
-var cnRegex = /^R |^Consumer R |^Found. Coll. R |^Small Bus. R |^Career R |^Civil Service R |^Phone R.|^Info. Desk R|^Desk R |^Computer Center R |^Admin. R|^RAS R|^TS R|^Teen R |^YA R |^jR |^Furn. Coll|^Furn. Folio|^Geneal.|^Mss|^M |^MK |^MKG |^Michigan |^Rare Book Coll|^Archives |^Coll. /;
+var cnRegex = /^R |^Consumer R |^Found. Coll. R |^Small Bus. R |^Career R |^Civil Service R |^Phone R.|^Info. Desk R|^Desk R |^Computer Center R |^Admin. R|^RAS R|^TS R|^Teen R |^YA R |^jR |^Furn. Coll|^Furn. Folio|^Geneal.|^Mss|^M |^MK |^MKG |^Michigan |^Rare Book|^Archives |^Coll. /;
 if (whole_cn_text.match(cnRegex)){ tmpCN = whole_cn_text+' (Library-Use-Only)';}
 
 
-	$n(row, 'callnumber').appendChild(text(whole_cn_text));
+	$n(row, 'callnumber').appendChild(text(tmpCN));
 
         var myreq = new Request(FETCH_COPIES_FROM_VOLUME, record.doc_id(), cn, orgNode.id());
         if (record.doc_id()){
