@@ -398,6 +398,7 @@ function replaceISMCard(){
     var rnd = Math.floor(Math.random()*999999);
     rnd = '555'+rnd;
     input.widget.attr('disabled', false).attr('readOnly', true).attr('value', rnd).focus();
+    genISM.attr('disabled', true);
 
     var profile = findWidget('au', 'profile');
     profile.widget.attr('value',71);
