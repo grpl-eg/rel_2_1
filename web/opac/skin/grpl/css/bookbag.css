@@ -1,0 +1,316 @@
+* {
+	margin: 0;
+	padding: none;
+}
+
+body {
+	background-color: #E2E3E5;
+	font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #006699;
+}
+
+#content {
+	width: 1000px;
+	background-color: #fff;
+	margin: 0 auto;
+}
+
+/* --- header --- */
+
+#header {
+	text-align: left;
+}
+
+#nav {
+	background-image: url("img/wrapper_bkg.gif");
+	background-size: 100%;
+}
+
+#nav img {
+	display: block;
+}
+
+#grpl {
+	margin-top: 16px;
+	margin-bottom: 10px;
+}
+
+#wave {
+	background-image: url("img/wave.gif");
+	height: 47px;
+	width: 832px;
+	padding-left: 20px;
+	padding-top: 20px;
+}
+
+#bookbag-title {
+	background-image: url("img/wrapper_bkg.gif");
+	background-size: 100%;
+	height: 25px;
+	margin-left: 160px;
+	width: 820px;	
+	vertical-align: middle;
+	padding-left: 20px;
+	padding-top: 10px;
+	font-size: 13px;
+}
+
+/* --- bookbag --- */
+
+#bookbag {
+	width: 100%;
+	min-height: 300px;
+	border-top: 1px solid #E2E3E5;
+}
+
+#sidebar {
+	width: 140px;
+	float: left;
+	padding: 10px;
+}
+
+#bag {
+	width: 780px;
+	padding: 10px;
+	padding-bottom: 0px;
+	min-height: 300px;
+	border-left: 1px solid #E2E3E5;
+}
+
+.item {
+	margin-bottom: 10px;
+	min-height: 75px;
+	width: 820px;
+}
+
+.image {
+	width: 100%;
+	min-width: 35px;
+	min-height: 46px;
+	margin-top: 10px;
+	text-align: center;
+	background: url("img/book.png") no-repeat;
+	background-position: 50% 50%;
+}
+
+.info {
+	width: 75%;
+	padding: 5px;
+	vertical-align: top;
+}
+
+.actions {
+	width: 10%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 5px;
+	padding-right: 5px;
+	float: right;
+}
+
+.action {
+	margin: 5px;
+}
+
+.quick-info {
+	width: 13%;
+	text-align: center;
+	min-height: 110px;
+}
+
+.title {
+	float: left;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 15px;
+	color: #333;
+}
+
+#bookbag-title {
+	font-weight: bold;
+}
+
+.by {
+	font-weight: normal;
+	font-size: 10px;
+}
+
+.authors {
+	font-weight: normal;
+	font-style: normal;
+	font-size: 12px;
+}
+
+.author {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.author a {
+	text-decoration: underline;
+}
+
+.description {
+	margin-top: 5px;
+	float: left;
+	width: 100%;
+}
+
+.published {
+	float: left;
+}
+
+.categories {
+	margin-top: 5px;
+	float: left;
+}
+
+.category {
+	display: inline-block;	
+	margin-right: 5px;
+}
+
+.category a {
+	text-decoration: underline;
+}
+
+.availability {
+	text-align: center;
+	padding: 3px;
+	margin: 5px;
+}
+
+.button {
+	padding: 5px 10px;
+	font-size: 11px;
+	vertical-align: middle;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.actions {
+}
+
+/* --- footer -- */
+
+#footer {
+	margin: 0 auto;
+	width: 976px;
+	padding: 37px 0 60px 23px;
+	border-top: 1px solid #E2E3E5;
+	font-family: tahoma,geneva,sans-serif;
+	background-color: #fff;
+}
+
+#footer-logo {
+	float: left;
+	margin-right: 15px;
+}
+
+#addressSelect {
+    background: url("http://www.grpl.org/img/footer_addressBox_bkg.gif") no-repeat scroll left top transparent;
+    float: left;
+    height: 118px;
+    padding: 10px 0 0 15px;
+    width: 323px;
+}
+
+#addressSelect h3 {
+	color: #8D8D8D;
+    font-size: 10px;
+    text-decoration: none;
+}
+
+#addressSelect ul {
+	list-style-type: none;
+	width: 320px;
+	padding: 0;
+}
+
+#addressSelect ul li {
+	float: left;
+	width: 130px;
+	margin-top: 4px;
+}
+
+#addressSelect ul li a {
+	color: #8D8D8D;
+    font-size: 10px;
+    text-decoration: none;
+}
+
+#addressDisplay h3 {
+    color: #353E4B;
+    font-size: 11px;
+    line-height: 18px;
+}
+
+#addressDisplay p {
+    color: #353E4B;
+    font-size: 11px;
+    line-height: 18px;
+    text-decoration: none;
+}
+
+#footer #navigation {
+	clear: both;
+	width: 100%;
+	margin: 0 auto;
+}
+
+#footer #navigation ul {
+	list-style-type: none;
+}
+
+#footer #navigation ul li {
+    float: left;
+    padding: 10px 18px 0 0;
+}
+
+#footer #navigation ul li a {
+    color: #464E5A;
+    font-size: 10px;
+    text-decoration: none;
+}
+
+#navigation img {
+	width: 20px;
+}
+
+#donate img {
+	height: 20px;
+	width: 73px;
+}
+
+#footer #contact {
+	width: 100px;
+	display: inline-block;
+}
+
+#footer #contact a {
+	padding-left: 25px;
+	font-size: 11px;
+	color: #06A1FF;
+}
+
+#addressDisplay {
+    float: left;
+    height: 70px;
+    padding: 22px 0 0 25px;
+    width: 185px;
+}
+
+.panel {
+	display: inline-block;
+}
+
+.bottom {
+}
+
+.button {
+}

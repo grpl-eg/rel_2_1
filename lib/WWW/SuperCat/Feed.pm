@@ -635,6 +635,7 @@ sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new;
 	$self->type('text/html');
+	$self->{xsl} = "/ATOM2XHTML.xsl";
 	return $self;
 }
 
@@ -656,8 +657,7 @@ sub toString {
 	$xslt_file ||=
                 OpenSRF::Utils::SettingsClient
        	                ->new
-               	        ->config_value( dirs => 'xsl' ).
-                "/ATOM2XHTML.xsl";
+               	        ->config_value( dirs => 'xsl' ).$self->{xsl};
 
         # parse the MODS xslt ...
         my $atom2html_xslt = $_xslt->parse_stylesheet( $_parser->parse_file($xslt_file) );
