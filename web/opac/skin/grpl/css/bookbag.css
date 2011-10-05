@@ -26,7 +26,7 @@ a {
 }
 
 #nav {
-	background-image: url("img/wrapper_bkg.gif");
+	background-image: url("../../../images/grpl/wrapper_bkg.gif");
 	background-size: 100%;
 }
 
@@ -40,7 +40,7 @@ a {
 }
 
 #wave {
-	background-image: url("img/wave.gif");
+	background-image: url("../../../images/grpl/wave.gif");
 	height: 47px;
 	width: 832px;
 	padding-left: 20px;
@@ -48,8 +48,9 @@ a {
 }
 
 #bookbag-title {
-	background-image: url("img/wrapper_bkg.gif");
+	background-image: url("../../../images/grpl/wrapper_bkg.gif");
 	background-size: 100%;
+	background-color: #fff;
 	height: 25px;
 	margin-left: 160px;
 	width: 820px;	
@@ -93,7 +94,7 @@ a {
 	min-height: 46px;
 	margin-top: 10px;
 	text-align: center;
-	background: url("img/book.png") no-repeat;
+	background: url("../../../images/grpl/book.png") no-repeat;
 	background-position: 50% 50%;
 }
 
@@ -182,6 +183,27 @@ a {
 	text-align: center;
 	padding: 3px;
 	margin: 5px;
+}
+
+.green {
+   border-top: 1px solid #4E7FC7;
+   background: #06357A;
+   background: -webkit-gradient(linear, left top, left bottom, from(#b8eba4), to(#3b803a));
+   background: -webkit-linear-gradient(top, #2759A3, #06357A);
+   background: -moz-linear-gradient(top, #2759A3, #06357A);
+   background: -ms-linear-gradient(top, #2759A3, #06357A);
+   background: -o-linear-gradient(top, #2759A3, #06357A);
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: #052047 0 1px 0;
+   text-shadow: #052047 0 1px 0;
+   color: #fff;
+}
+.green:hover {
+   border-top-color: #052047;
+   background: #082F69;
+   text-shadow: #485211 0 1px 0;
+   color: #fff;
 }
 
 .button {
@@ -305,12 +327,11 @@ a {
     width: 185px;
 }
 
+#widgit-link-container {
+    float: right;
+    margin-bottom: 10px;
+}
+
 .panel {
 	display: inline-block;
-}
-
-.bottom {
-}
-
-.button {
 }
