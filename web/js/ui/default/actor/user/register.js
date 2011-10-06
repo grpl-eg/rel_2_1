@@ -233,7 +233,8 @@ function load() {
     dojo.connect(genISM, 'onClick', replaceISMCard);
     dojo.connect(suffixSelector, 'onChange', updateSuffix);
 
-    if(patron.cards().length > 1)
+//    if(patron.cards().length > 1)
+    if(!patron.isnew())
         dojo.removeClass(dojo.byId('uedit-all-barcodes'), 'hidden');
 
     var input = findWidget('ac', 'barcode');
