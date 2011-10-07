@@ -739,8 +739,10 @@ g.render_barcode_entry = function(node,callnumber_composite_key,count,ou_id) {
                 if (! g.first_focus) { g.first_focus = tb; }
             }
             if (g.use_defaults && ! g.first_focus) {
+if (ses('ws_ou') < 9 || ses('ws_ou') > 18) {
                 g.first_focus = tb;
                 tb.focus();
+}
             }
             if (set_handlers) {
                 util.widgets.apply_vertical_tab_on_enter_handler(
