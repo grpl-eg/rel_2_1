@@ -26,6 +26,15 @@
     <!-- BEHAVIOR -->
     <script type="text/javascript">
         var myPackageDir = 'open_ils_staff_client'; var IAMXUL = true;
+function show_copy_notes(ev) {
+    JSAN.use('util.window'); var win = new util.window();
+    var cid = document.getElementById('copy_id').value;
+        win.open(
+            urls.XUL_COPY_NOTES,
+            $("catStrings").getString("staff.cat.copy_editor.copy_notes"),'chrome,resizable,modal',
+            { 'copy_id' : cid }
+        );
+}
     </script>
     <scripts id="openils_util_scripts"/>
 
@@ -130,7 +139,7 @@
                             </row>
                             <row>
                                 <label value="&staff.circ.alternate_copy_summary.Copy_ID.label;" />
-                                <textbox name="copy_id" readonly="true" context="clipboard"/>
+                                <textbox name="copy_id" id="copy_id" readonly="true" context="clipboard"/>
                                 <label value="&staff.circ.alternate_copy_summary.Reference.label;" />
                                 <textbox name="ref" readonly="true" context="clipboard"/>
                                 <!--
@@ -193,6 +202,9 @@
                                 <label value="&staff.circ.alternate_copy_summary.Alert.label;" />
                                 <textbox name="alert_message" multiline="true"  context="clipboard"/>
                             </row>
+			    <row>
+				<button id="copy_notes" name="copy_notes" label="&staff.cat.copy_editor.copy_notes.label;" onclick="try{show_copy_notes(event);}catch(E){alert(E);}"/>
+			    </row>
                         </rows>
                     </grid>
                 </tabpanel>
