@@ -755,6 +755,17 @@ OpenILS.data.prototype = {
                 for (var i = 0; i < obj.list.aou.length; i++) {
                     var c = obj.list.aou[i].children();
                     if (!c) c = [];
+
+//MIEG: GRPL catalogers want Main at the top, so we'll order by org_unit.id
+if (obj.list.au[0].ws_ou() > 9 && obj.list.au[0].ws_ou() < 19) {
+                    c = c.sort(
+                        function( a, b ) {
+                            if (a.id() < b.id()) return -1;
+                            if (a.id() > b.id()) return 1;
+                            return 0;
+                        }
+                    );
+}else{
                     c = c.sort(
                         function( a, b ) {
                             if (a.shortname() < b.shortname()) return -1;
@@ -762,6 +773,7 @@ OpenILS.data.prototype = {
                             return 0;
                         }
                     );
+}
                     obj.list.aou[i].children( c );
                 }
                 obj.list.aou = util.fm_utils.flatten_ou_branch( obj.tree.aou );
