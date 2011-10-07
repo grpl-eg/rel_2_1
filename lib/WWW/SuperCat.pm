@@ -1017,7 +1017,7 @@ sub bookbag_feed {
     $feed->id($bucket_tag);
 
     if ($host =~ /GRPL/i) {
-        $feed->{xsl} = "/grpl_bookbag.xsl";
+        $feed->{xsl} = "/GRPLBookbag.xsl";
     }
 
     $feed->title("Items in Book Bag [".$bucket->name."]");

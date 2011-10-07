@@ -34,7 +34,7 @@
 <div id="bookbag">
 
 	<div id="sidebar" class="panel">
-		Bookbags are collections of library materials that people can create and share.<br/><br/>Visit <a href="https://grpl.michiganevergreen.org/opac/en-US/skin/grpl/xml/myopac.xml?l=10">your account</a> on the catalog to create your own.
+		Bookbags are collections of library materials that <a href="http://www.grpl.org/wiki/index.php/Using_Evergreen_Bookbags">people can create and share</a>.<br/><br/>Visit <a href="https://grpl.michiganevergreen.org/opac/en-US/skin/grpl/xml/myopac.xml?l=10">your account</a> on the catalog to create your own.
 	</div><div id="bag" class="panel">
 
 	<!-- item loop -->
@@ -44,7 +44,7 @@
 	<xsl:variable name="description" select="atom:summary"/>
 	<xsl:variable name="categories" select="atom:category"/>
         <xsl:variable name="id" select="substring-before(substring-after(atom:id[2], 'biblio-record_entry/'), '/ME')"/>
-        <xsl:variable name="opac">http://grpl-new.michiganevergreen.org/opac/en-US/skin/grpl/xml/rdetail.xml?r=<xsl:value-of select="$id"/></xsl:variable>
+        <xsl:variable name="opac">http://grpl.michiganevergreen.org/opac/en-US/skin/grpl/xml/rdetail.xml?r=<xsl:value-of select="$id"/></xsl:variable>
 
 	<!-- TODO: remove discard/weed -->
 	<xsl:variable name="copies" select="holdings:holdings/holdings:volumes//holdings:volume[contains(@lib, 'GRPL')]/holdings:copies"/>
@@ -105,7 +105,7 @@
 						<xsl:otherwise>
 							<div class="author">
 								<a>
-									<xsl:attribute name="href">http://grpl-new.michiganevergreen.org/opac/en-US/skin/grpl/xml/rresult.xml?rt=author&amp;t=<xsl:value-of select="current()"/>.&amp;tp=author&amp;ol=9&amp;l=9&amp;d=1</xsl:attribute>
+									<xsl:attribute name="href">http://grpl.michiganevergreen.org/opac/en-US/skin/grpl/xml/rresult.xml?rt=author&amp;t=<xsl:value-of select="current()"/>.&amp;tp=author&amp;ol=9&amp;l=9&amp;d=1</xsl:attribute>
 									<xsl:value-of select="current()"/>
 								</a></div>
 						</xsl:otherwise>
@@ -121,7 +121,7 @@
 				<xsl:for-each select="$categories">
 					<div class="category">
 						<a>
-							<xsl:attribute name="href">http://grpl-new.michiganevergreen.org/opac/en-US/skin/grpl/xml/rresult.xml?rt=subject&amp;tp=subject&amp;t=<xsl:value-of select="@term"/>.&amp;d=1&amp;l=9&amp;ol=9
+							<xsl:attribute name="href">http://grpl.michiganevergreen.org/opac/en-US/skin/grpl/xml/rresult.xml?rt=subject&amp;tp=subject&amp;t=<xsl:value-of select="@term"/>.&amp;d=1&amp;l=9&amp;ol=9
 							</xsl:attribute>
 							<xsl:value-of select="@term"/>
 						</a>
