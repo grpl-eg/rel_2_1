@@ -43,6 +43,16 @@ econst OILS_COPY_STATUS_DISCARD       => 13;
 econst OILS_COPY_STATUS_DAMAGED       => 14;
 econst OILS_COPY_STATUS_ON_RESV_SHELF => 15;
 
+#MIEG custom Statuses
+econst OILS_COPY_STATUS_BILLED        => 101; 
+econst OILS_COPY_STATUS_MENDING       => 102; 
+econst OILS_COPY_STATUS_TRACE         => 103; 
+econst OILS_COPY_STATUS_AV_REPAIR     => 104; 
+econst OILS_COPY_STATUS_LOST_AND_PAID => 105; 
+econst OILS_COPY_STATUS_COURTESY_HOLD => 106; 
+econst OILS_COPY_STATUS_STAFF_REVIEW  => 108; 
+econst OILS_COPY_STATUS_NEW_SERIAL    => 109;
+
 
 # ---------------------------------------------------------------------
 # Circ defaults for pre-cataloged copies
