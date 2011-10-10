@@ -63,6 +63,9 @@ sub handler {
 	my $locale = $apache_obj->dir_config('OILSRedirectLocale') || 'en-US';
 
 	my $hostname = $cgi->server_name();
+
+	if ($hostname =~ /quest\.oe/){$hostname='oe.michiganevergreen.org';}
+
 	unless ($hostname =~ /^eg\./){
 		$skin = $hostname;
 		$skin =~ s/(.*?)(\..*)/$1/;
