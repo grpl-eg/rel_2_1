@@ -258,7 +258,7 @@ function load() {
     if (staff.ws_ou() > 9 && staff.ws_ou() < 18){
 	dojo.removeClass(dojo.byId('ISMbutton'),"hidden");
 	openils.Util.hide('claims_never_checked_out_count');
-        openils.Util.hide('juvenile');
+      //  openils.Util.hide('juvenile');
 	openils.Util.hide('master_account');
     }
 	
@@ -1428,6 +1428,7 @@ if (newVal.length > 22){
  	                e = e.replace(/\s+/g," ");	
 			var street1 = findWidget('aua', 'street1');
 			street1.widget.attr('value',e);
+			checkForShelter(e);
 		    }
 		);
 		return;
@@ -2048,5 +2049,12 @@ function printable_output() {
     s += '=-=-=-=\r\n';
     return s;
 }
+
+function checkForShelter(str) {
+        var shelterAddresses = /^25 SHELDON|^40 JEFFERSON|^110 HALL|^144 DIVISION|^144 S DIVISION|^200 EASTERN|^220 EASTERN|^225 COMMERCE|^255 DIVISION|^255 S DIVISION|^322 FRONT|^343 DIVISION|^343 S DIVISION|^523 LYON|^701 PROSPECT|^710 FULTON|^710 W FULTON|^750 CHERRY|^761 BRIDGE|^766 7TH|^766 SEVENTH|^801 COLLEGE|^822 CHERRY|^901 EASTERN|^904 SHELDON|^906 DIVISION|^906 S DIVISION|^920 CHERRY|^938 HUMBOLT|^1024 IONIA|^1025 LAFAYETTE|^1215 FULTON|^1215 E FULTON|^1491 DIVISION|^2355 KNAPP|^2440 RICHMOND|^54 DIVISION|^54 S DIVISION|^1706 DIVISION|^1706 S DIVISION/i;
+        if (str.match(shelterAddresses))
+                alert('Is this patron a candidate for a Temporary Residence Card?');
+}
+
 
 openils.Util.addOnLoad(load);
