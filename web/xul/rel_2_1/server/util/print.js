@@ -82,9 +82,6 @@ util.print.prototype = {
                 line = line.replace(/<block.*?>/gi,'');
                 line = line.replace(/<li.*?>/gi,' * ');
                 line = line.replace(/<.+?>/gi,'');
-                line = line.replace(/&lt;/gi,'<');
-                line = line.replace(/&gt;/gi,'>');
-                line = line.replace(/&amp;/gi,'&');
                 if (line) { new_lines.push(line); }
             } else {
                 new_lines.push(line);
@@ -93,11 +90,6 @@ util.print.prototype = {
         var new_html = new_lines.join('\n');
         //dump('html2txt, after:\n' + new_html + '\nhtml2txt, done.\n');
         return new_html;
-    },
-
-    'escape_html' : function(data) {
-      if(data)
-        return data.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     },
 
     'simple' : function(msg,params) {
@@ -156,11 +148,13 @@ util.print.prototype = {
 
             switch(content_type) {
                 case 'text/html' :
-                    var jsrc = 'data:text/javascript,' + window.escape('var params = window.arguments[0]; window.go_print = window.arguments[1];');
+                    var jsrc = 'data:text/javascript,' + window.escape('var params = { "data" : ' + js2JSON(params.data) + ', "list" : ' + js2JSON(params.list) + '}; function my_init() { if (typeof go_print == "function") { go_print(); } else { setTimeout( function() { if (typeof go_print == "function") { alert("Please tell the developers that the 2-second go_print workaround executed, and let them know whether this job printed successfully.  Thanks!"); go_print(); } else { alert("Please tell the developers that the 2-second go_print workaround did not work.  We will try to print one more time; there have been reports of wasted receipt paper at this point.  Please check the settings in the print dialog and/or prepare to power off your printer.  Thanks!"); window.print(); } }, 2000 ); } /* FIXME - mozilla bug#301560 - xpcom kills it too */ }');
                     var print_url = 'data:text/html,'
-                        + '<html id="top"><head><script src="/xul/rel_2_1/server/main/JSAN.js"></script><script src="' + window.escape(jsrc) + '"></script></head>'
-                        + '<body onload="try{go_print();}catch(E){alert(E);}">' + window.escape(msg) + '</body></html>';
-                    w = obj.win.openDialog(print_url,'receipt_temp','chrome,resizable,minimizable', null, { "data" : params.data, "list" : params.list}, function() { 
+                        + '<html id="top"><head><script src="/xul/0working_branch_e62e2f7/server/main/JSAN.js"></script><script src="' + window.escape(jsrc) + '"></script></head>'
+                        + '<body onload="try{my_init();}catch(E){alert(E);}">' + window.escape(msg) + '</body></html>';
+                    w = obj.win.open(print_url,'receipt_temp','chrome,resizable');
+                    w.minimize();
+                    w.go_print = function() { 
                         try {
                             obj.NSPrint(w, silent, params);
                         } catch(E) {
@@ -168,8 +162,7 @@ util.print.prototype = {
                             w.print();
                         }
                         w.minimize(); w.close();
-                    });
-                    w.minimize();
+                    }
                 break;
                 default:
                     w = obj.win.open('data:' + content_type + ',' + window.escape(msg),'receipt_temp','chrome,resizable');
@@ -230,32 +223,32 @@ util.print.prototype = {
             try{b = s; s = s.replace(/%LINE_NO%/,Number(params.row_idx)+1);}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
 
-            try{b = s; s = s.replace(/%patron_barcode%/,this.escape_html(params.patron_barcode));}
+            try{b = s; s = s.replace(/%patron_barcode%/,params.patron_barcode);}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
 
-            try{b = s; s = s.replace(/%LIBRARY%/,this.escape_html(params.lib.name()));}
+            try{b = s; s = s.replace(/%LIBRARY%/,params.lib.name());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%PINES_CODE%/,this.escape_html(params.lib.shortname()));}
+            try{b = s; s = s.replace(/%PINES_CODE%/,params.lib.shortname());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%SHORTNAME%/,this.escape_html(params.lib.shortname()));}
+            try{b = s; s = s.replace(/%SHORTNAME%/,params.lib.shortname());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%STAFF_FIRSTNAME%/,this.escape_html(params.staff.first_given_name()));}
+            try{b = s; s = s.replace(/%STAFF_FIRSTNAME%/,params.staff.first_given_name());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%STAFF_LASTNAME%/,this.escape_html(params.staff.family_name()));}
+            try{b = s; s = s.replace(/%STAFF_LASTNAME%/,params.staff.family_name());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%STAFF_BARCODE%/,this.escape_html(params.staff.barcode)); }
+            try{b = s; s = s.replace(/%STAFF_BARCODE%/,params.staff.barcode); }
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%STAFF_PROFILE%/,this.escape_html(obj.data.hash.pgt[ params.staff.profile() ].name() )); }
+            try{b = s; s = s.replace(/%STAFF_PROFILE%/,obj.data.hash.pgt[ params.staff.profile() ].name() ); }
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%PATRON_ALIAS_OR_FIRSTNAME%/,this.escape_html((params.patron.alias() == '' || params.patron.alias() == null) ? params.patron.first_given_name() : params.patron.alias()));}
+            try{b = s; s = s.replace(/%PATRON_ALIAS_OR_FIRSTNAME%/,(params.patron.alias() == '' || params.patron.alias() == null) ? params.patron.first_given_name() : params.patron.alias());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%PATRON_ALIAS%/,this.escape_html((params.patron.alias() == '' || params.patron.alias() == null) ? '' : params.patron.alias()));}
+            try{b = s; s = s.replace(/%PATRON_ALIAS%/,(params.patron.alias() == '' || params.patron.alias() == null) ? '' : params.patron.alias());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%PATRON_FIRSTNAME%/,this.escape_html(params.patron.first_given_name()));}
+            try{b = s; s = s.replace(/%PATRON_FIRSTNAME%/,params.patron.first_given_name());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%PATRON_LASTNAME%/,this.escape_html(params.patron.family_name()));}
+            try{b = s; s = s.replace(/%PATRON_LASTNAME%/,params.patron.family_name());}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
-            try{b = s; s = s.replace(/%PATRON_BARCODE%/,this.escape_html(typeof params.patron.card() == 'object' ? params.patron.card().barcode() : util.functional.find_id_object_in_list( params.patron.cards(), params.patron.card() ).barcode() )) ;}
+            try{b = s; s = s.replace(/%PATRON_BARCODE%/,typeof params.patron.card() == 'object' ? params.patron.card().barcode() : util.functional.find_id_object_in_list( params.patron.cards(), params.patron.card() ).barcode() ) ;}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
 
             try{b = s; s=s.replace(/%TODAY%/g,(new Date()));}
@@ -283,22 +276,21 @@ util.print.prototype = {
             try{b = s; s=s.replace(/%TODAY_PLUS8%/g,(util.date.formatted_date(grplDate,'%m/%d')));}
                 catch(E){s = b; this.error.sdump('D_WARN','string = <' + s + '> error = ' + js2JSON(E)+'\n');}
 
+
             try {
                 if (typeof params.row != 'undefined') {
                     if (params.row.length >= 0) {
                         alert('debug - please tell the developers that deprecated template code tried to execute');
                         for (var i = 0; i < cols.length; i++) {
                             var re = new RegExp(cols[i],"g");
-			    //try{b = s; s=s.replace(re, this.escape_html(params.row[i]));}
-                            try{b = s; s=s.replace(re, (typeof params.row[i] == 'string' ? this.escape_html(params.row[i]) : params.row[i]));}
+                            try{b = s; s=s.replace(re, params.row[i]);}
                                 catch(E){s = b; this.error.standard_unexpected_error_alert('print.js, template_sub(): 1 string = <' + s + '>',E);}
                         }
                     } else { 
                         /* for dump_with_keys */
                         for (var i in params.row) {
                             var re = new RegExp('%'+i+'%',"g");
-			    //try{b = s; s=s.replace(re, this.escape_html(params.row[i]));}
-			    try{b = s; s=s.replace(re, (typeof params.row[i] == 'string' ? this.escape_html(params.row[i]) : params.row[i]));}
+                            try{b = s; s=s.replace(re, params.row[i]);}
                                 catch(E){s = b; this.error.standard_unexpected_error_alert('print.js, template_sub(): 2 string = <' + s + '>',E);}
                         }
                     }
@@ -307,15 +299,23 @@ util.print.prototype = {
                 if (typeof params.data != 'undefined') {
                     for (var i in params.data) {
                         var re = new RegExp('%'+i+'%',"g");
-                        if (typeof params.data[i] == 'string' || typeof params.data[i] == 'number') {
-                            try{b = s; s=s.replace(re, (typeof params.data[i] == 'string' ? this.escape_html(params.data[i]) : params.data[i]));}
-                                catch(E){s = b; this.error.standard_unexpected_error_alert('print.js, template_sub(): 3 string = <' + s + '>',E);}
-                        } else {
-                            /* likely a null, print as an empty string */
-                            try{b = s; s=s.replace(re, '');}
+                        if (typeof params.data[i] == 'string') {
+                            try{b = s; s=s.replace(re, params.data[i]);}
                                 catch(E){s = b; this.error.standard_unexpected_error_alert('print.js, template_sub(): 3 string = <' + s + '>',E);}
                         }
                     }
+                }
+            } catch(E) { dump(E+'\n'); }
+
+            // Date Format
+            try {
+                var match;
+                var date_format_patt=/%DATE_FORMAT\(\s*([^,]*?)\s*,\s*([^)]*?)\s*\)%/
+                while(match = date_format_patt.exec(s)) {
+                    if(match[1] == '' || match[2] == '')
+                        s = s.replace(match[0], '');
+                    else
+                        s = s.replace(match[0], util.date.formatted_date(match[1], match[2]));
                 }
             } catch(E) { dump(E+'\n'); }
 
@@ -478,10 +478,10 @@ util.print.prototype = {
             var html_path = '"' + html_file._file.path + '"';
             html_file.close();
             
-            var cmd = params.dos_print ? 
-		 'copy ' + text_path + ' lpt1 /b\n' 
-		 : obj.oils_printer_external_cmd.replace('%receipt.txt%',text_path).replace('%receipt.html%',html_path)
-	    ;
+            var cmd = params.dos_print ?
+                'copy ' + text_path + ' lpt1 /b\n'
+                : obj.oils_printer_external_cmd.replace('%receipt.txt%',text_path).replace('%receipt.html%',html_path)
+            ;
 
             file = new util.file('receipt.bat');
             file.write_content('truncate+exec',cmd);
