@@ -9,6 +9,7 @@
 		config.ids.login.tbody			= "login_tbody";
 		config.ids.login.username	= "login_username";
 		config.ids.login.password	= "login_password";
+		config.ids.login.sticky		= "login_sticky";
 		config.ids.login.button		= "login_button";
 		config.ids.login.cancel		= "login_cancel_button";
 		config.ids.altcanvas.login			= config.ids.login.box;
@@ -44,6 +45,15 @@
                         </span>
                     </td>
                 </tr>
+                <tr>
+                    <td/>
+                    <td>
+                        <span class='login_text'>
+                            <input type='checkbox' id='login_sticky' name='login_sticky' value='1'></input> Keep me logged in
+                        </span>
+                    </td>
+                </tr>
+
                 <tr><td><br/></td><td/></tr>
                 <tr class='color_1'>
                     <td colspan='2' align='center'>

@@ -101,6 +101,9 @@ function loggedInOK() {
 	if(! ( depth && depth <= findOrgDepth(org)) ) 
 		depth = findOrgDepth(org);
 
+        if(G.ui.login.sticky.checked)
+	    AUTHTIME=14400;
+
 	runEvt( "common", "locationChanged", org, depth);
 }
 
