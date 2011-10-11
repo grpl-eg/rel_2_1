@@ -226,6 +226,8 @@ function load() {
     loadSurveys();
     checkClaimsReturnCountPerm();
     checkClaimsNoCheckoutCountPerm();
+    checkBarPatronPerm();
+    checkUnBarPatronPerm();
 
     dojo.connect(replaceBarcode, 'onClick', replaceCardHandler);
     dojo.connect(allCards, 'onClick', drawAllCards);
@@ -992,6 +994,41 @@ function checkClaimsReturnCountPerm() {
         true
     );
 }
+
+/**
+ * if the user does not have the BAR_PATRON/UNBAR_PATRON perm
+ * This function checks the perm and disable/enables the widget.
+ */
+
+function checkBarPatronPerm() {
+    new openils.User().getPermOrgList(
+        'BAR_PATRON',
+        function(orgList) {
+            var cr = findWidget('au', 'barred');
+            if(orgList.indexOf(patron.home_ou()) == -1)
+                cr.widget.attr('disabled', true);
+            else
+                cr.widget.attr('disabled', false);
+        },
+        true,
+        true
+    );
+}
+function checkUnBarPatronPerm(){
+    new openils.User().getPermOrgList(
+        'UNBAR_PATRON',
+        function(orgList) {
+            var cr = findWidget('au', 'barred');
+            if(orgList.indexOf(patron.home_ou()) == -1)
+                cr.widget.attr('disabled', true);
+            else
+                cr.widget.attr('disabled', false);
+        },
+        true,
+        true
+    );
+}
+
 
 var collectExemptCBox;
 function checkCollectionsExemptPerm(cbox) {
