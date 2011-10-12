@@ -818,7 +818,8 @@ patron.display.prototype = {
                         netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
                         var x = obj.summary_window.g.summary.controller.view.patron_checkouts;
                         var n = Number(x.getAttribute('value'));
-                        x.setAttribute('value',n+1);
+                      //  x.setAttribute('value',n+1);
+obj.summary_window.g.summary.controller.render('patron_checkouts');
                     },
                     'on_list_change_old' : function(checkout) {
                     
