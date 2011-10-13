@@ -132,8 +132,11 @@
         </td>
     </tr>
 
+    <tr name='uedit-addr-type-row' fmfield="address_type" type='addr-template' required='required'>
+        <td class='uedit-help'></td>
+        <td>Type</td>
+    </tr>
 
-    <tr fmclass='aua' fmfield='address_type' type='addr-template' required='required'/>
     <tr fmclass='aua' fmfield='post_code' type='addr-template' required='required'/>
     <tr fmclass='aua' fmfield='street1' type='addr-template' required='required'/>
     <tr fmclass='aua' fmfield='street2' type='addr-template' required='show'/>

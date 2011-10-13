@@ -47,6 +47,22 @@ var allCardsTemplate;
 var uEditCloneCopyAddr; // if true, copy addrs on clone instead of link
 var homeOuTypes = {};
 
+var addressTypeStore;
+const ADDRESS_TYPE_DEFAULT = "MAILING";       
+const ADDRESS_TYPES = {         
+        "label":"type",             
+        "identifier":"type",               
+        "items":[
+                {"type":"MAILING"},      
+                {"type":"PHYSICAL"},
+                {"type":"JUVENILE"},
+                {"type":"GUARDIAN"},    
+                {"type":"SCHOOL"},             
+                {"type":"ALTERNATIVE"},
+                {"type":"INSTITUTION"}
+        ]                 
+};
+
 var dupeUsrname = false;
 var dupeBarcode = false;
 
@@ -61,6 +77,7 @@ function load() {
     cloneUser = cgi.param('clone');
     var userId = cgi.param('usr');
     var stageUname = cgi.param('stage');
+    addressTypeStore = new dojo.data.ItemFileReadStore({data:ADDRESS_TYPES});
 
     saveButton.attr("label", localeStrings.SAVE);
     saveCloneButton.attr("label", localeStrings.SAVE_CLONE);
@@ -1954,6 +1971,34 @@ function uEditNewAddr(evt, id, mkLinks) {
 
                 var btn = dojo.query('[name=delete-button]', row)[0];
                 if(btn) btn.onclick = function(){ uEditDeleteAddr(id) };
+            } else if (row.getAttribute('name') == 'uedit-addr-type-row') {
+
+                var wtd = row.appendChild(document.createElement('td'));
+                row.setAttribute('type', '');
+                row.setAttribute('addr', id+'');   
+                row.setAttribute('fmclass', 'aua');           
+                row.appendChild(document.createElement('td'));
+
+                var span = document.createElement('span');
+                wtd.appendChild(span);
+
+                var address = patron.addresses().filter(
+                    function(i) { return (i.id() == id) })[0]; 
+
+                var combobox = new dijit.form.ComboBox({
+                        store:addressTypeStore,
+                        scrollOnFocus:false,
+                        searchAttr:'type',
+                        required:"required",
+                        value: address ? address.address_type() : ADDRESS_TYPE_DEFAULT
+                    },
+                    span);
+
+                combobox._wtype = 'aua';
+                combobox._fmfield = 'address_type';
+                combobox._addr = id;
+                
+                widgetPile.push(combobox);
             }
         }
     );
