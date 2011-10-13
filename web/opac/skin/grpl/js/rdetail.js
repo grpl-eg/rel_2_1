@@ -202,8 +202,10 @@ function rdetailDraw() {
 	G.evt.result.copyCountsReceived = [];
 	G.evt.result.allRecordsReceived = [];
 
-    if(isXUL()) 
+    if(isXUL()){ 
         unHideMe($('rdetail_show_orders'));
+	unHideMe($('custom_quick_search'));
+    }
 }
 
 function rdetailGetPageIds() {

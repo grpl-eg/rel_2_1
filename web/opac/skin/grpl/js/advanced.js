@@ -9,15 +9,14 @@ function advInit() {
 	depthSelInit(); 
 	setEnterFunc( $n( $('advanced.marc.tbody'), 'advanced.marc.value'), advMARCRun );
 
-	unHideMe($('adv_quick_search_sidebar'));
+}
 
-	/*
-	if(isXUL()) 
-		setSelector($('adv_quick_type'), 'tcn'); */
+function showQuickSearches () {
+        unHideMe($('adv_quick_search_sidebar'));
 
-	setEnterFunc($('adv_quick_text'), advGenericSearch);
+        setEnterFunc($('adv_quick_text'), advGenericSearch);
 
-	unHideMe($('adv_marc_search_sidebar'));
+        unHideMe($('adv_marc_search_sidebar'));
 }
 
 
@@ -77,7 +76,7 @@ function advExtractMARC(tbody) {
 	return { 'term' : term.toLowerCase(), 'restrict' :  [ { 'tag' : tag, 'subfield' : subfield } ] };
 }
 
-function advGenericSearch() {
+function advGenericSearch(str) {
 	clearSearchParams();
 	var type = getSelectorVal($('adv_quick_type'));
 	
@@ -85,6 +84,11 @@ function advGenericSearch() {
 
         dojo.cookie('focusWhere','quick'); 
  	focusWhere = dojo.cookie('focusWhere');
+
+        if (str == 'custom') {
+            type = getSelectorVal($('custom_quick_type'));
+            term = $('custom_quick_text').value;
+        }
 
 	if(!term) return;
 

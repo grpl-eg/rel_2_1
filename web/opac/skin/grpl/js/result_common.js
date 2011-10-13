@@ -191,6 +191,9 @@ function resultSetHitInfo() {
 
 	$('result_count2').appendChild(text(getHitCount()));
 	unHideMe($('result_info_div2'));
+
+        if (isXUL())
+                unHideMe($('custom_quick_search'));
 }
 
 function resultLowHits() {

@@ -8,6 +8,8 @@ var advSelectedOrg = null;
 dojo.require('dojo.cookie'); 
 var focusWhere = dojo.cookie('focusWhere');
 
+showQuickSearches();
+
 function advgInit() {
 
 	/* XXX */
