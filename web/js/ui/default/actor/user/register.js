@@ -977,6 +977,8 @@ function trimGrpTree(autoWidget) {
         function(item) {
             if(!checkGrpAppPerm(item.id[0]) && patron.profile() != item.id[0])
                 store.deleteItem(item);
+            else if( (staff.ws_ou() > 9 && staff.ws_ou() < 18) && (item.id[0] == 2 || item.id[0].match(/72|73|10|58|70|20|66|65|68|64|67|69|63|59|77|44|23|24|76|29|27|57|56|25|46|43|42|62|61|60|30/)))
+                store.deleteItem(item);
         }
     });
 }
