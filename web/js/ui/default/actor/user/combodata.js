@@ -1,0 +1,59 @@
+var comboData = {
+	"address_types": {
+		"label":"type",             
+        "identifier":"type",               
+        "items":[
+                {"type":"MAILING"},      
+                {"type":"PHYSICAL"},
+                {"type":"JUVENILE"},
+                {"type":"GUARDIAN"},    
+                {"type":"SCHOOL"},             
+                {"type":"ALTERNATIVE"},
+                {"type":"INSTITUTION"}
+        ]		
+	},
+
+	"suffixes": {
+		"label":"suffix",
+		"identifier":"suffix",
+		"items":[
+			{"suffix":"Jr"},
+			{"suffix":"Sr"},
+			{"suffix":"II"},
+			{"suffix":"III"},
+			{"suffix":"AA"},
+			{"suffix":"AS"},
+			{"suffix":"AAS"},
+			{"suffix":"BA"},
+			{"suffix":"BS"},
+			{"suffix":"CFPIM"},
+			{"suffix":"CPA"},
+			{"suffix":"CPIM"},
+			{"suffix":"CPM"},
+			{"suffix":"CXE"},
+			{"suffix":"DC"},
+			{"suffix":"DDS"},
+			{"suffix":"DO"},
+			{"suffix":"DPM"},
+			{"suffix":"DVM"},
+			{"suffix":"Esq"},
+			{"suffix":"FACAAI"},
+			{"suffix":"FACP"},
+			{"suffix":"FACS"},
+			{"suffix":"FACEP"},
+			{"suffix":"FCP"},
+			{"suffix":"FICS"},
+			{"suffix":"GYN"},
+			{"suffix":"JD"},
+			{"suffix":"LPN"},
+			{"suffix":"MA"},
+			{"suffix":"MCSE"},
+			{"suffix":"MD"},
+			{"suffix":"MS"},
+			{"suffix":"NMD"},
+			{"suffix":"OB"},
+			{"suffix":"PhD"},
+			{"suffix":"RN"}
+    	]  		
+	}
+};
