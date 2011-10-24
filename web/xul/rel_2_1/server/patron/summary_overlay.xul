@@ -72,7 +72,7 @@
                 value="&staff.patron_display.holds_available.label;"  />
             <description id="patron_holds_available" class="copyable holds_ready value subgroup" />
         </row>
-        <row id="pdsgr2" class="hide_patron_credit" hidden="true">
+        <row id="pdsgr2" class="hide_patron_credit">
             <label id="PatronSummaryStatus_credit_label" class="copyable text_left credit label"
                 value="&staff.patron_display.credit.label;" />
             <description id="patron_credit" class="copyable credit value"/>
