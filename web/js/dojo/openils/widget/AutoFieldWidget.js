@@ -320,7 +320,10 @@ if(!dojo._hasResource['openils.widget.AutoFieldWidget']) {
                         if(this._buildLinkSelector()) break;
 
                     default:
-                        if(this.dijitArgs && (this.dijitArgs.required || this.dijitArgs.regExp)) {
+                        if (this.dijitArgs && (this.dijitArgs.store)) {
+                            dojo.require('dijit.form.ComboBox');
+                            this.widget = new dijit.form.ComboBox(this.dijitArgs, this.parentNode);                            
+                        } else if (this.dijitArgs && (this.dijitArgs.required || this.dijitArgs.regExp)) {
                             dojo.require('dijit.form.ValidationTextBox');
                             this.widget = new dijit.form.ValidationTextBox(this.dijitArgs, this.parentNode);
                         } else {
