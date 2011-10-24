@@ -62,7 +62,7 @@ function getHoldCount(id){
     holdCount = new ActiveXObject( "Microsoft.XMLHTTP" );
   }
 
-   holdCount.open( "GET", "/cgi-bin/utils/public/hold_count_grpl.cgi?id=" + id, false )
+   holdCount.open( "GET", "/cgi-bin/utils/public/hold_count_ndl.cgi?id=" + id, false )
    holdCount.onreadystatechange = function() {
         if (holdCount.readyState == 4) {
             result = holdCount.responseText;
@@ -85,7 +85,7 @@ function txtCallNumber(tit,cn){
 
 	var win = window.open('','',"location=no,width=450,height=230,scrollbars");
 	var content = "<body>";
-	content += '<link type="text/css" rel="stylesheet" href="http://grpl-new.michiganevergreen.org//opac//common/css/mediumfont.css">';
+	content += '<link type="text/css" rel="stylesheet" href="http://ndl.michiganevergreen.org//opac//common/css/mediumfont.css">';
 	content += "<span>Call number and title information can be sent via text message to certain mobile devices.  Please select your carrier and enter your 10-digit mobile number.</span><br/>&nbsp;";
 	content += "<form method='post' action='/cgi-bin/utils/txtCallNumber.cgi'>";
 	content += "<select name='carrier' id='carrier'><option>"+carrier;
