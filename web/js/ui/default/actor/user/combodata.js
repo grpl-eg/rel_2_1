@@ -8,7 +8,7 @@ var comboData = {
                 {"type":"JUVENILE"},
                 {"type":"GUARDIAN"},    
                 {"type":"SCHOOL"},             
-                {"type":"ALTERNATIVE"},
+                {"type":"ALTERNATE"},
                 {"type":"INSTITUTION"}
         ]		
 	},
