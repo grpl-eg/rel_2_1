@@ -233,9 +233,6 @@ function load() {
     dojo.connect(allCards, 'onClick', drawAllCards);
     dojo.connect(clearAlert, 'onClick', clearMessage);
     dojo.connect(genISM, 'onClick', replaceISMCard);
-    //dojo.connect(suffixSelector, 'onChange', updateSuffix);
-    dojo.connect(addTypeSelector, 'onChange', updateAddType);
-    initSuffixSelect();
 
 //    if(patron.cards().length > 1)
         dojo.removeClass(dojo.byId('uedit-all-barcodes'), 'hidden');
