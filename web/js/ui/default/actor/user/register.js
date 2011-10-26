@@ -19,7 +19,6 @@ dojo.require('openils.Event');
 dojo.requireLocalization('openils.actor', 'register');
 var localeStrings = dojo.i18n.getLocalization('openils.actor', 'register');
 
-
 var pcrud;
 var fmClasses = ['au', 'ac', 'aua', 'actsc', 'asv', 'asvq', 'asva'];
 var fieldDoc = {};
@@ -234,10 +233,11 @@ function load() {
     dojo.connect(allCards, 'onClick', drawAllCards);
     dojo.connect(clearAlert, 'onClick', clearMessage);
     dojo.connect(genISM, 'onClick', replaceISMCard);
-    dojo.connect(suffixSelector, 'onChange', updateSuffix);
+    //dojo.connect(suffixSelector, 'onChange', updateSuffix);
+    dojo.connect(addTypeSelector, 'onChange', updateAddType);
+    initSuffixSelect();
 
 //    if(patron.cards().length > 1)
-    if(!patron.isnew())
         dojo.removeClass(dojo.byId('uedit-all-barcodes'), 'hidden');
 
     var input = findWidget('ac', 'barcode');
@@ -262,10 +262,10 @@ function load() {
 	dojo.removeClass(dojo.byId('ISMbutton'),"hidden");
 	openils.Util.hide('claims_never_checked_out_count');
       //  openils.Util.hide('juvenile');
+	openils.Util.hide('parentGuardian');
 	openils.Util.hide('master_account');
     }
-
-    // load combobox options	
+	
 }
 
 var permGroups;
@@ -396,6 +396,11 @@ function clearMessage(){
 function updateSuffix(){
     var suffix = findWidget('au', 'suffix');
     suffix.widget.attr('value',dojo.byId("suffixSelector").value);
+}
+
+function updateAddType(){
+    var addType = findWidget('aua', 'address_type');
+    addType.widget.attr('value',dojo.byId("addTypeSelector").value);
 }
 
 function replaceISMCard(){
@@ -738,6 +743,8 @@ function loadStatCats() {
         row.setAttribute('stat_cat_id',stat.id());
         if (stat.id() == 19 || stat.id() == 20 ) //MIEG:  GRPL requires these two
                 row.setAttribute('required','required');
+        if (stat.id() == 12 || stat.id() == 18 ) //MIEG: BDL requires these
+		row.setAttribute('required','required');
         tbody.appendChild(row);
         getByName(row, 'name').innerHTML = stat.name();
         var valtd = getByName(row, 'widget');
@@ -920,11 +927,11 @@ function fleshFMRow(row, fmcls, args) {
     };
 
     // handle comboBox data, create store if necessary
-    if (row.attr('combodata')) {
+    if (dojo.attr(row, 'combodata')) {
 
-        var dataName = row.attr('combodata');        
+        var dataName = dojo.attr(row, 'combodata');        
         if (!comboStores[dataName])
-            comboStores[dataName] = new dojo.data.DataFileReadStore({data:comboData[dataName]});
+            comboStores[dataName] = new dojo.data.ItemFileReadStore({data:comboData[dataName]});
 
         wargs.dijitArgs.store = comboStores[dataName]; 
         wargs.dijitArgs.searchAttr = comboData[dataName].identifier;
@@ -952,6 +959,17 @@ function fleshFMRow(row, fmcls, args) {
             if(fmfield == 'profile') { trimGrpTree(ww); }
         }
     );
+    //var widget;
+    //if (!row.getAttribute('custom-widget')) {
+    //    widget = new openils.widget.AutoFieldWidget(wargs);
+    //    widget.build(
+    //        function(w, ww) {
+    //            if(fmfield == 'profile') { trimGrpTree(ww); }
+    //        }
+    //    );
+    //} else {
+    //    widget = dijit.byId(row.getAttribute('custom-widget'), row);
+    //}
 
     // now put it back before we register the widget
     if(isPasswd2) fmfield = 'passwd2';
@@ -973,10 +991,10 @@ function trimGrpTree(autoWidget) {
         function(item) {
             if(!checkGrpAppPerm(item.id[0]) && patron.profile() != item.id[0])
                 store.deleteItem(item);
-            else if( (staff.ws_ou() > 9 && staff.ws_ou() < 18) && (item.id[0] == 2 || item.id[0].match(/72|73|10|58|70|20|66|65|68|64|67|69|63|59|77|44|23|24|76|29|27|57|56|25|46|43|42|62|61|60|30/)))
-                store.deleteItem(item);
-	    else if( (staff.ws_ou() > 2 && staff.ws_ou() < 9) && (item.id[0] == 2 || !item.id[0].match(/18|19|20|21|22|23|24|25|26|27|31|37|38|39|44|46/)))
+	    else if( (staff.ws_ou() > 9 && staff.ws_ou() < 18) && (item.id[0] == 2 || item.id[0].match(/72|73|10|58|70|20|66|65|68|64|67|69|63|59|77|44|23|24|76|29|27|57|56|25|46|43|42|62|61|60|30/)))
 		store.deleteItem(item);
+	    else if( (staff.ws_ou() > 2 && staff.ws_ou() < 9) && (item.id[0] == 2 || !item.id[0].match(/18|19|20|21|22|23|24|25|26|27|31|37|38|39|44|46/)))
+               store.deleteItem(item);
         }
     });
 }
@@ -1045,6 +1063,7 @@ function checkUnBarPatronPerm(){
         true
     );
 }
+
 
 
 var collectExemptCBox;
@@ -1260,15 +1279,16 @@ if (barcode.length > 22){
                         var oldDob = patron.dob();
                         if(dojo.date.stamp.fromISOString(oldDob) == newDob) return;
 //MIEG: kludge to fix timezone issue
-		newDob = dojo.date.add(newDob,'hours',3);
+		newDob = dojo.date.add(newDob,'hours',4);
 
                         var juvInterval = orgSettings['global.juvenile_age_threshold'] || '18 years';
                         var juvWidget = findWidget('au', 'juvenile');
                         var base = new Date();
                         base.setTime(base.getTime() - Number(openils.Util.intervalToSeconds(juvInterval) + '000'));
 
-                        if(newDob <= base) // older than global.juvenile_age_threshold
+                        if(newDob <= base) { // older than global.juvenile_age_threshold
                             juvWidget.widget.attr('value', false);
+openils.Util.show('parentGuardian');}
                         else
                             juvWidget.widget.attr('value', true);
                     }
@@ -1871,7 +1891,7 @@ function uEditNewAddr(evt, id, mkLinks) {
     dojo.forEach(addrTemplateRows, 
         function(row) {
 
-            row = tbody.insertBefore(row.cloneNode(true), dojo.byId('new-addr-row'));
+            row = tbody.insertBefore(dojo.clone(row), dojo.byId('new-addr-row'));
             row.setAttribute('type', '');
             row.setAttribute('addr', id+'');
 
@@ -1879,9 +1899,8 @@ function uEditNewAddr(evt, id, mkLinks) {
                 var widget = fleshFMRow(row, 'aua', {addr:id});
 
                 // make new addresses a default address type
-                if(id < 0 && row.getAttribute('fmfield') == 'address_type') {
-                    widget.widget.attr('value', localeStrings.DEFAULT_ADDRESS_TYPE); 
-                }
+                if(id < 0 && row.getAttribute('fmfield') == 'address_type') 
+                    widget.widget.attr('value', localeStrings.DEFAULT_ADDRESS_TYPE);
 
                 // make new addresses valid by default
                 if(id < 0 && row.getAttribute('fmfield') == 'valid') 
@@ -2109,7 +2128,6 @@ function checkForShelter(str) {
         var shelterAddresses = /^25 SHELDON|^40 JEFFERSON|^110 HALL|^144 DIVISION|^144 S DIVISION|^200 EASTERN|^220 EASTERN|^225 COMMERCE|^255 DIVISION|^255 S DIVISION|^322 FRONT|^343 DIVISION|^343 S DIVISION|^523 LYON|^701 PROSPECT|^710 FULTON|^710 W FULTON|^750 CHERRY|^761 BRIDGE|^766 7TH|^766 SEVENTH|^801 COLLEGE|^822 CHERRY|^901 EASTERN|^904 SHELDON|^906 DIVISION|^906 S DIVISION|^920 CHERRY|^938 HUMBOLT|^1024 IONIA|^1025 LAFAYETTE|^1215 FULTON|^1215 E FULTON|^1491 DIVISION|^2355 KNAPP|^2440 RICHMOND|^54 DIVISION|^54 S DIVISION|^1706 DIVISION|^1706 S DIVISION/i;
         if (str.match(shelterAddresses))
                 alert('Is this patron a candidate for a Temporary Residence Card?');
-}
-
+	}
 
 openils.Util.addOnLoad(load);
