@@ -1474,7 +1474,7 @@ circ.util.columns = function(modify,params) {
             'flex' : 1,
             'primary' : false,
             'hidden' : true,
-            'editable' : false, 'render' : function(my) { return my.circ ? ( typeof my.circ.checkin_workstation() == 'object' ? my.circ.checkin_workstation().name() : my.circ.checkin_workstation() ) : ""; },
+            'editable' : false, 'render' : function(my) { return my.circ ? ( typeof my.circ.checkin_workstation() == 'object' ? my.circ.checkin_workstation().name() : my.circ.checkin_workstation() ) : ""; }
         },
         {
             'persist' : 'hidden width ordinal',
@@ -1484,7 +1484,7 @@ circ.util.columns = function(modify,params) {
             'flex' : 1,
             'primary' : false,
             'hidden' : true,
-            'editable' : false, 'render' : function(my) { return my.circ ? ( typeof my.circ.workstation() == 'object' ? my.circ.workstation().name() : my.circ.workstation() ) : ""; },
+            'editable' : false, 'render' : function(my) { return my.circ ? ( typeof my.circ.workstation() == 'object' ? my.circ.workstation().name() : my.circ.workstation() ) : ""; }
         },
         {
             'persist' : 'hidden width ordinal',
@@ -1494,7 +1494,7 @@ circ.util.columns = function(modify,params) {
             'flex' : 1,
             'primary' : false,
             'hidden' : true,
-            'editable' : false, 'render' : function(my) { if (my.circ&&!my.original_circ) { if(!get_bool(my.circ.desk_renewal())&&!get_bool(my.circ.opac_renewal())&&!get_bool(my.circ.phone_renewal())){my.original_circ = my.circ;}}; return my.original_circ ? ( typeof my.original_circ.workstation() == 'object' ? my.original_circ.workstation().name() : my.original_circ.workstation() ) : ""; },
+            'editable' : false, 'render' : function(my) { if (my.circ&&!my.original_circ) { if(!get_bool(my.circ.desk_renewal())&&!get_bool(my.circ.opac_renewal())&&!get_bool(my.circ.phone_renewal())){my.original_circ = my.circ;}}; return my.original_circ ? ( typeof my.original_circ.workstation() == 'object' ? my.original_circ.workstation().name() : my.original_circ.workstation() ) : ""; }
         },
         {
             'persist' : 'hidden width ordinal',
@@ -3014,7 +3014,7 @@ circ.util.checkin_via_barcode2 = function(session,params,backdate,auto_print,che
                             document.getElementById('circStrings').getString('staff.circ.utils.hold_slip.print.no'),
                             null,
                             document.getElementById('circStrings').getString('staff.circ.confirm.msg'),
-                            '/xul/rel_2_1/server/skin/media/images/turtle.gif'
+                            '/xul/rel_2_1/server/skin/media/images/hold.gif'
                         );
                     } else {
                         if (suppress_popups && !no_print_prompting) {
@@ -3165,7 +3165,7 @@ circ.util.checkin_via_barcode2 = function(session,params,backdate,auto_print,che
                             document.getElementById('circStrings').getString('staff.circ.utils.reservation_slip.print.no'),
                             null,
                             document.getElementById('circStrings').getString('staff.circ.confirm.msg'),
-                            '/xul/rel_2_1/server/skin/media/images/turtle.gif'
+                            '/xul/rel_2_1/server/skin/media/images/hold.gif'
                         );
                     }
                     if (rv == 0) {
@@ -3407,7 +3407,7 @@ circ.util.checkin_via_barcode2 = function(session,params,backdate,auto_print,che
                     document.getElementById('circStrings').getString('staff.circ.utils.transit_slip.print.no'),
                     null,
                     document.getElementById('circStrings').getString('staff.circ.confirm.msg'),
-                    '/xul/rel_2_1/server/skin/media/images/turtle.gif'
+                    '/xul/rel_2_1/server/skin/media/images/transit.gif'
                 );
             } else {
                 if (suppress_popups && !no_print_prompting) {
