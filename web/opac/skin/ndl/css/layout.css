@@ -30,6 +30,8 @@ table { border-collapse: collapse; }
 .classic_link:visited { text-decoration: underline; color: black;}
 .classic_link_col { text-decoration: underline; color: red;}
 
+.hold_link { text-decoration: underline; color: white;}
+
 .encircled { border: 1px solid black; }
 
 .hold_button  { border: 1px outset; padding: 1px; text-decoration: none; background-color: #dedede; height: 13px; }
@@ -111,16 +113,16 @@ table { border-collapse: collapse; }
 
 #next_prev_links_dead {padding-left: 5px; padding-right: 5px;}
 
-#res_table { width: 100%; }
+#res_table { width: 100%;}
 
 .result_table_pic_cell { width: 43px;}
 .result_table_pic { height: 50px; width: 40px;  border: none;}
 .result_table_pic_header { width: 43px; }
 
-.result_table_row { text-align: left; width: 100%;}
+.result_table_row { text-align: left; width: 100%; border: 1px solid #9966cc; padding-bottom: 5px; }
 .result_table_subtable { width: 100%; border-collapse: collapse; vertical-align: top;}
 .result_table_subtbody { height: 100%; width: 100%; }
-.result_table_title_cell { text-align: left; }
+.result_table_title_cell { text-align: left; color: #222222;}
 
 .copy_count_cell { width: 12%; vertical-align: middle; text-align: center; }
 .copy_count_div { width:  4em; height: 99%; vertical-align: middle; text-align: center; }

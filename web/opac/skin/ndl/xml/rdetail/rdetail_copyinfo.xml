@@ -37,7 +37,8 @@
 				<td name='rdetail_library_cell'></td>
 				<td name='rdetail_callnumber_cell'>
 					<div style='margin-top: 2px;'>
-						<a name='callnumber' style='font-size: 8pt;' class='classic_link'></a>
+						<a href='javascript:rdetailShowExtra("cn");'
+						 name='callnumber' style='font-size: 8pt;' class='classic_link'></a>
                                         </div>
 				</td>
                                 <td name='location'></td>
