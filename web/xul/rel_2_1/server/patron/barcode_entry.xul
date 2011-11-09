@@ -100,12 +100,8 @@
                     function(req) {
                         document.getElementById('progress').setAttribute('hidden','true');
                         tb.disabled = false; tb.select(); tb.focus(); ;
-                        //var robj = req.getResultObject();
-if (barcode.length < 14 && !barcode.match(/^555/) && ses('ws_ou') > 9 && ses('ws_ou') < 18 ){  //  GRPL: retreieve patron by ID 
-   var robj=barcode; 
- }else{ 
-   var robj = req.getResultObject(); 
-} 
+                        var robj = req.getResultObject();
+ 
                         if (typeof robj.ilsevent != 'undefined') {
                             sound.bad();
                             switch(Number(robj.ilsevent)) {
@@ -178,9 +174,6 @@ if (barcode.length < 14 && !barcode.match(/^555/) && ses('ws_ou') > 9 && ses('ws
                 var horizontal_interface = String( g.data.hash.aous['ui.circ.patron_summary.horizontal'] ) == 'true';
                 var loc = xulG.url_prefix( horizontal_interface ? urls.XUL_PATRON_HORIZ_DISPLAY : urls.XUL_PATRON_DISPLAY );
                 if (typeof window.xulG == 'object' && typeof window.xulG.set_tab == 'function') {
-if (barcode.length < 14 && !barcode.match(/^555/) && ses('ws_ou') > 9 && ses('ws_ou') < 18 ) // GRPL: retrieve patron by ID  
-    window.xulG.set_tab( loc, {}, { 'id' : barcode } ); 
- else 
                     window.xulG.set_tab( loc, {}, { 'barcode' : barcode } );
                 } else {
                     location.href = loc + '?barcode=' + window.escape(barcode);
