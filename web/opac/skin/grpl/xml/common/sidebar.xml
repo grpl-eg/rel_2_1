@@ -37,6 +37,10 @@
 			<span>&navigate.loggedinas;<b id='username_dest'> </b></span>
 		</div>
 
+                <div id="spilled_ink_div" class='hide_me' style='padding: 10px 0 0 10px;'>
+                        <form name='sink_form' method='post' action='https://www.grpl.org/cgi-bin/spilled_ink_reg.cgi'><input type='hidden' id='bc' name='bc'/><input type='image' src='/opac/images/grpl/ink.png' onClick='submit();'/></form>
+                </div>
+
 		<div id='sidebar_results_wrapper' class='hide_me border_1'>
 			<div title="&navigate.titleGroupResults;" 
 				id='mresult_link_div' class="side_bar_item hide_me">

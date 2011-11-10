@@ -227,4 +227,8 @@ function buildEGGalLink() {
 }
 /* --------------------------------------------------------------------------------- */
 
+function spilled_ink_reg (bc) {
+       $('bc').setAttribute('value', bc);
+       return;
+}
 

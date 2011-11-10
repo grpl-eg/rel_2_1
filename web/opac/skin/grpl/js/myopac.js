@@ -878,6 +878,8 @@ function _myOPACSummaryShowUer(r) {
 	appendClear($('myopac_summary_create_date'),text(_trimTime(user.create_date())));
 	appendClear($('myopac_summary_expire_date'),text(_trimTime(user.expire_date())));
 
+	spilled_ink_reg(user.card().barcode());
+
 	var req = new Request( 
 		FETCH_USER_NOTES, G.user.session, {pub:1, patronid:G.user.id()});
 	req.callback(myopacDrawNotes);
