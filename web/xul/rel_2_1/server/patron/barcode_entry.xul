@@ -101,7 +101,7 @@
                         document.getElementById('progress').setAttribute('hidden','true');
                         tb.disabled = false; tb.select(); tb.focus(); ;
                         var robj = req.getResultObject();
- 
+
                         if (typeof robj.ilsevent != 'undefined') {
                             sound.bad();
                             switch(Number(robj.ilsevent)) {
@@ -147,7 +147,7 @@
                             }
                         } else {
                             sound.good();
-                            spawn(barcode);
+                            spawn(barcode,robj);
                         }
                     }
                 );
@@ -165,8 +165,8 @@
             d.setAttribute('style','color: red');
         }
 
-        function spawn(barcode) {
-            if (xul_param('perm_editor')) { spawn_perm_editor(barcode); } else { spawn_checkout(barcode); }
+        function spawn(barcode,id) {
+            if (xul_param('perm_editor')) { spawn_perm_editor(barcode); } else { spawn_checkout(id); }
         }
 
         function spawn_checkout(barcode) {
@@ -174,7 +174,7 @@
                 var horizontal_interface = String( g.data.hash.aous['ui.circ.patron_summary.horizontal'] ) == 'true';
                 var loc = xulG.url_prefix( horizontal_interface ? urls.XUL_PATRON_HORIZ_DISPLAY : urls.XUL_PATRON_DISPLAY );
                 if (typeof window.xulG == 'object' && typeof window.xulG.set_tab == 'function') {
-                    window.xulG.set_tab( loc, {}, { 'barcode' : barcode } );
+                    window.xulG.set_tab( loc, {}, { 'id' : barcode } );
                 } else {
                     location.href = loc + '?barcode=' + window.escape(barcode);
                 }
