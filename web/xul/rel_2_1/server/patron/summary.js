@@ -561,13 +561,16 @@ if (req.getResultObject().ready > 0){e2.setAttribute('style','color: red');docum
                     'patron_date_of_exp' : [
                         ['render'],
                         function(e) {
-                            return function() { 
+                            return function() {
+                                var sig_on_file = '';
+                                if (obj.patron.photo_url())
+                                     sig_on_file = ' - Signature on file';
                                 util.widgets.set_text(e,
                                     patronStrings.getString('staff.patron.summary.expires_on') + ' ' + (
                                         obj.patron.expire_date() ?
                                         util.date.formatted_date( obj.patron.expire_date(), '%{localized_date}' ) :
-                                        patronStrings.getString('staff.patron.field.unset') 
-                                    )
+                                        patronStrings.getString('staff.patron.field.unset')
+                                    )+' '+sig_on_file
                                 );
                             };
                         }
