@@ -228,8 +228,11 @@
                                                 var ltext = item.getAttribute('label')
                                                 if ( item.getAttribute('href').match(/netlibrary/i) )
                                                         ltext = 'Download From Netlibrary';
-                                                if ( item.getAttribute('href').match(/overdrive/i) )
+                                                if ( item.getAttribute('href').match(/overdrive/i) ){
                                                         ltext = 'Download From Overdrive';
+							var cinfo=dojo.byId('rdetail_copy_info_div');
+							cinfo.innerHTML='<br/><a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank"><img src="http://www.grpl.org/bmm/download/logo-Overdrive.png"/></a>';
+						}
 
                                                 var link = '<a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank">' + ltext + '</a>';
                                                 if (item.getAttribute('use_restriction'))
