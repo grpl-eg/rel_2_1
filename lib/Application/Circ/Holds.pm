@@ -2664,10 +2664,20 @@ sub find_nearest_permitted_hold {
 
 	my $fifo = $U->ou_ancestor_setting_value($user->ws_ou, 'circ.holds_fifo');
 
+    # when using fifo holds strategy and rules which limit which copies can
+    # transit for holds (such as age hold protection), your 10 next holds
+    # may all be unsuitable for capture. Look at 100 instead when using fifo.
+
+    my $holds_to_consider = 10;
+
+    if ($fifo) {
+        $holds_to_consider = 100;
+    }
+
 	# search for what should be the best holds for this copy to fulfill
 	my $best_holds = $U->storagereq(
         "open-ils.storage.action.hold_request.nearest_hold.atomic", 
-		$user->ws_ou, $copy->id, 10, $hold_stall_interval, $fifo );
+		$user->ws_ou, $copy->id, $holds_to_consider, $hold_stall_interval, $fifo );
 
 	unless(@$best_holds) {
 
