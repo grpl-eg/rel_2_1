@@ -2399,7 +2399,8 @@ sub do_checkin {
             } else {
                 # copy needs to transit "home", or stick here if it's a floating copy
     
-                if ($U->is_true( $self->copy->floating ) && !$self->remote_hold) { # copy is floating, stick here
+           #     if ($U->is_true( $self->copy->floating ) && !$self->remote_hold) { # copy is floating, stick here
+		if ($U->is_true( $self->copy->floating ) && !$self->remote_hold && ($self->circ_lib =~ /11|12|13/) ) { # copy is floating, stick here
                     $self->checkin_changed(1);
                     $self->copy->circ_lib( $self->circ_lib );
                     $self->update_copy;

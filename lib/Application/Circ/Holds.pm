@@ -1667,6 +1667,7 @@ sub _reset_hold {
 	$hold->clear_current_copy;
 	$hold->clear_shelf_time;
 	$hold->clear_shelf_expire_time;
+	$hold->clear_prev_check_time;
 
 	$e->update_action_hold_request($hold) or return $e->die_event;
 	$e->commit;
