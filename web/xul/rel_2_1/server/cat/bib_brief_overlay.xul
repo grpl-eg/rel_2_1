@@ -28,6 +28,7 @@
                     <textbox id="tcn" name="tcn" readonly="true" context="clipboard" class="plain" onfocus="this.select()"/>
                     <label value="&staff.cat.bib_brief.created_by.label;" accesskey="&staff.cat.bib_brief.created_by.accesskey;" control="creator" class="emphasis"/>
                     <textbox id="creator" name="creator" readonly="true" context="clipboard" class="plain" onfocus="this.select()"/>
+		    <textbox id="create_date" name="create_date" readonly="true" context="clipboard" class="plain" onfocus="this.select()"/>
                 </row>
                 <row position="2">
                     <label value="&staff.cat.bib_brief.author.label;" accesskey="&staff.cat.bib_brief.author.accesskey;" control="author" class="emphasis"/>
