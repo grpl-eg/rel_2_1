@@ -1275,8 +1275,6 @@ if (barcode.length > 22){
                         if(!newDob) return;
                         var oldDob = patron.dob();
                         if(dojo.date.stamp.fromISOString(oldDob) == newDob) return;
-//MIEG: kludge to fix timezone issue
-		newDob = dojo.date.add(newDob,'hours',4);
 
                         var juvInterval = orgSettings['global.juvenile_age_threshold'] || '18 years';
                         var juvWidget = findWidget('au', 'juvenile');
@@ -1727,7 +1725,14 @@ function _uEditSave(doClone) {
             case 'au':
                 if(w._fmfield != 'passwd2')
                     patron[w._fmfield](val);
-                break;
+//MIEG: dob kludge
+		if(w._fmfield == 'dob'){
+		    var DOB = dojo.date.stamp.fromISOString(val);
+		    DOB = dojo.date.add(DOB,'hour',4);
+		    DOB = dojo.date.stamp.toISOString(DOB);
+		    patron[w._fmfield](DOB);
+		}
+		break;
 
             case 'ac':
                 patron.card()[w._fmfield](val);
