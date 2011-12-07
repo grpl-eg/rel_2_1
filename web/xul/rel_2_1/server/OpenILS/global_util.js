@@ -650,6 +650,7 @@
     }
 
         function updateStatus(panel,value) {
+	   if (!value) return;
 
 		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 
