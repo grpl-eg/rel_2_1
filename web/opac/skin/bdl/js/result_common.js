@@ -191,6 +191,9 @@ function resultSetHitInfo() {
 
 	$('result_count2').appendChild(text(getHitCount()));
 	unHideMe($('result_info_div2'));
+
+//MIEG: Page numbering
+	add_page_numbers();
 }
 
 function resultLowHits() {
@@ -266,7 +269,6 @@ function resultZeroHits() {
 
 function resultExpandSearch() {
 	var top = findOrgDepth(globalOrgTree);
-        if (top == 0) top=1;
 	if(getDepth() == top) return;
 	unHideMe($('low_hits_expand_range'));
 	var par = $('low_hits_expand_link').parentNode;
@@ -397,7 +399,7 @@ function resultPaginate() {
 		addCSSClass($('prev_link2'), config.css.result.nav_active);
 
 		args[PARAM_OFFSET] = 0;
-		G.ui.result.home_link.setAttribute( "href", buildOPACLink(args)); 
+		//G.ui.result.home_link.setAttribute( "href", buildOPACLink(args)); 
 		addCSSClass(G.ui.result.home_link, config.css.result.nav_active);
 
 		$('search_home_link2').setAttribute( "href", buildOPACLink(args)); 
