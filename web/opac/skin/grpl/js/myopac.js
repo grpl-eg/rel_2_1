@@ -1110,10 +1110,11 @@ function myOPACUpdateUsername() {
 
 function myOPACUpdateEmail() {
 	var email = $('myopac_new_email').value;
-	if(email == null || email == "") {
+	if(!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) && email != "") {
 		alert($('myopac_email_error').innerHTML);
 		return;
 	}
+
 
 	var req = new Request(UPDATE_EMAIL, G.user.session, email );
 	req.send(true);
