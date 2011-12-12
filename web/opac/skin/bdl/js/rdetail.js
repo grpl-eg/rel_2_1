@@ -83,6 +83,11 @@ function rdetailSetPaging(ids) {
 		}
 	}
 
+	var cgi = new CGI();
+	var offset = parseInt(cgi.param('o'));
+	if (offset)
+		i=i+offset;
+
 	$('np_offset').appendChild(text(i + 1));
 	$('np_count').appendChild(text(getHitCount()));
 
