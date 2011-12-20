@@ -228,12 +228,16 @@
                                                 var ltext = item.getAttribute('label')
                                                 if ( item.getAttribute('href').match(/netlibrary/i) )
                                                         ltext = 'Download From Netlibrary';
+                                                if ( item.getAttribute('href').match(/galegroup/i) ) {
+                                                        ltext = 'Download From Gale Virtual Reference';
+							var cinfo=dojo.byId('rdetail_copy_info_div');
+							cinfo.innerHTML='<br/><a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank"><img src="http://www.grpl.org/bmm/download/eBooks-GVRL.png"/></a>';
+                                                }
                                                 if ( item.getAttribute('href').match(/overdrive/i) ){
                                                         ltext = 'Download From Overdrive';
 							var cinfo=dojo.byId('rdetail_copy_info_div');
 							cinfo.innerHTML='<br/><a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank"><img src="http://www.grpl.org/bmm/download/eBooks.png"/></a>';
 						}
-
                                                 var link = '<a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank">' + ltext + '</a>';
                                                 if (item.getAttribute('use_restriction'))
                                                         link += ' (Use restriction: ' + item.getAttribute('use_restriction') + ')';
