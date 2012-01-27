@@ -12,7 +12,7 @@ use Data::Dumper;
 use SRU::Request;
 use SRU::Response;
 
-use OpenSRF::EX qw(:try);
+use OpenSRF::EX qw(:try);d
 use OpenSRF::Utils qw/:datetime/;
 use OpenSRF::Utils::Cache;
 use OpenSRF::System;
@@ -1016,7 +1016,7 @@ sub bookbag_feed {
     $feed->root($root);
     $feed->id($bucket_tag);
 
-    if ($host =~ /GRPL/i) {
+    if ($cgi->url(-base) =~ /grpl|master/i) {
         $feed->{xsl} = "/GRPLBookbag.xsl";
     }
 
