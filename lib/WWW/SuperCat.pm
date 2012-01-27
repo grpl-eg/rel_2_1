@@ -12,7 +12,7 @@ use Data::Dumper;
 use SRU::Request;
 use SRU::Response;
 
-use OpenSRF::EX qw(:try);d
+use OpenSRF::EX qw(:try);
 use OpenSRF::Utils qw/:datetime/;
 use OpenSRF::Utils::Cache;
 use OpenSRF::System;
