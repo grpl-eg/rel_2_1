@@ -118,6 +118,7 @@ function load() {
         'ui.patron.edit.au.suffix.suggest',
         'ui.patron.edit.au.alias.show',
         'ui.patron.edit.au.alias.suggest',
+	'ui.patron.edit.au.alias.require',
         'ui.patron.edit.au.dob.require',
         'ui.patron.edit.au.dob.show',
         'ui.patron.edit.au.dob.suggest',
