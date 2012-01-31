@@ -1016,7 +1016,7 @@ sub bookbag_feed {
     $feed->root($root);
     $feed->id($bucket_tag);
 
-    if ($host =~ /GRPL/i) {
+    if ($cgi->url(-base) =~ /grpl|master/i) {
         $feed->{xsl} = "/GRPLBookbag.xsl";
     }
 
