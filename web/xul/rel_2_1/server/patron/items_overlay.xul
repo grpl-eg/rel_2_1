@@ -26,8 +26,8 @@
     <command id="cmd_items_mark_lost" />
     <command id="cmd_show_catalog" />
     <command id="cmd_add_billing" />
-    <command id="sel_mark_items_damaged" disabled="true"/>
-    <command id="sel_mark_items_missing" disabled="true"/>
+    <command id="sel_mark_items_damaged"/>
+    <command id="sel_mark_items_missing"/>
     
     <command id="cmd_show_noncats" />
 
@@ -48,8 +48,8 @@
     <command id="cmd_items_mark_lost2" />
     <command id="cmd_show_catalog2" />
     <command id="cmd_add_billing2" />
-    <command id="sel_mark_items_damaged2" disabled="true"/>
-    <command id="sel_mark_items_missing2" disabled="true"/>
+    <command id="sel_mark_items_damaged2"/>
+    <command id="sel_mark_items_missing2"/>
 </commandset>
 
 
@@ -73,6 +73,8 @@
         <menuitem label="&staff.patron.items_overlay.items_renew_with_date.label;" command="cmd_items_renew_with_date" hidden="false"/>
         <menuitem label="&staff.patron.items_overlay.items_checkin.label;" command="cmd_items_checkin" />
         <menuitem label="&staff.patron.items_overlay.add_billing.label;" command="cmd_add_billing" />
+	<menuitem label="Mark Item Damaged" command="sel_mark_items_damaged"/>
+	<menuitem label="Mark Item Missing Pieces" command="sel_mark_items_missing"/>
         <menuseparator />
         <menuitem command="save_columns" label="&staff.patron.items_overlay.save_columns.label;"/>
     </popup>
