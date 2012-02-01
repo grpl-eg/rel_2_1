@@ -116,7 +116,7 @@ function load() {
         'ui.patron.edit.au.second_given_name.suggest',
         'ui.patron.edit.au.suffix.show',
         'ui.patron.edit.au.suffix.suggest',
-        'ui.patron.edit.au.alias.show',
+	'ui.patron.edit.au.alias.show',
         'ui.patron.edit.au.alias.suggest',
 	'ui.patron.edit.au.alias.require',
         'ui.patron.edit.au.dob.require',
@@ -156,6 +156,7 @@ function load() {
         'ui.patron.edit.au.barred.show',
         'ui.patron.edit.au.barred.suggest',
         'ui.patron.edit.au.master_account.show',
+	'ui.patron.edit.au.net_access_level.show',
         'ui.patron.edit.au.master_account.suggest',
         'ui.patron.edit.au.claims_returned_count.show',
         'ui.patron.edit.au.claims_returned_count.suggest',
@@ -233,6 +234,11 @@ function load() {
     dojo.connect(replaceBarcode, 'onClick', replaceCardHandler);
     dojo.connect(allCards, 'onClick', drawAllCards);
     dojo.connect(clearAlert, 'onClick', clearMessage);
+    dojo.connect(asAdult, 'onClick', RegAsAdult);
+    dojo.connect(plus, 'onClick', addOneMonth);
+    dojo.connect(plus6, 'onClick', addSixMonths);
+    dojo.connect(plus1, 'onClick', addOneYear);
+    dojo.connect(plus3, 'onClick', addThreeYears);
     dojo.connect(genISM, 'onClick', replaceISMCard);
 
 //    if(patron.cards().length > 1)
@@ -258,10 +264,13 @@ function load() {
     //MIEG: we'll use this to hide features between systems
     if (staff.ws_ou() > 9 && staff.ws_ou() < 18){
 	dojo.removeClass(dojo.byId('ISMbutton'),"hidden");
+        dojo.removeClass(dojo.byId('AsAdultButton'),"hidden");
+	dojo.removeClass(dojo.byId('expOptions'),"hidden");
 	openils.Util.hide('claims_never_checked_out_count');
       //  openils.Util.hide('juvenile');
 	openils.Util.hide('parentGuardian');
-	openils.Util.hide('master_account');
+       dojo.addClass(dojo.byId('masterAccount'),"hidden");
+        openils.Util.hide('net_access_level');
     }
 	
 }
@@ -390,6 +399,37 @@ function clearMessage(){
     var input = findWidget('au', 'alert_message');
     input.widget.attr('disabled', false).attr('readOnly', false).attr('value', null).focus();
 }
+
+function RegAsAdult(){
+    var input = findWidget('au', 'ident_value2');
+    input.widget.attr('value', 'REGISTERED AS ADULT').focus();
+}
+
+function addOneMonth(){
+    var expire = findWidget('au', 'expire_date');
+    var newDate = new Date();
+    newDate.setDate(newDate.getDate() + 30);
+    expire.widget.attr('value', newDate).focus();
+}
+function addSixMonths(){
+    var expire = findWidget('au', 'expire_date');
+    var newDate = new Date();
+    newDate.setDate(newDate.getDate() + 180);
+    expire.widget.attr('value', newDate).focus();
+}
+function addOneYear(){
+    var expire = findWidget('au', 'expire_date');
+    var newDate = new Date();
+    newDate.setDate(newDate.getDate() + 365);
+    expire.widget.attr('value', newDate).focus();
+}
+function addThreeYears(){
+    var expire = findWidget('au', 'expire_date');
+    var newDate = new Date();
+    newDate.setDate(newDate.getDate() + 1095);
+    expire.widget.attr('value', newDate).focus();
+}
+
 
 function updateSuffix(){
     var suffix = findWidget('au', 'suffix');
@@ -847,7 +887,7 @@ function fleshFMRow(row, fmcls, args) {
         else if(isphone && orgSettings['ui.patron.edit.phone.example']) {
             ftd.appendChild(document.createTextNode(localeStrings.EXAMPLE + orgSettings['ui.patron.edit.phone.example']));
         }
-        else if(fieldIdl.datatype == 'timestamp') {
+        else if(fieldIdl.datatype == 'timestamp' && !fmfield.match(/expire/)) {
             ftd.appendChild(document.createTextNode(localeStrings.EXAMPLE + dojo.date.locale.format(new Date(1970,0,31),{selector: "date", fullYear: true, datePattern: (orgSettings['format.date'] ? orgSettings['format.date'] : null)})));
         }
     }
