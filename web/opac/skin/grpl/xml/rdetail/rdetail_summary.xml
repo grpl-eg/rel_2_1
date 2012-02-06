@@ -22,7 +22,7 @@
                     </div>
 				</td>
 				<td nowrap='nowrap' class='rdetail_desc'>Title</td>		
-                                <td type='opac/slot-data' query='datafield[tag=245]' class='rdetail_item' id='rdetail_title'>
+                                <td type='opac/slot-data' query='datafield[tag="245"]' class='rdetail_item' id='rdetail_title'>
                     			<script type='opac/slot-format'><![CDATA[
                         			var out = '';
                         			var list = dojo.query( 'subfield', item );
@@ -34,15 +34,19 @@
                                 </td>
 			</tr>
 
-			<tr class='hide_me' id='tag246'>
-				<td nowrap='nowrap' class='rdetail_desc'>Alternate title</td>
-				<td type='opac/slot-data' query='datafield[tag=246] subfield[code=a]' class='rdetail_item'>
-					<script type='opac/slot-format'><![CDATA[
-						dojo.query('#tag246').removeClass('hide_me');
-						return BT.textContent(item);
-					]]></script>
-				</td>
-			</tr>
+                        <tr class='hide_me' id='tag246'>
+                                <td nowrap='nowrap' class='rdetail_desc'>Alternate title</td>
+                                <td type='opac/slot-data' query='datafield[tag="246"]' class='rdetail_item'>
+<script type='opac/slot-format'><![CDATA[
+var output='';
+dojo.query('subfield[code="a"]', item).forEach(function(item) {
+                                                dojo.query('#tag246').removeClass('hide_me');
+                                                output += BT.textContent(item);
+});
+return output;
+]]></script>
+                                </td>
+                        </tr>
 			<tr class='hide_me' id='tag100'>
 				<td nowrap='nowrap' class='rdetail_desc'>&common.author;</td>
 				<td type='opac/slot-data' query='datafield[tag^="1"]' class='rdetail_item'>
@@ -81,13 +85,17 @@
                                         <span id='rdetail_tor' style='padding-left: 5px;'> </span>
                                 </td>
                         </tr>
-			<tr class='hide_me' id='tag511'>
+                        <tr class='hide_me' id='tag511'>
                                 <td nowrap='nowrap' class='rdetail_desc'>Performer/Presenter</td>
-                                <td type='opac/slot-data' query='datafield[tag=511] subfield[code=a]' class='rdetail_item'>
-                                        <script type='opac/slot-format'>
+                                <td type='opac/slot-data' query='datafield[tag="511"]' class='rdetail_item'>
+<script type='opac/slot-format'><![CDATA[
+var output='';
+dojo.query('subfield[code="a"]', item).forEach(function(item) {
                                                 dojo.query('#tag511').removeClass('hide_me');
-                                                return BT.textContent(item);
-                                        </script>
+                                                output += BT.textContent(item);
+});
+return output;
+]]></script>
                                 </td>
                         </tr>
 
@@ -106,20 +114,23 @@
 				</td>
 				<td><span></span></td>
 			</tr>
-
-			<tr class='hide_me less' id='tag020'>
-				<td nowrap='nowrap' class='rdetail_desc'>ISBN</td>			
-				<td type='opac/slot-data' query='datafield[tag=020] subfield[code=a]' class='rdetail_item'>
-				    <script type='opac/slot-format'>
-					dojo.query('#tag020').removeClass('hide_me');
-					return BT.textContent(item);
-				    </script>
+                        <tr class='hide_me less' id='tag020'>
+                                <td nowrap='nowrap' class='rdetail_desc'>ISBN</td>
+                                <td type='opac/slot-data' query='datafield[tag="020"]' class='rdetail_item'>
+<script type='opac/slot-format'><![CDATA[
+var output='';
+dojo.query('subfield[code="a"]', item).forEach(function(item) {
+                                        dojo.query('#tag020').removeClass('hide_me');
+                                        output += BT.textContent(item);
+});
+return output;
+]]></script>
 				</td>
+                        </tr>
 
-			</tr>
 			<tr class='hide_me less' id='tag250'>
 				<td nowrap='nowrap' class='rdetail_desc'>Edition</td>		
-				<td type='opac/slot-data' query='datafield[tag=250]' class='rdetail_item'>
+				<td type='opac/slot-data' query='datafield[tag="250"]' class='rdetail_item'>
 				    <script type='opac/slot-format'>
 					dojo.query('#tag250').removeClass('hide_me');
 					return BT.textContent(item);
@@ -130,7 +141,7 @@
 
 			<tr class='hide_me less' id='tag260'>
 				<td nowrap='nowrap' class='rdetail_desc'>Publisher</td>		
-				<td type='opac/slot-data' query='datafield[tag=260]' class='rdetail_item'>
+				<td type='opac/slot-data' query='datafield[tag="260"]' class='rdetail_item'>
 
 				    <script type='opac/slot-format'>
 					dojo.query('#tag260').removeClass('hide_me');
@@ -152,7 +163,7 @@
 
 			<tr class='hide_me less' id='tag520'>
 				<td nowrap='nowrap' class='rdetail_desc'>Abstract</td>	
-				<td type='opac/slot-data' query='datafield[tag=520]' class='rdetail_item'>
+				<td type='opac/slot-data' query='datafield[tag="520"]' class='rdetail_item'>
 				    <script type='opac/slot-format'>
 					dojo.query('#tag520').removeClass('hide_me');
 					return BT.textContent(item);
@@ -163,7 +174,7 @@
 
 			<tr class='hide_me less' id='tag505'>
                                 <td nowrap='nowrap' class='rdetail_desc'>Contents</td>
-                                <td type='opac/slot-data' query='datafield[tag=505]' class='rdetail_item'>
+                                <td type='opac/slot-data' query='datafield[tag="505"]' class='rdetail_item'>
                                     <script type='opac/slot-format'>
                                         dojo.query('#tag505').removeClass('hide_me');
                                         return BT.textContent(item);
@@ -222,27 +233,33 @@
                                 <!-- *** Example of how to use the openils.BibTemplate infrastructure to augment the stock
                                      *** summary screen with complex information, such as location-specific URIs (856$9). -->
                                 <td nowrap='nowrap' class='rdetail_desc'>&rdetail.summary.online;</td>
-                                <td class='rdetail_item' id='rdetail_online' type='opac/slot-data' query='volumes volume uris uri' join=", ">
-                                        <script type='opac/slot-format' query='datafield[tag=856] subfield[code=9]'><![CDATA[
-						unHideMe('rdetail_online_row');
-                                                var ltext = item.getAttribute('label')
-                                                if ( item.getAttribute('href').match(/netlibrary/i) )
-                                                        ltext = 'Download From Netlibrary';
-                                                if ( item.getAttribute('href').match(/galegroup/i) ) {
-                                                        ltext = 'Download From Gale Virtual Reference';
-							var cinfo=dojo.byId('rdetail_copy_info_div');
-							cinfo.innerHTML='<br/><a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank"><img src="http://www.grpl.org/bmm/download/eBooks-GVRL.png"/></a>';
-                                                }
-                                                if ( item.getAttribute('href').match(/overdrive/i) ){
-                                                        ltext = 'Download From Overdrive';
-							var cinfo=dojo.byId('rdetail_copy_info_div');
-							cinfo.innerHTML='<br/><a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank"><img src="http://www.grpl.org/bmm/download/eBooks.png"/></a>';
-						}
-                                                var link = '<a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank">' + ltext + '</a>';
-                                                if (item.getAttribute('use_restriction'))
-                                                        link += ' (Use restriction: ' + item.getAttribute('use_restriction') + ')';
-                                                return link;
-                                        ]]></script>
+                                <td class='rdetail_item' id='rdetail_online' type='opac/slot-data'  query='datafield[tag="856"]'>
+						<script type='opac/slot-format' ><![CDATA[ 
+                                                                var org = BT.textContent(dojo.query("subfield[code='9']", item)[0]);
+                                                                var url = BT.textContent(dojo.query("subfield[code='u']", item)[0]); 
+                                                                if (org.match(/GRPL/) && url) { 
+
+									if ( url.match(/overdrive/i) ){
+										var link = '<a href="' + url +'" target=\"_blank\" class=\"classic_link\">Download From Overdrive</a><br/>';
+										var cinfo=dojo.byId('rdetail_copy_info_div');
+                                                        			cinfo.innerHTML='<br/><a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank"><img src="http://www.grpl.org/bmm/download/eBooks.png"/></a>';
+
+                                                                       		return link;
+									}
+									if ( url.match(/galegroup/i) ){
+                                                                                var link = '<a href="' + url +'" target=\"_blank\" class=\"classic_link\">Download From Gale Virtual Reference</a><br/>';
+                                                                                var cinfo=dojo.byId('rdetail_copy_info_div');
+                                                                                cinfo.innerHTML='<br/><a href="' + item.getAttribute('href') + '" class="classic_link" target="_blank"><img src="http://www.grpl.org/bmm/download/eBooks-GVRL.png"/></a>';
+
+                                                                                return link;
+                                                                        } 
+
+									var link = '<a href="' + url +'" target=\"_blank\" class=\"classic_link\">Click for Online Resource</a><br/>';
+                                                                        return link;
+                                                                }
+                                                    ]]></script>
+
+
                                 </td>
                         </tr>
                         <tr name="serial_holdings_label"
