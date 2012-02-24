@@ -1,7 +1,7 @@
 
 <div id='myopac_checked_div' xmlns:xi="http://www.w3.org/2001/XInclude" >
 
-	<script language='javascript' type='text/javascript' src='/opac/en-US/skin/grpl/js/sorttable.js'/>
+	<script language='javascript' type='text/javascript' src='/opac/en-US/skin/grpl/js/sorttable.js'></script>
 
    <table width='100%'><tbody>
       <tr>
