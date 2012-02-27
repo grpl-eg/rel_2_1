@@ -1445,6 +1445,23 @@ function __myopacSelectChecked(value) {
    }
 }
 
+function myopacSelectDueSoon() {
+   var rows = myopacGetCheckedOutRows();
+   var threeDays = new Date();
+   threeDays.setDate(threeDays.getDate() + 3);
+   for( var i = 0; i < rows.length; i++ ) {
+      var row = rows[i];
+      var box = $n(row, 'selectme');
+      if( box && ! box.disabled ){
+	var due = $n(row, 'myopac_checked_due');
+	var dueDate = new Date(due.innerHTML);
+	if (dueDate < threeDays){
+          box.checked = true;
+	}
+      }
+   }
+}
+
 function myopacGetCheckedOutRows() {
    var rows = [];
    var tbody = $('myopac_checked_tbody');

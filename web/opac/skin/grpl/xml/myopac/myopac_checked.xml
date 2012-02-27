@@ -29,8 +29,9 @@
 				<th width='10%' nowrap='nowrap' align='center'>&myopac.checked.renew.remaining;</th>
             <th width='15%' class='unsortable'>&common.select;
                (<a id='myopac_select_all_checked' onclick='myopacSelectAllChecked();' 
-                  class='classic_link' href='javascript:void(0);'>&common.all;</a>/<a id='myopac_select_none_checked' 
-                  onclick='myopacSelectNoneChecked();' class='classic_link'   href='javascript:void(0);'>&common.none;</a>)
+                  class='classic_link' href='javascript:void(0);'>&common.all;</a>&nbsp;/&nbsp;<a id='myopac_select_none_checked' 
+                  onclick='myopacSelectNoneChecked();' class='classic_link'   href='javascript:void(0);'>&common.none;</a>&nbsp;/&nbsp;
+		<a id='myopac_select_due_soon' onClick='myopacSelectDueSoon();' class='classic_link' href='javascript:void(0);'>Due_within_3_days</a>)
             </th>
 			</tr>
 		</thead>
