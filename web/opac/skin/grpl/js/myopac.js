@@ -1454,7 +1454,12 @@ function myopacSelectDueSoon() {
       var box = $n(row, 'selectme');
       if( box && ! box.disabled ){
 	var due = $n(row, 'myopac_checked_due');
-	var dueDate = new Date(due.innerHTML);
+	due = due.innerHTML;
+	   if ( due.match(/\</) ) {
+		due = due.match(/.*?\>(.*?)\<.*/)
+		due = due[1];
+	   }
+	var dueDate = new Date(due);
 	if (dueDate < threeDays){
           box.checked = true;
 	}
