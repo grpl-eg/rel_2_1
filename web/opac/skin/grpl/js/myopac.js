@@ -413,6 +413,12 @@ function myOPACDrawHolds(r) {
                 text(dojo.date.locale.format(exp_date, {selector:'date'})));
         }
 
+        if(h.shelf_expire_time()) {
+            exp_date = dojo.date.stamp.fromISOString(h.shelf_expire_time().replace(/(T\d\d:\d\d:\d\d)([+-]\d\d)(\d)/, "$1$2:$3"));
+            $n(row, 'myopac_hold_expire_time').appendChild(
+                text(dojo.date.locale.format(exp_date, {selector:'date'})));
+        }
+
 		unHideMe(row);
 
         var interval = fetchOrgSettingDefault(G.user.home_ou(), 'circ.hold_expire_alert_interval');
