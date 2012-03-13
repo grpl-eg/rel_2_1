@@ -964,10 +964,10 @@ obj.summary_window.g.summary.controller.render('patron_checkouts');
                         var blist='';
                         if (penalties[i].standing_penalty().block_list())
                                 blist = ' (BLOCKED: '+penalties[i].standing_penalty().block_list()+')';
-                        msg += obj.OpenILS.data.hash.aou[ penalties[i].org_unit() ].shortname() + ' : ' + penalties[i].standing_penalty().label() + blist + '<br/>';
+                        msg += '<div style="color:red">' + obj.OpenILS.data.hash.aou[ penalties[i].org_unit() ].shortname() + ' : ' + penalties[i].standing_penalty().label() + blist + '<br/>';
                         msg += '</dt><dd>';
                         msg += (penalties[i].note())?penalties[i].note():'';
-                        msg += '</dd>';
+                        msg += '</div></dd>';
                   //  }
                 }
                 if (dl_flag_opened) { msg += '</dl>'; }
