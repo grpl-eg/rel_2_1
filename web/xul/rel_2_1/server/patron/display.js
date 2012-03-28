@@ -956,6 +956,7 @@ obj.summary_window.g.summary.controller.render('patron_checkouts');
                 for (var i = 0; i < penalties.length; i++) {
 //MIEG: let's see them all
                    // if (penalties[i].standing_penalty().block_list() || penalties[i].standing_penalty().id() == 20 /* ALERT_NOTE */) {
+		   if (penalties[i].standing_penalty().id() != 21){ // go ahead and hide SILENT_NOTEs
                         if (!dl_flag_opened) {
                             msg += '<dl>';
                             dl_flag_opened = true;
@@ -963,12 +964,12 @@ obj.summary_window.g.summary.controller.render('patron_checkouts');
                         msg += '<dt>';
                         var blist='';
                         if (penalties[i].standing_penalty().block_list())
-                                blist = ' (BLOCKED: '+penalties[i].standing_penalty().block_list()+')';
-                        msg += '<div style="color:red">' + obj.OpenILS.data.hash.aou[ penalties[i].org_unit() ].shortname() + ' : ' + penalties[i].standing_penalty().label() + blist + '<br/>';
+                                blist = '<span style="color:red"> (BLOCKED: '+penalties[i].standing_penalty().block_list()+')</span>';
+                        msg +=  obj.OpenILS.data.hash.aou[ penalties[i].org_unit() ].shortname() + ' : ' + penalties[i].standing_penalty().label() + blist + '<br/>';
                         msg += '</dt><dd>';
                         msg += (penalties[i].note())?penalties[i].note():'';
-                        msg += '</div></dd>';
-                  //  }
+                        msg += '</dd>';
+                   }
                 }
                 if (dl_flag_opened) { msg += '</dl>'; }
                 var holds = params.holds_summary;
