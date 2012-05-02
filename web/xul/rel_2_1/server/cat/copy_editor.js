@@ -287,6 +287,7 @@ g.retrieve_templates = function() {
 g.applied_templates = [];
 
 g.apply_template = function(apply_volume_editor_template_changes) {
+    g.reset();  //force a reset to prevent lingering values between templates
     try {
         var name = g.template_menu.value;
         if (g.templates[ name ] != 'undefined') {
