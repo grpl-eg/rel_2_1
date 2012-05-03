@@ -612,7 +612,8 @@ function _trimTime(time) {
     time = time.replace(/(T\d\d:\d\d:\d\d)([+-]\d\d)(\d)/, "$1$2:$3");
     var d = dojo.date.stamp.fromISOString(time);
     if(!d) return ""; /* date parse failed */
-    return dojo.date.locale.format(d, {"formatLength": "medium"});
+    //return dojo.date.locale.format(d, {"formatLength": "medium"});
+    return dojo.date.locale.format(d, {"datePattern":"MM/dd/yyyy", selector: "date"});
 }
 
 function _trimSeconds(time) { 
@@ -1454,7 +1455,7 @@ function __myopacSelectChecked(value) {
 function myopacSelectDueSoon() {
    var rows = myopacGetCheckedOutRows();
    var threeDays = new Date();
-   threeDays.setDate(threeDays.getDate() + 3);
+   threeDays.setDate(threeDays.getDate() + 4);
    for( var i = 0; i < rows.length; i++ ) {
       var row = rows[i];
       var box = $n(row, 'selectme');
