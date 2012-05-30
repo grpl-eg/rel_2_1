@@ -1157,8 +1157,8 @@ function rdetailBuildBrowseInfo(row, cn, local, orgNode, cl) {
 //		$n(row, 'browse').setAttribute('href', bHref);
 
 	if(isXUL()) {
-		unHideMe($n(row, 'hold_div'));
-		$n(row, 'hold').onclick = function() {
+		unHideMe($n(row, 'vol_hold_link'));
+		$n(row, 'vol_hold_link').onclick = function() {
 			var req = new Request(FETCH_VOLUME_BY_INFO, cn, record.doc_id(), orgNode.id());
 			req.callback(
 					function(r) {
