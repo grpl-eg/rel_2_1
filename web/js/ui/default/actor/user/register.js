@@ -1029,10 +1029,12 @@ function trimGrpTree(autoWidget) {
         function(item) {
             if(!checkGrpAppPerm(item.id[0]) && patron.profile() != item.id[0])
                 store.deleteItem(item);
-	    else if( (staff.ws_ou() > 9 && staff.ws_ou() < 18) && (item.id[0] == 2 || item.id[0].match(/72|73|10|58|70|20|66|65|68|64|67|69|63|59|77|44|23|24|76|29|27|57|56|25|46|43|42|62|61|60|30/)))
+	    else if( (staff.ws_ou() > 9 && staff.ws_ou() < 18) && (item.id[0] == 2 || item.id[0].match(/72|73|10|58|70|20|66|65|68|64|67|69|63|59|77|44|23|24|76|29|27|57|56|25|46|43|42|62|61|60|30|85/)))
 		store.deleteItem(item);
 	    else if( (staff.ws_ou() > 2 && staff.ws_ou() < 9) && (item.id[0] == 2 || !item.id[0].match(/18|19|20|21|22|23|24|25|26|27|31|37|38|39|44|46/)))
                store.deleteItem(item);
+	    else if( (staff.ws_ou() == 40) && (!item.id[0].match(/22|31|34|36|37|38|41|85/)))
+	       store.deleteItem(item); 
         }
     });
 }
